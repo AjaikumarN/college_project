@@ -1,0 +1,35 @@
+
+[
+  {
+    "register_number": "23UCS531",
+    "name": "G. Varsha",
+    "email": "varsha.g@xaviers.edu",
+    "course": "II CS",
+    "phone": "9876543210",
+    "gender": "Female",
+    "dob": "2004-03-10",
+    "year": 2,
+    "user_id": 101
+  }
+]
+
+[
+  {
+    "id": "F101",
+    "name": "Dr. M.Preethi",
+    "email": "preethi.m@xaviers.edu",
+    "phone": "9876501234",
+    "gender": "Female",
+    "department": "Computer Science",
+    "qualification": "PhD",
+    "joining_date": "2024-07-01"
+  }
+]
+
+[
+  { "roll": "23UCS531", "name": "G. Varsha", "total": 60, "present": 56, "percent": "93.3%" }
+]
+
+[
+  { "roll": "23UCS531", "name": "G. Varsha", "ds": 87, "dbms": 91, "se": 78, "total": 256 }
+]

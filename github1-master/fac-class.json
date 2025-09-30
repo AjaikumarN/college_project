@@ -1,0 +1,24 @@
+{
+  "facultyId": "fac01",
+  "name": "Dr. M. PREETHIi",
+  "courses": [
+    {
+      "class": "II-B.Sc COMPUTER SCIENCE",
+      "subject": "Database Management Systems",
+      "batch": "2023-2026",
+      "semester": 4
+    },
+    {
+      "class": "I-B.Sc COMPUTER SCIENCE",
+      "subject": "Python Programming Lab",
+      "batch": "2024-2027",
+      "semester": 2
+    },
+    {
+      "class": "III-B.Sc COMPUTER SCIENCE",
+      "subject": "Data Structures",
+      "batch": "2022-2025",
+      "semester": 6
+    }
+  ]
+}

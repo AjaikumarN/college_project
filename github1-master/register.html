@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Student Registration</title>
+  <link rel="stylesheet" href="register.css">
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+<div class="register-bg">
+  <div class="register-card animate-pop">
+    <img src="assets/register_icon.png" alt="Logo" class="register-logo">
+    <h2>Student Registration</h2>
+
+    <form id="registerForm">
+      <div class="form-group"><input type="text" name="name" placeholder="Full Name" required /></div>
+      <div class="form-group"><input type="email" name="email" placeholder="Email" required /></div>
+      <div class="form-group"><input type="password" name="password" placeholder="Password" required /></div>
+      <div class="form-group"><input type="text" name="course" placeholder="Course" required /></div>
+      <div class="form-group"><input type="text" name="year" placeholder="Year" required /></div>
+      <div class="form-group"><input type="text" name="phone" placeholder="Phone" /></div>
+      <div class="form-group"><input type="text" name="gender" placeholder="Gender" /></div>
+      <div class="form-group"><input type="date" name="dob" placeholder="Date of Birth" /></div>
+      <button type="submit" class="btn-register">Register</button>
+    </form>
+
+    <div id="message" class="register-msg"></div>
+  </div>
+</div>
+
+<script>
+  const form = document.getElementById('registerForm');
+  const msg = document.getElementById('message');
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData.entries());
+
+    axios.post('http://localhost:8080/api/users/register', data)
+      .then(() => {
+        msg.innerText = "✅ Registered Successfully!";
+        msg.style.color = "green";
+        setTimeout(() => {
+          window.location.href = "login.html";
+        }, 1500);
+      })
+      .catch(err => {
+        console.error("Registration failed", err);
+        msg.innerText = "❌ Registration Failed.";
+        msg.style.color = "red";
+      });
+  });
+</script>
+</body>
+</html>

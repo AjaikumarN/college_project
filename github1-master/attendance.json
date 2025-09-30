@@ -1,0 +1,50 @@
+{
+  "student": {
+    "name": "VARSHA G",
+    "id": "23UCS531",
+    "course": "II-Year-B.Sc COMPUTER SCIENCE",
+    "photo": "assets/hannah.jpg"
+  },
+  "attendance": [
+    {
+      "courseCode": "23UCS201",
+      "courseTitle": "Data Structures",
+      "classesHeld": 45,
+      "attended": 42,
+      "absent": 3,
+      "percentage": "93.3%"
+    },
+    {
+      "courseCode": "23UCS202",
+      "courseTitle": "Database Management Systems",
+      "classesHeld": 48,
+      "attended": 46,
+      "absent": 2,
+      "percentage": "95.8%"
+    },
+    {
+      "courseCode": "23UCS203",
+      "courseTitle": "Software Engineering",
+      "classesHeld": 44,
+      "attended": 40,
+      "absent": 4,
+      "percentage": "90.9%"
+    },
+    {
+      "courseCode": "23UCS204",
+      "courseTitle": "Data Science",
+      "classesHeld": 43,
+      "attended": 41,
+      "absent": 2,
+      "percentage": "95.3%"
+    },
+    {
+      "courseCode": "23UCS205",
+      "courseTitle": "Lab-RDBMS",
+      "classesHeld": 46,
+      "attended": 44,
+      "absent": 2,
+      "percentage": "95.7%"
+    }
+  ]
+}

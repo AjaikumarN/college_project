@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Upload Notes | Faculty</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="fac-notes.css" />
+  
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+  <div class="container">
+    <header class="dashboard-header">
+      <button class="back-btn" onclick="window.history.back()" aria-label="Go Back">&#8592;</button>
+      <span class="header-title">Upload Notes</span>
+      <div class="header-right">
+        <button class="hamburger" aria-label="Open menu">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </button>
+      </div>
+    </header>
+
+    <main>
+      <section class="notes-section">
+        <div class="section-title">UPLOAD NOTES / RESOURCES</div>
+        <form class="notes-form" enctype="multipart/form-data" onsubmit="submitNotes(event)">
+          <div class="form-row">
+            <label for="class-select">Class</label>
+            <select id="class-select" required>
+              <option value="">-- Select Class --</option>
+              <option value="ii-bsc-cs">II-B.Sc COMPUTER SCIENCE</option>
+              <option value="i-bca">I-B.Sc COMPUTER SCIENCE</option>
+              <option value="iii-bsc-cs">III-B.Sc COMPUTER SCIENCE</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <label for="subject-select">Subject</label>
+            <select id="subject-select" required>
+              <option value="">-- Select Subject --</option>
+              <option value="dbms">Database Management Systems</option>
+              <option value="python-lab">Python Programming Lab</option>
+              <option value="ds">Data Structures</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <label for="notes-title">Title</label>
+            <input type="text" id="notes-title" placeholder="Title of Notes/Resource" required />
+          </div>
+          <div class="form-row">
+            <label for="notes-file">Upload File (PDF/DOC/PPT/IMG)</label>
+            <input type="file" id="notes-file" accept=".pdf,.doc,.docx,.ppt,.pptx,.jpg,.jpeg,.png" required />
+          </div>
+          <button type="submit" class="submit-btn">Upload</button>
+        </form>
+      </section>
+
+      <section class="notes-section">
+        <div class="section-title">UPLOADED NOTES</div>
+        <div class="notes-list">
+          <!-- Notes will be dynamically inserted here -->
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="footer-bar">
+        2025 © <strong>ST. XAVIER'S COLLEGE (AUTONOMOUS)</strong>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    async function loadNotes() {
+      const notesList = document.querySelector('.notes-list');
+      notesList.innerHTML = 'Loading notes...';
+
+      try {
+        const response = await axios.get('fac-notes.json'); // change to your backend API if needed
+        const notes = response.data;
+
+        if (!Array.isArray(notes) || notes.length === 0) {
+          notesList.innerHTML = '<p>No notes found.</p>';
+          return;
+        }
+
+        notesList.innerHTML = ''; // Clear loading text
+
+        notes.forEach(note => {
+          const noteRow = document.createElement('div');
+          noteRow.classList.add('note-row');
+
+          const titleSpan = document.createElement('span');
+          titleSpan.classList.add('note-title');
+          titleSpan.textContent = note.title;
+
+          const downloadLink = document.createElement('a');
+          downloadLink.href = note.fileUrl;
+          downloadLink.classList.add('download-link');
+          downloadLink.textContent = 'Download';
+          downloadLink.target = '_blank';
+
+          noteRow.appendChild(titleSpan);
+          noteRow.appendChild(downloadLink);
+
+          notesList.appendChild(noteRow);
+        });
+      } catch (error) {
+        notesList.innerHTML = '<p>Error loading notes data.</p>';
+        console.error('Error fetching notes:', error);
+      }
+    }
+
+    async function submitNotes(event) {
+      event.preventDefault();
+
+      const classSelect = document.getElementById('class-select').value;
+      const subjectSelect = document.getElementById('subject-select').value;
+      const title = document.getElementById('notes-title').value;
+      const fileInput = document.getElementById('notes-file');
+
+      if (!fileInput.files.length) {
+        alert('Please select a file to upload.');
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append('class', classSelect);
+      formData.append('subject', subjectSelect);
+      formData.append('title', title);
+      formData.append('file', fileInput.files[0]);
+
+      try {
+        const response = await axios.post('/api/upload-notes', formData, {
+          headers: { 'Content-Type': 'multipart/form-data' }
+        });
+
+        alert('Notes uploaded successfully!');
+
+        // Reload notes list after upload
+        await loadNotes();
+
+        // Reset form
+        event.target.reset();
+      } catch (error) {
+        alert('Failed to upload notes.');
+        console.error('Upload error:', error);
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', loadNotes);
+  </script>
+</body>
+</html>

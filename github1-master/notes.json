@@ -1,0 +1,22 @@
+[
+  {
+    "course": "23UCS201 - Data Structures",
+    "file": "notes/data-structures.pdf"
+  },
+  {
+    "course": "23UCS202 - Database Management Systems",
+    "file": "assets/RDBMS_Unit_I.docx"
+  },
+  {
+    "course": "23UCS203 - Software Engineering",
+    "file": "assets/SE One word.docx"
+  },
+  {
+    "course": "23UCS204 - Data Science",
+    "file": "assets/Data Science.docx"
+  },
+  {
+    "course": "23UCS205 - Lab RDBMS",
+    "file": "assets/rdbmspracticallist.docx"
+  }
+]

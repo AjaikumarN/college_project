@@ -1,0 +1,32 @@
+[
+  {
+    "code": "23UCS201",
+    "title": "Data Structures",
+    "faculty": "Dr. J.Rexy",
+    "image": "assets/Computer Science - Dr. Rexy JeYAKUMAR.jpg"
+  },
+  {
+    "code": "23UCS202",
+    "title": "Database Management Systems",
+    "faculty": "Dr. J.Margaret Sangeetha",
+    "image": "assets/magie.jpg"
+  },
+  {
+    "code": "23UCS203",
+    "title": "Software Engineering",
+    "faculty": "Dr. M.Preethi",
+    "image": "assets/Dr. M. PREETHIi.jpg"
+  },
+  {
+    "code": "23UCS204",
+    "title": "Data Science",
+    "faculty": "Dr. M.Preethi",
+    "image": "assets/Dr. M. PREETHIi.jpg"
+  },
+  {
+    "code": "23UCS205",
+    "title": "Lab-RDBMS",
+    "faculty": "Dr. J.Margaret Sangeetha",
+    "image": "assets/magie.jpg"
+  }
+]

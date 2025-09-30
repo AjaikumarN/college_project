@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Class Notes | Student Portal</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="notes.css">
+</head>
+<body>
+<header class="notes-header" style="text-align: center;">
+  <button class="back-btn" onclick="window.history.back()">&#8592;</button>
+  <span class="notes-title">Class Notes</span>
+</header>
+
+<main class="notes-main">
+  <section class="notes-profile">
+    <img src="assets/default.jpg" alt="Student Photo" class="notes-photo" id="student-photo" />
+    <div class="notes-student-info">
+      <div class="notes-student-name" id="student-name">Loading...</div>
+      <div class="notes-student-id" id="student-id"></div>
+      <div class="notes-student-course" id="student-course"></div>
+    </div>
+  </section>
+
+  <section class="notes-list-section">
+    <div class="section-title">Available Notes</div>
+    <ul class="notes-list" id="notes-list">
+      <li>Loading notes...</li>
+    </ul>
+  </section>
+</main>
+
+<footer>
+  <div class="footer-bar">
+    2025 © <strong>KARUNYA COLLEGE</strong>
+  </div>
+</footer>
+
+<script>
+  const user = {
+    name: localStorage.getItem("userName"),
+    id: localStorage.getItem("userId"),
+    course: localStorage.getItem("userCourse")
+  };
+
+  if (!user.name) {
+    alert("Please login again.");
+    window.location.href = "login.html";
+  } else {
+    document.getElementById("student-name").textContent = user.name;
+    document.getElementById("student-id").textContent = "ID: " + user.id;
+    document.getElementById("student-course").textContent = user.course || "N/A";
+    document.getElementById("student-photo").src = "assets/default.jpg";
+
+    fetch("notes.json")
+      .then(res => res.json())
+      .then(data => {
+        const list = document.getElementById("notes-list");
+        list.innerHTML = "";
+        data.forEach(note => {
+          const li = document.createElement("li");
+          li.innerHTML = `<span class="notes-course">${note.course}</span>
+                          <a href="${note.fileUrl}" target="_blank" class="download-link">Download PDF</a>`;
+          list.appendChild(li);
+        });
+      })
+      .catch(err => {
+        console.error("Failed to load notes:", err);
+        document.getElementById("notes-list").innerHTML = "<li>Error loading notes</li>";
+      });
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+{
+  "student": {
+    "name": "VARSHA G",
+    "regNo": "23UCS121",
+    "degree": "B.Sc COMPUTER SCIENCE",
+    "year": "II"
+  },
+  "marks": [
+    {
+      "courseCode": "23UCS201",
+      "courseTitle": "Data Structures",
+      
+      "total": 91
+      
+    },
+    {
+      "courseCode": "23UCS202",
+      "courseTitle": "Database Management Systems",
+      
+      "total": 91
+    },
+    {
+      "courseCode": "23UCS203",
+      "courseTitle": "Software Engineering",
+     
+      "total": 85
+    },
+    {
+      "courseCode": "23UCS204",
+      "courseTitle": "Data Science",
+     
+      "total": 85
+     
+    },
+    {
+      "courseCode": "23UCS205",
+      "courseTitle": "Lab-RDBMS",
+      
+      "total": 93
+      
+    }
+  ]
+}

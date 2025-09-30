@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Login | Karunya College</title>
+  <link rel="stylesheet" href="login.css">
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body class="login-bg">
+<div class="login-center-container">
+  <form id="loginForm" class="login-card">
+    <img src="assets/karunya-logo.jpeg" alt="Logo" class="login-logo">
+    <h1>Karunya Login</h1>
+    <div class="form-group">
+      <label for="login-email">Email</label>
+      <input type="email" id="login-email" required />
+    </div>
+    <div class="form-group">
+      <label for="login-password">Password</label>
+      <input type="password" id="login-password" required />
+    </div>
+    <button type="submit" class="btn-primary">Login</button>
+    <p id="login-error" class="error-msg"></p>
+  </form>
+</div>
+
+<script>
+  document.getElementById('loginForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    const email = document.getElementById('login-email').value.trim();
+    const password = document.getElementById('login-password').value;
+    const errorMsg = document.getElementById('login-error');
+
+    axios.post('http://localhost:8080/api/auth/login', { email, password })
+      .then(res => {
+        const user = res.data;
+        localStorage.setItem("userId", user.id);
+        localStorage.setItem("userName", user.name);
+        localStorage.setItem("userEmail", user.email);
+        localStorage.setItem("userCourse", user.course);
+        window.location.href = "student.html";
+      })
+      .catch(err => {
+        console.error("Login error:", err);
+        errorMsg.textContent = "Invalid email or password.";
+        errorMsg.style.color = "red";
+      });
+  });
+</script>
+</body>
+</html>

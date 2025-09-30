@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard | Student Portal</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="student.css">
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+
+<!-- Drawer -->
+<div class="side-drawer" id="sideDrawer">
+  <div class="drawer-content">
+    <ul class="drawer-menu">
+      <li><a href="student.html"><span>🏠</span>Home</a></li>
+      <li><a href="stu-profile.html"><span>👤</span>Profile</a></li>
+      <li><a href="attendance.html"><span>📅</span>Attendance</a></li>
+    </ul>
+    <ul class="drawer-menu logout-menu">
+      <li><a href="login.html" onclick="localStorage.clear()"><span>🚪</span>Logout</a></li>
+    </ul>
+  </div>
+</div>
+
+<!-- Header -->
+<header class="dashboard-header">
+  <div class="header-left"><span>Dashboard</span></div>
+  <div class="header-right">
+    <button class="hamburger" onclick="openDrawer()">
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </button>
+  </div>
+</header>
+
+<main>
+  <!-- Student Profile -->
+  <section class="student-profile-card">
+    <img src="assets/default.jpg" alt="Student Photo" class="student-photo" id="studentPhoto"
+         onerror="this.onerror=null;this.src='assets/default.jpg';"/>
+    <div class="student-info">
+      <div class="student-name" id="studentName">Loading...</div>
+      <div class="student-id" id="studentId">Loading...</div>
+      <div class="student-course" id="studentCourse">Loading...</div>
+    </div>
+  </section>
+
+  <!-- College Features -->
+  <section class="college-section">
+    <div class="section-title">MY COLLEGE</div>
+    <div class="college-features-grid">
+      <a href="stu-profile.html" class="feature-card"><img src="assets/pro.png"><span>My Profile</span></a>
+      <a href="courses.html" class="feature-card"><img src="assets/courseic.png"><span>Courses</span></a>
+      <a href="attendance.html" class="feature-card"><img src="assets/atticon.png"><span>Attendance</span></a>
+      <a href="marks.html" class="feature-card"><img src="assets/marksic.webp"><span>Marks</span></a>
+      <a href="notes.html" class="feature-card"><img src="assets/notesic.webp"><span>Notes</span></a>
+      <a href="announcement.html" class="feature-card"><img src="assets/annoic.jpg"><span>Announcements</span></a>
+    </div>
+  </section>
+
+  <!-- Timetable -->
+  <section id="timetable" class="college-section" style="display: none;">
+    <div class="section-title">Your Timetable</div>
+    <table class="timetable-table">
+      <thead>
+      <tr>
+        <th>Day</th>
+        <th>9:00 - 10:00</th>
+        <th>10:00 - 11:00</th>
+        <th>11:00 - 12:00</th>
+        <th>12:00 - 1:00</th>
+        <th>1:00 - 2:00</th>
+        <th>2:00 - 3:00</th>
+        <th>3:00 - 4:00</th>
+      </tr>
+      </thead>
+      <tbody id="timetable-body"></tbody>
+    </table>
+  </section>
+</main>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-bar">2025 © <strong>KARUNYA COLLEGE</strong></div>
+</footer>
+
+<!-- Script -->
+<script>
+  function openDrawer() {
+    document.getElementById('sideDrawer').classList.add('open');
+  }
+
+  function closeDrawer() {
+    document.getElementById('sideDrawer').classList.remove('open');
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === "Escape") closeDrawer();
+  });
+
+  const userId = localStorage.getItem("userId");
+
+  if (!userId) {
+    alert("Session expired. Please login again.");
+    window.location.href = "login.html";
+  } else {
+    axios.get(`http://localhost:8080/api/users/profile/${userId}`)
+      .then(res => {
+        const user = res.data;
+        document.getElementById("studentName").textContent = user.name;
+        document.getElementById("studentId").textContent = "ID: " + user.id;
+        document.getElementById("studentCourse").textContent = user.course || "N/A";
+        document.getElementById("studentPhoto").src = user.photoUrl || "assets/default.jpg";
+      })
+      .catch(err => {
+        console.error("Failed to load profile", err);
+        alert("Failed to load profile data.");
+      });
+  }
+
+  const selectedSubjects = JSON.parse(localStorage.getItem("selectedSubjects") || "[]");
+  const timetableSection = document.getElementById("timetable");
+  const timetableBody = document.getElementById("timetable-body");
+
+  if (selectedSubjects.length > 0) {
+    timetableSection.style.display = "block";
+
+    const weekdays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
+    weekdays.forEach((day, dayIndex) => {
+      const tr = document.createElement("tr");
+      const tdDay = document.createElement("td");
+      tdDay.textContent = day;
+      tr.appendChild(tdDay);
+
+      for (let i = 0; i < 7; i++) {
+        const td = document.createElement("td");
+        td.textContent = selectedSubjects[(dayIndex + i) % selectedSubjects.length] || "-";
+        tr.appendChild(td);
+      }
+      timetableBody.appendChild(tr);
+    });
+  }
+</script>
+</body>
+</html>

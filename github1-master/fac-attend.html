@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Mark Attendance | Faculty</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="fac-attend.css">
+</head>
+<body>
+  <div class="container">
+    <header class="dashboard-header">
+  <button class="back-btn" onclick="window.history.back()" aria-label="Go Back">&#8592;</button>
+  
+  <span class="header-title">Mark Attendance</span>
+  
+  <div class="header-right">
+    <button class="hamburger" aria-label="Open menu">
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </button>
+  </div>
+</header>
+
+
+    <main>
+      <section class="attendance-section">
+        <div class="section-title">SELECT CLASS & SUBJECT</div>
+        <form class="attendance-form">
+          <div class="form-row">
+            <label for="class-select">Class</label>
+            <select id="class-select" required>
+              <option value="">-- Select Class --</option>
+              <option value="ii-bsc-cs">II-B.Sc COMPUTER SCIENCE</option>
+              <option value="i-bsc-cs">I-B.Sc COMPUTER SCIENCE</option>
+              <option value="iii-bsc-cs">III-B.Sc COMPUTER SCIENCE</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <label for="subject-select">Subject</label>
+            <select id="subject-select" required>
+              <option value="">-- Select Subject --</option>
+              <option value="dbms">Database Management Systems</option>
+              <option value="python-lab">Python Programming Lab</option>
+              <option value="ds">Data Structures</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <label for="date-select">Date</label>
+            <input type="date" id="date-select" required>
+          </div>
+          <button type="button" class="load-students-btn" onclick="loadStudents()">Load Students</button>
+        </form>
+      </section>
+
+      <section class="attendance-section" id="students-section" style="display:none;">
+        <div class="section-title">MARK ATTENDANCE</div>
+        <form class="attendance-students-form" onsubmit="submitAttendance(event)">
+          <div class="students-list"></div>
+          <button type="submit" class="submit-btn">Submit Attendance</button>
+        </form>
+      </section>
+    </main>
+
+    <footer>
+      <div class="footer-bar">
+        2025 © <strong>ST. XAVIER'S COLLEGE (AUTONOMOUS)</strong>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Axios CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+  <script>
+    async function loadStudents() {
+      const classValue = document.getElementById("class-select").value;
+      const studentsSection = document.getElementById("students-section");
+      const studentsList = document.querySelector(".students-list");
+
+      if (!classValue) {
+        alert("Please select a class.");
+        return;
+      }
+
+      try {
+        const response = await axios.get('fac-attend.json');
+        const data = response.data[classValue];
+
+        if (!data) {
+          studentsList.innerHTML = "<p>No students found for selected class.</p>";
+        } else {
+          studentsList.innerHTML = "";
+          data.forEach(student => {
+            const row = document.createElement('div');
+            row.classList.add('student-row');
+            row.innerHTML = `
+              <span class="student-name">${student.name}</span>
+              <div class="attendance-options">
+                <label><input type="radio" name="${student.id}" value="present"> Present</label>
+                <label><input type="radio" name="${student.id}" value="absent"> Absent</label>
+              </div>
+            `;
+            studentsList.appendChild(row);
+          });
+        }
+
+        studentsSection.style.display = 'block';
+        window.scrollTo({ top: studentsSection.offsetTop, behavior: 'smooth' });
+
+      } catch (err) {
+        console.error('Error loading students:', err);
+        studentsList.innerHTML = "<p style='color: red;'>Could not load students.json</p>";
+      }
+    }
+
+    function submitAttendance(event) {
+      event.preventDefault();
+      const radios = document.querySelectorAll('.attendance-options input[type="radio"]:checked');
+
+      if (radios.length === 0) {
+        alert("Please mark attendance for at least one student.");
+        return;
+      }
+
+      const attendanceData = Array.from(radios).map(radio => ({
+        studentId: radio.name,
+        status: radio.value
+      }));
+
+      console.log("Attendance Submitted:", attendanceData);
+      alert("Attendance submitted successfully!");
+    }
+  </script>
+</body>
+</html>

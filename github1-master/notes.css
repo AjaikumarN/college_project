@@ -1,0 +1,168 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background-color: #e6f2ff; /* light blue */
+  overflow-x: hidden;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  color: #0d1b4c; /* dark blue */
+}
+body {
+  background: #ebf5ff; /* soft light blue */
+  color: #0d1b4c;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+.notes-header {
+  background: #0d1b4c; /* dark blue */
+  color: #fff;
+  display: flex;
+  align-items: center;
+  padding: 18px 16px 10px 12px;
+}
+.back-arrow {
+  font-size: 2rem;
+  cursor: pointer;
+  margin-right: 10px;
+}
+.notes-title {
+  font-size: 1.3rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+  flex: 1;
+}
+.notes-main {
+  max-width: 700px;
+  margin: 32px auto 0 auto;
+  padding: 0 12px 30px 12px;
+}
+.notes-profile {
+  display: flex;
+  align-items: center;
+  background: linear-gradient(90deg, #d6eaff 70%, #ebf5ff 100%);
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(13, 27, 76, 0.07);
+  padding: 18px 18px 18px 19px;
+  margin-bottom: 20px;
+}
+.notes-photo {
+  width: 90px;
+  height: 90px;
+  border-radius: 9px;
+  object-fit: cover;
+  background: #c9d6e3;
+  margin-right: 19px;
+  border: 3px solid #0d1b4c;
+}
+.notes-student-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.notes-student-name {
+  font-size: 1.13rem;
+  font-weight: bold;
+  color: #0d1b4c;
+  margin-bottom: 6px;
+}
+.notes-student-id {
+  font-size: 1.01rem;
+  color: #27496d;
+  margin-bottom: 3px;
+  font-weight: 600;
+}
+.notes-student-course {
+  font-size: 1rem;
+  color: #3b5c88;
+}
+.notes-list-section {
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(13, 27, 76, 0.07);
+  padding: 24px 10px 20px 10px;
+}
+.section-title {
+  background: linear-gradient(90deg, #d9ebff 65%, #ebf5ff 100%);
+  color: #0d1b4c;
+  font-weight: 600;
+  padding: 10px 16px 10px 18px;
+  font-size: 1.03rem;
+  letter-spacing: 0.5px;
+  margin-bottom: 13px;
+  border-radius: 7px;
+}
+.notes-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.notes-list li {
+  padding: 12px 0;
+  border-bottom: 1.5px solid #cce0f5;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.notes-list li:last-child {
+  border-bottom: none;
+}
+.notes-course {
+  font-weight: 600;
+  color: #0d1b4c;
+}
+.download-link {
+  background: #1f4e79; /* mid dark blue */
+  color: #fff;
+  padding: 6px 18px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1em;
+  transition: background 0.14s;
+}
+.download-link:hover {
+  background: #163e68;
+}
+.footer-bar {
+  background: #0d1b4c;
+  color: #fff;
+  text-align: center;
+  font-size: 1.02rem;
+  font-weight: 500;
+  padding: 15px 0 13px 0;
+  border-radius: 18px 18px 0 0;
+  letter-spacing: 1px;
+  margin: 0;
+  position: fixed;
+  width: 100vw;
+  left: 0;
+  bottom: 0;
+}
+@media (max-width: 600px) {
+  .notes-main {
+    max-width: 99vw;
+    padding: 0 2vw 40px 2vw;
+  }
+  .notes-profile {
+    flex-direction: column;
+    align-items: center;
+    padding: 12px 4vw;
+  }
+  .notes-photo {
+    margin-bottom: 13px;
+    margin-right: 0;
+  }
+  .notes-list li {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+  }
+}
+.back-btn {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 2rem;
+  cursor: pointer;
+}

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>My Subjects | Student Portal</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="courses.css" />
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+<header class="courses-header" style="text-align: center;">
+  <button class="back-btn" onclick="window.history.back()" aria-label="Go Back">&#8592;</button>
+  <span class="courses-title">Choose Subjects</span>
+</header>
+
+<main class="courses-main">
+  <section class="courses-section">
+    <table class="courses-table">
+      <thead>
+      <tr>
+        <th>Select</th>
+        <th>Subject</th>
+        <th>Faculty</th>
+      </tr>
+      </thead>
+      <tbody id="subjectList">
+      <tr><td colspan="3">Loading subjects...</td></tr>
+      </tbody>
+    </table>
+
+    <div id="selectionStatus" class="status-msg"></div>
+    <button id="generateBtn" class="btn-generate" disabled>Generate Timetable</button>
+  </section>
+</main>
+
+<footer>
+  <div class="footer-bar">
+    2025 © <strong>KARUNYA COLLEGE</strong>
+  </div>
+</footer>
+
+<script>
+  const selectedSubjects = new Set();
+  const tbody = document.getElementById('subjectList');
+  const status = document.getElementById('selectionStatus');
+  const generateBtn = document.getElementById('generateBtn');
+  const userId = localStorage.getItem("userId");
+
+  function updateUI() {
+    status.textContent = `${selectedSubjects.size} of 5 subjects selected.`;
+    generateBtn.disabled = selectedSubjects.size !== 5;
+  }
+
+  function handleSelectionChange(code, checkbox) {
+    if (checkbox.checked) {
+      if (selectedSubjects.size < 5) {
+        selectedSubjects.add(code);
+      } else {
+        checkbox.checked = false;
+        alert("You can only select 5 subjects.");
+      }
+    } else {
+      selectedSubjects.delete(code);
+    }
+    updateUI();
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    axios.get('http://localhost:8080/api/courses')
+      .then(response => {
+        const courses = response.data;
+        tbody.innerHTML = '';
+
+        courses.forEach(subject => {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td><input type="checkbox" onchange="handleSelectionChange('${subject.code}', this)" /></td>
+            <td>${subject.title}</td>
+            <td>${subject.faculty}</td>
+          `;
+          tbody.appendChild(tr);
+        });
+      })
+      .catch(error => {
+        console.error('Error loading courses:', error);
+        tbody.innerHTML = '<tr><td colspan="3">Failed to load subjects.</td></tr>';
+      });
+  });
+
+  generateBtn.addEventListener('click', () => {
+    const subjectCodes = Array.from(selectedSubjects);
+
+    if (subjectCodes.length !== 5) {
+      alert("You must select exactly 5 subjects.");
+      return;
+    }
+
+    localStorage.setItem("selectedSubjects", JSON.stringify(subjectCodes));
+
+    axios.post(`http://localhost:8080/api/users/${userId}/subjects`, subjectCodes, {
+      headers: { 'Content-Type': 'application/json' }
+    }).then(() => {
+      alert("✅ Subjects saved successfully!");
+      window.location.href = "student.html";
+    }).catch(err => {
+      alert("❌ Failed to save subjects.");
+      console.error(err);
+    });
+  });
+
+  window.handleSelectionChange = handleSelectionChange;
+</script>
+</body>
+</html>

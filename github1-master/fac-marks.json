@@ -1,0 +1,15 @@
+{
+  "ii-bsc-cs": [
+    { "id": "stu1", "name": "Emma Watson M" },
+    { "id": "stu2", "name": "Ken" },
+    { "id": "stu3", "name": "Taylor S" }
+  ],
+  "i-bsc-cs": [
+    { "id": "stu4", "name": "Ren J" },
+    { "id": "stu5", "name": "Camila K" }
+  ],
+  "iii-bsc-cs": [
+    { "id": "stu6", "name": "John D" },
+    { "id": "stu7", "name": "Selena L" }
+  ]
+}

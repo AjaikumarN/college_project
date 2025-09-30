@@ -1,0 +1,12 @@
+{
+  "name": "Dr. M. Preethi",
+  "facultyId": "FAC1234",
+  "department": "Computer Science",
+  "gender": "FEMALE",
+  "dob": "11-NOV-1988",
+  "email": "preethiindira12@gmail.com",
+  "phone": "9677769121",
+  "qualification": "M.Sc., M.Phil., Ph.D",
+  "experience": "8 Years",
+  "photo": "assets/Dr. M. PREETHIi.jpg"
+}

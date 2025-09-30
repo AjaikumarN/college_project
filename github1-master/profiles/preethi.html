@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Faculty Profile - Dr. M. Preethi</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        :root {
+            --beige: #f5f5dc;
+            --maroon: #800000;
+            --light-maroon: #a05252;
+            --border-radius: 12px;
+        }
+
+        body {
+            background: var(--beige);
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .profile-container {
+            background: #fff;
+            max-width: 800px;
+            margin: 40px auto;
+            border-radius: var(--border-radius);
+            box-shadow: 0 8px 24px rgba(128, 0, 0, 0.12);
+            padding: 32px;
+            border-top: 10px solid var(--maroon);
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .profile-photo {
+            width: 160px;
+            height: 190px;
+            object-fit: cover;
+            border-radius: var(--border-radius);
+            border: 3px solid var(--maroon);
+            background: var(--beige);
+            box-shadow: 0 4px 12px rgba(128,0,0,0.08);
+        }
+
+        .profile-basic {
+            flex: 1;
+        }
+
+        .profile-basic h2 {
+            color: var(--maroon);
+            margin: 0 0 8px;
+        }
+
+        .profile-basic p {
+            margin: 0 0 6px;
+            color: #333;
+            font-weight: 500;
+        }
+
+        section {
+            margin-top: 28px;
+        }
+
+        section h3 {
+            color: var(--maroon);
+            border-bottom: 2px solid var(--light-maroon);
+            display: inline-block;
+            padding-bottom: 3px;
+            margin-bottom: 12px;
+            font-size: 1.2em;
+        }
+
+        .personal-details, .academic-identity {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px 32px;
+            font-size: 1em;
+        }
+
+        .personal-details div, .academic-identity div {
+            margin-bottom: 6px;
+        }
+
+        .qualifications-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 8px;
+        }
+
+        .qualifications-table th, .qualifications-table td {
+            border: 1px solid var(--beige);
+            padding: 7px 11px;
+            text-align: left;
+        }
+
+        .qualifications-table th {
+            background: var(--maroon);
+            color: #fff;
+        }
+
+        .qualifications-table tr:nth-child(even) {
+            background: #f9ecec;
+        }
+
+        .links a {
+            color: var(--maroon);
+            text-decoration: underline;
+            margin-right: 16px;
+            word-break: break-all;
+        }
+
+        .teaching-experience-table {
+            width: 100%;
+            max-width: 400px;
+            border-collapse: collapse;
+            margin-top: 8px;
+        }
+
+        .teaching-experience-table th,
+        .teaching-experience-table td {
+            padding: 6px 10px;
+            border: 1px solid var(--beige);
+        }
+
+        .teaching-experience-table th {
+            background: var(--light-maroon);
+            color: #fff;
+        }
+
+        @media (max-width: 700px) {
+            .profile-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+            .personal-details, .academic-identity {
+                grid-template-columns: 1fr;
+            }
+        }
+        html, body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background-color: #f4f4d4;
+  overflow-x: hidden;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  color: #3d1c13;
+}
+    </style>
+</head>
+<body>
+    <div class="profile-container">
+        <div class="profile-header">
+            <img class="profile-photo" src="../assets/Dr. M. PREETHIi.jpg" alt="Dr. M. Preethi Photo">
+            <div class="profile-basic">
+                <h2>Dr. M. Preethi</h2>
+                <p><strong>Designation:</strong> Assistant Professor</p>
+                <p><strong>Department:</strong> Computer Science</p>
+                <p><strong>Address:</strong> 17, Mathan Kovil Street, Alwarthirunagari-628612</p>
+            </div>
+        </div>
+
+        <section>
+            <h3>Personal Details</h3>
+            <div class="personal-details">
+                <div>Date of Birth: <b>11.11.1988</b></div>
+                <div>Community: <b>MBC</b></div>
+                <div>Qualification: <b>M.Sc., M.Phil., Ph.D</b></div>
+                <div>Religion: <b>Hindu</b></div>
+                <div>Designation: <b>Assistant Professor</b></div>
+                <div>Nationality: <b>Indian</b></div>
+                <div>Department: <b>Computer Science</b></div>
+                <div>Mobile: <b>9677769121</b></div>
+                <div>Email ID: <b>preethiindira12@gmail.com</b></div>
+            </div>
+        </section>
+
+        <section>
+            <h3>Academic Qualifications</h3>
+            <table class="qualifications-table">
+                <tr>
+                    <th>Degree</th>
+                    <th>Specialization</th>
+                    <th>College</th>
+                    <th>University</th>
+                    <th>Year of Passing</th>
+                </tr>
+                <tr>
+                    <td>SSLC</td>
+                    <td>-</td>
+                    <td>Hindu Higher Secondary School, Alwarthirunagari</td>
+                    <td>State Board of Tamilnadu</td>
+                    <td>2007</td>
+                </tr>
+                <tr>
+                    <td>HSC</td>
+                    <td>Maths Biology</td>
+                    <td>Hindu Higher Secondary School, Alwarthirunagari</td>
+                    <td>State Board of Tamilnadu</td>
+                    <td>2007-2009</td>
+                </tr>
+                <tr>
+                    <td>B.Sc</td>
+                    <td>Information Technology</td>
+                    <td>Sadakathullah Appa College, Tirunelveli</td>
+                    <td>Manonmaniam Sundaranar University</td>
+                    <td>2006-2009</td>
+                </tr>
+                <tr>
+                    <td>M.Sc</td>
+                    <td>Computer Science</td>
+                    <td>Sadakathullah Appa College, Tirunelveli</td>
+                    <td>Manonmaniam Sundaranar University</td>
+                    <td>2009-2011</td>
+                </tr>
+                <tr>
+                    <td>M.Phil</td>
+                    <td>Computer Science</td>
+                    <td>Manonmaniam Sundaranar University</td>
+                    <td>Manonmaniam Sundaranar University</td>
+                    <td>2012-2013</td>
+                </tr>
+                <tr>
+                    <td>Ph.D</td>
+                    <td>Computer Science</td>
+                    <td>S.T. Hindu College, Nagercoil</td>
+                    <td>Manonmaniam Sundaranar University</td>
+                    <td>2023</td>
+                </tr>
+            </table>
+        </section>
+
+        <section>
+            <h3>Academic Identity</h3>
+            <div class="academic-identity">
+                <div><strong>VIDWAN ID:</strong> <a href="https://vidwan.inflibnet.ac.in/profile/394560/Mzk0NTYw" target="_blank">View Profile</a></div>
+                <div><strong>ORCID ID:</strong> <a href="https://orcid.org/0009-0004-5686-7161" target="_blank">0009-0004-5686-7161</a></div>
+                <div><strong>SCOPUS ID:</strong> <a href="https://www.scopus.com/authid/detail.url?authorId=56195409" target="_blank">56195409</a></div>
+                <div><strong>RESEARCHER ID / PUBLONS ID:</strong> rid85113</div>
+                <div class="links">
+                    <strong>Google Scholar:</strong>
+                    <!-- Add the Google Scholar link if available -->
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h3>Teaching Experience</h3>
+            <table class="teaching-experience-table">
+                <tr>
+                    <th>Level</th>
+                    <th>Experience</th>
+                </tr>
+                <tr>
+                    <td>UG</td>
+                    <td>8 years</td>
+                </tr>
+                <tr>
+                    <td>PG</td>
+                    <td>1 year</td>
+                </tr>
+                <tr>
+                    <td>M.Phil.</td>
+                    <td>Nil</td>
+                </tr>
+            </table>
+            <div style="margin-top:10px;">
+                <strong>Date of Appointment:</strong> 19.06.2024<br>
+                <strong>Date of Retirement:</strong> 1.06.2029<br>
+            </div>
+            <div style="margin-top:10px;">
+                <strong>Research Guided:</strong> M.Phil: Nil, Ph.D: Nil Guided, Ph.D Scholar: Nil
+            </div>
+        </section>
+    </div>
+</body>
+</html>

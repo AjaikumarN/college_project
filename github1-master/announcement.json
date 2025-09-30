@@ -1,0 +1,26 @@
+{
+  "student": {
+    "name": "VARSHA G",
+    "id": "23UCS531",
+    "course": "II-Year-B.Sc COMPUTER SCIENCE",
+    "photo": "assets/hannah.jpg"
+  },
+  "announcements": [
+    {
+      "date": "May 25, 2025",
+      "text": "Semester exams start from June 3rd. Hall tickets will be issued soon."
+    },
+    {
+      "date": "May 20, 2025",
+      "text": "Workshop on AI Tools for B.Sc students on May 28th in Lab 2."
+    },
+    {
+      "date": "May 16, 2025",
+      "text": "Last date for fee payment for next semester: May 30th."
+    },
+    {
+      "date": "May 8, 2025",
+      "text": "Intercollegiate coding contest registration closes May 15th."
+    }
+  ]
+}

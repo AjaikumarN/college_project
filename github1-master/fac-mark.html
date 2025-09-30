@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Enter Marks | Faculty</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="fac-mark.css" />
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+  <div class="container">
+    <header class="dashboard-header">
+      <button class="back-btn" onclick="window.history.back()" aria-label="Go Back">&#8592;</button>
+      <span class="header-title">Enter Marks</span>
+      <div class="header-right">
+        <button class="hamburger" aria-label="Open menu">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </button>
+      </div>
+    </header>
+
+    <main>
+      <section class="marks-section">
+        <div class="section-title">SELECT CLASS & SUBJECT</div>
+        <form class="marks-form" id="select-form">
+          <div class="form-row">
+            <label for="class-select">Class</label>
+            <select id="class-select" required>
+              <option value="">-- Select Class --</option>
+              <option value="ii-bsc-cs">II-B.Sc COMPUTER SCIENCE</option>
+              <option value="i-bsc-cs">I-B.Sc COMPUTER SCIENCE</option>
+              <option value="iii-bsc-cs">III-B.Sc COMPUTER SCIENCE</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <label for="subject-select">Subject</label>
+            <select id="subject-select" required>
+              <option value="">-- Select Subject --</option>
+              <option value="dbms">Database Management Systems</option>
+              <option value="python-lab">Python Programming Lab</option>
+              <option value="ds">Data Structures</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <label for="assessment-type">Assessment Type</label>
+            <select id="assessment-type" required>
+              <option value="">-- Select Assessment --</option>
+              <option value="internal1">Internal 1</option>
+              <option value="internal2">Internal 2</option>
+              <option value="semester">Semester Exam</option>
+            </select>
+          </div>
+          <button type="submit" class="load-students-btn">Load Students</button>
+        </form>
+      </section>
+
+      <section class="marks-section" id="marks-entry-section" style="display:none;">
+        <div class="section-title">ENTER MARKS</div>
+        <form class="marks-entry-form" id="marks-form">
+          <div class="students-list">
+            <!-- Student rows will be dynamically inserted here -->
+          </div>
+          <button type="submit" class="submit-btn">Submit Marks</button>
+        </form>
+      </section>
+    </main>
+
+    <footer>
+      <div class="footer-bar">
+        2025 © <strong>ST. XAVIER'S COLLEGE (AUTONOMOUS)</strong>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    let studentsData = {};
+
+    // Fetch students.json using Axios
+    async function fetchStudentsData() {
+      try {
+        const response = await axios.get('fac-marks.json');
+        studentsData = response.data;
+      } catch (error) {
+        alert('Error loading student data: ' + error);
+      }
+    }
+
+    // Load students into form based on selected class
+    function loadStudents(selectedClass) {
+      const studentsListDiv = document.querySelector('.students-list');
+      studentsListDiv.innerHTML = '';
+
+      const students = studentsData[selectedClass] || [];
+
+      if (students.length === 0) {
+        studentsListDiv.innerHTML = '<p>No students found for selected class.</p>';
+        return;
+      }
+
+      students.forEach(student => {
+        const div = document.createElement('div');
+        div.className = 'student-row';
+        div.dataset.studentId = student.id;
+
+        div.innerHTML = `
+          <span class="student-name">${student.name}</span>
+          <input type="number" min="0" max="100" placeholder="Marks" required>
+        `;
+
+        studentsListDiv.appendChild(div);
+      });
+    }
+
+    // Wait for DOM to load before setting up event listeners and fetching data
+    document.addEventListener('DOMContentLoaded', async () => {
+      await fetchStudentsData();
+
+      // Handle form submission to show marks entry form
+      document.getElementById('select-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const selectedClass = document.getElementById('class-select').value;
+        const selectedSubject = document.getElementById('subject-select').value;
+        const assessmentType = document.getElementById('assessment-type').value;
+
+        if (!selectedClass || !selectedSubject || !assessmentType) {
+          alert('Please select Class, Subject and Assessment Type.');
+          return;
+        }
+
+        loadStudents(selectedClass);
+
+        // Show marks entry section
+        document.getElementById('marks-entry-section').style.display = 'block';
+
+        // Scroll smoothly to marks section
+        window.scrollTo({
+          top: document.getElementById('marks-entry-section').offsetTop,
+          behavior: 'smooth'
+        });
+      });
+
+      // Handle marks submission
+      document.getElementById('marks-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const selectedClass = document.getElementById('class-select').value;
+        const selectedSubject = document.getElementById('subject-select').value;
+        const assessmentType = document.getElementById('assessment-type').value;
+
+        const studentRows = document.querySelectorAll('.student-row');
+        let allValid = true;
+        const marksData = [];
+
+        studentRows.forEach(row => {
+          const studentId = row.dataset.studentId;
+          const studentName = row.querySelector('.student-name').textContent;
+          const input = row.querySelector('input[type="number"]');
+          const value = input.value.trim();
+
+          if (value === "" || isNaN(value) || Number(value) < 0 || Number(value) > 100) {
+            allValid = false;
+          }
+
+          marksData.push({
+            studentId,
+            studentName,
+            marks: Number(value)
+          });
+        });
+
+        if (!allValid) {
+          alert('Please enter valid marks (0-100) for all students.');
+          return false;
+        }
+
+        const payload = {
+          class: selectedClass,
+          subject: selectedSubject,
+          assessmentType: assessmentType,
+          marks: marksData
+        };
+
+        console.log('Marks JSON payload:', payload);
+        alert('Marks submitted successfully! Check console for JSON data.');
+
+        // TODO: Send payload to your backend here using axios.post()
+
+        return false;
+      });
+    });
+  </script>
+</body>
+</html>

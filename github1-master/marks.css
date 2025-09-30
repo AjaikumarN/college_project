@@ -1,0 +1,125 @@
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background: #e6f2ff; /* light blue background */
+  color: #0d1b4c; /* dark blue text */
+}
+
+.marks-header {
+  background: #0d1b4c; /* dark blue header */
+  color: #fff;
+  display: flex;
+  align-items: center;
+  padding: 18px 16px 10px 12px;
+}
+
+.back-btn {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+.marks-title {
+  font-size: 1.3rem;
+  font-weight: bold;
+  flex: 1;
+  text-align: center;
+}
+
+.marks-main {
+  max-width: 700px;
+  margin: 32px auto;
+  padding: 0 12px 30px 12px;
+}
+
+.marks-profile {
+  display: flex;
+  align-items: center;
+  background: linear-gradient(90deg, #d6eaff 70%, #ebf5ff 100%); /* light blue gradient */
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 51, 102, 0.1); /* blue shadow */
+  padding: 18px;
+  margin-bottom: 20px;
+}
+
+.marks-photo {
+  width: 90px;
+  height: 90px;
+  border-radius: 9px;
+  object-fit: cover;
+  margin-right: 19px;
+  border: 3px solid #0d1b4c; /* dark blue border */
+}
+
+.marks-student-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.marks-student-name {
+  font-size: 1.13rem;
+  font-weight: bold;
+  color: #0d1b4c;
+  margin-bottom: 6px;
+}
+
+.marks-student-id, .marks-student-course {
+  font-size: 1rem;
+  color: #27496d;
+}
+
+.marks-table-section {
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(13, 27, 76, 0.08); /* light dark blue shadow */
+  padding: 24px 10px;
+}
+
+.section-title {
+  background: linear-gradient(90deg, #d9ebff 65%, #ebf5ff 100%);
+  color: #0d1b4c;
+  font-weight: 600;
+  padding: 10px 18px;
+  border-radius: 7px;
+  margin-bottom: 13px;
+  font-size: 1.03rem;
+}
+
+.marks-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #f0f8ff;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.marks-table th, .marks-table td {
+  padding: 12px 10px;
+  text-align: left;
+  border-bottom: 1.5px solid #cce0f5;
+}
+
+.marks-table th {
+  background: #d9ebff;
+  color: #0d1b4c;
+}
+
+.marks-table td {
+  color: #1b305e;
+}
+
+.footer-bar {
+  background: #0d1b4c;
+  color: #fff;
+  text-align: center;
+  font-size: 1.02rem;
+  font-weight: 500;
+  padding: 15px 0;
+  border-radius: 18px 18px 0 0;
+  width: 100vw;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+}

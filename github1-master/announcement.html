@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Announcements | Student Portal</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="announcement.css" />
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+<header class="announcement-header" style="text-align: center;">
+  <button class="back-btn" onclick="window.history.back()" aria-label="Go Back">&#8592;</button>
+  <span class="announcement-title">Announcements</span>
+</header>
+
+<main class="announcement-main">
+  <section class="announcement-profile">
+    <img src="assets/default.jpg" alt="Student Photo" class="announcement-photo" id="student-photo" />
+    <div class="announcement-student-info">
+      <div class="announcement-student-name" id="student-name">Loading...</div>
+      <div class="announcement-student-id" id="student-id"></div>
+      <div class="announcement-student-course" id="student-course"></div>
+    </div>
+  </section>
+
+  <section class="announcement-list-section">
+    <div class="section-title">Latest Announcements</div>
+    <ul class="announcement-list" id="announcement-list">
+      <li>Loading announcements...</li>
+    </ul>
+  </section>
+</main>
+
+<footer>
+  <div class="footer-bar">
+    2025 © <strong>KARUNYA COLLEGE</strong>
+  </div>
+</footer>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const userName = localStorage.getItem('userName');
+    const userId = localStorage.getItem('userId');
+    const userCourse = localStorage.getItem('userCourse');
+
+    if (!userId || !userName) {
+      alert('Please login again.');
+      window.location.href = 'login.html';
+      return;
+    }
+
+    // Set student info
+    document.getElementById('student-name').textContent = userName;
+    document.getElementById('student-id').textContent = "ID: " + userId;
+    document.getElementById('student-course').textContent = userCourse;
+    document.getElementById('student-photo').src = 'assets/default.jpg';
+
+    // Load announcements
+    fetch('announcement.json')
+      .then(res => res.json())
+      .then(data => {
+        const list = document.getElementById('announcement-list');
+        list.innerHTML = '';
+
+        data.announcements.forEach(item => {
+          const li = document.createElement('li');
+          li.innerHTML = `
+            <span class="announcement-date">${item.date}</span><br>
+            <span class="announcement-text">${item.text}</span>
+          `;
+          list.appendChild(li);
+        });
+      })
+      .catch(err => {
+        console.error('Error loading announcements:', err);
+        document.getElementById('announcement-list').innerHTML = '<li>Failed to load announcements.</li>';
+      });
+  });
+</script>
+</body>
+</html>

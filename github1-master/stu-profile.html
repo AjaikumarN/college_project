@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Profile | Student Portal</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="stu-profile.css">
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+<header class="profile-header" style="text-align: center;">
+  <button class="back-btn" onclick="window.history.back()">&#8592;</button>
+  <span class="profile-title">PROFILE</span>
+</header>
+
+<div class="profile-bg-banner">
+  <img src="assets/ban.webp" class="profile-bg-img">
+  <div class="profile-photo-container">
+    <img src="assets/default.jpg" class="profile-photo" id="profilePhoto"/>
+  </div>
+</div>
+
+<main class="profile-main">
+  <section class="personal-info-section">
+    <div class="section-title">PERSONAL INFORMATION</div>
+    <div class="info-list">
+      <div class="info-row"><span class="info-label">Name</span><span class="info-value" id="name">Loading...</span></div>
+      <div class="info-row"><span class="info-label">Reg. No</span><span class="info-value" id="regNo"></span></div>
+      <div class="info-row"><span class="info-label">Degree</span><span class="info-value" id="degree"></span></div>
+      <div class="info-row"><span class="info-label">Year</span><span class="info-value" id="year"></span></div>
+      <div class="info-row"><span class="info-label">Email</span><span class="info-value" id="email"></span></div>
+      <div class="info-row"><span class="info-label">Phone No</span><span class="info-value" id="phone"></span></div>
+      <div class="info-row"><span class="info-label">Gender</span><span class="info-value" id="gender"></span></div>
+      <div class="info-row"><span class="info-label">DOB</span><span class="info-value" id="dob"></span></div>
+    </div>
+  </section>
+</main>
+
+<footer><div class="footer-bar">2025 © <strong>KARUNYA COLLEGE</strong></div></footer>
+
+<script>
+  async function loadProfile() {
+    const userId = localStorage.getItem("userId");
+
+    if (!userId) {
+      alert("Not logged in!");
+      window.location.href = "login.html";
+      return;
+    }
+
+    try {
+      const res = await axios.get(`http://localhost:8080/api/users/profile/${userId}`);
+      const user = res.data;
+
+      document.getElementById('name').textContent = user.name;
+      document.getElementById('regNo').textContent = "ID: " + user.id;
+      document.getElementById('degree').textContent = user.course;
+      document.getElementById('year').textContent = user.year;
+      document.getElementById('email').textContent = user.email;
+      document.getElementById('phone').textContent = user.phone || "N/A";
+      document.getElementById('gender').textContent = user.gender || "N/A";
+      document.getElementById('dob').textContent = user.dob || "N/A";
+      document.getElementById('profilePhoto').src = "assets/icon.png"; // replace with photo URL if stored
+    } catch (err) {
+      console.error("Error loading profile:", err);
+      alert("Failed to load profile data.");
+    }
+  }
+
+  window.addEventListener('DOMContentLoaded', loadProfile);
+</script>
+</body>
+</html>

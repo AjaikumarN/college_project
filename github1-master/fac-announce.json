@@ -1,0 +1,16 @@
+[
+  {
+    "class": "ii-bsc-cs",
+    "subject": "dbms",
+    "title": "DBMS Internal Exam",
+    "message": "Internal exam will be held on June 10, 2025. Prepare all units.",
+    "date": "2025-05-29"
+  },
+  {
+    "class": "i-bsc-cs",
+    "subject": "python-lab",
+    "title": "Lab Submission",
+    "message": "Submit your Python Programming Lab record by Friday.",
+    "date": "2025-05-28"
+  }
+]

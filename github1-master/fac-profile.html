@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Faculty Profile</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="fac-profile.css" />
+</head>
+<body>
+  <header class="dashboard-header">
+    <button class="back-btn" onclick="window.history.back()" aria-label="Go Back">&#8592;</button>
+    <span class="header-title">Profile</span>
+  </header>
+
+  <main>
+    <div class="faculty-photo-container">
+      <img src="/assets/icon.png" alt="Faculty Photo" class="faculty-photo" id="facultyPhoto" />
+    </div>
+    <section class="profile-section">
+      <div class="section-title">PERSONAL INFORMATION</div>
+      <div class="profile-info-grid">
+        <div class="label">Name</div>
+        <div class="value" id="facultyName">Loading...</div>
+
+        <div class="label">Faculty ID</div>
+        <div class="value" id="facultyId">Loading...</div>
+
+        
+        <div class="label">Gender</div>
+        <div class="value" id="facultyGender">Loading...</div>
+
+        <div class="label">DOB</div>
+        <div class="value" id="facultyDob">Loading...</div>
+
+        <div class="label">Email</div>
+        <div class="value" id="facultyEmail">Loading...</div>
+
+        <div class="label">Phone</div>
+        <div class="value" id="facultyPhone">Loading...</div>
+
+        <div class="label">Qualification</div>
+        <div class="value" id="facultyQual">Loading...</div>
+
+        <div class="label">Experience</div>
+        <div class="value" id="facultyExp">Loading...</div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-bar">
+      2025 © <strong>ST. XAVIER'S COLLEGE (AUTONOMOUS)</strong>
+    </div>
+  </footer>
+
+  <!-- Axios CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script>
+    async function loadFacultyProfile() {
+  try {
+     
+    const response = await axios.get('http://localhost:4000/api/faculty');
+    const data = response.data[1];
+          if (!data) throw new Error('No student found');
+
+      
+    
+    document.getElementById('facultyName').textContent = data.name;
+    document.getElementById('facultyId').textContent = data.faculty_code;
+    
+    document.getElementById('facultyGender').textContent = data.gender;
+    document.getElementById('facultyDob').textContent = new Date(data.dob).toLocaleDateString();
+    document.getElementById('facultyEmail').textContent = data.email;
+    document.getElementById('facultyPhone').textContent = data.phone;
+    document.getElementById('facultyQual').textContent = data.qualification;
+    document.getElementById('facultyExp').textContent = data.experience_years;
+  } catch (error) {
+    console.error('Failed to load faculty profile:', error);
+  }
+}
+
+
+    loadFacultyProfile();
+  </script>
+</body>
+</html>

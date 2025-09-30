@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Faculty Profile - Dr. J. Rexy</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        :root {
+            --beige: #f5f5dc;
+            --maroon: #800000;
+            --light-maroon: #a05252;
+            --border-radius: 12px;
+        }
+
+        body {
+            background: var(--beige);
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .profile-container {
+            background: #fff;
+            max-width: 800px;
+            margin: 40px auto;
+            border-radius: var(--border-radius);
+            box-shadow: 0 8px 24px rgba(128, 0, 0, 0.12);
+            padding: 32px;
+            border-top: 10px solid var(--maroon);
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .profile-photo {
+            width: 160px;
+            height: 190px;
+            object-fit: cover;
+            border-radius: var(--border-radius);
+            border: 3px solid var(--maroon);
+            background: var(--beige);
+            box-shadow: 0 4px 12px rgba(128,0,0,0.08);
+        }
+
+        .profile-basic {
+            flex: 1;
+        }
+
+        .profile-basic h2 {
+            color: var(--maroon);
+            margin: 0 0 8px;
+        }
+
+        .profile-basic p {
+            margin: 0 0 6px;
+            color: #333;
+            font-weight: 500;
+        }
+
+        section {
+            margin-top: 28px;
+        }
+
+        section h3 {
+            color: var(--maroon);
+            border-bottom: 2px solid var(--light-maroon);
+            display: inline-block;
+            padding-bottom: 3px;
+            margin-bottom: 12px;
+            font-size: 1.2em;
+        }
+
+        .personal-details, .academic-identity {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px 32px;
+            font-size: 1em;
+        }
+
+        .personal-details div, .academic-identity div {
+            margin-bottom: 6px;
+        }
+
+        .qualifications-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 8px;
+        }
+
+        .qualifications-table th, .qualifications-table td {
+            border: 1px solid var(--beige);
+            padding: 7px 11px;
+            text-align: left;
+        }
+
+        .qualifications-table th {
+            background: var(--maroon);
+            color: #fff;
+        }
+
+        .qualifications-table tr:nth-child(even) {
+            background: #f9ecec;
+        }
+
+        .links a {
+            color: var(--maroon);
+            text-decoration: underline;
+            margin-right: 16px;
+        }
+
+        .teaching-experience-table {
+            width: 100%;
+            max-width: 400px;
+            border-collapse: collapse;
+            margin-top: 8px;
+        }
+
+        .teaching-experience-table th,
+        .teaching-experience-table td {
+            padding: 6px 10px;
+            border: 1px solid var(--beige);
+        }
+
+        .teaching-experience-table th {
+            background: var(--light-maroon);
+            color: #fff;
+        }
+
+        @media (max-width: 700px) {
+            .profile-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+            .personal-details, .academic-identity {
+                grid-template-columns: 1fr;
+            }
+        }
+        html, body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background-color: #f4f4d4;
+  overflow-x: hidden;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  color: #3d1c13;
+}
+    </style>
+</head>
+<body>
+    <div class="profile-container">
+        <div class="profile-header">
+            <img class="profile-photo" src="../assets/Computer Science - Dr. Rexy JeYAKUMAR.jpg" alt="Dr. J. Rexy Photo">
+            <div class="profile-basic">
+                <h2>Dr. J. Rexy</h2>
+                <p><strong>Designation:</strong> Coordinator, Assistant Professor</p>
+                <p><strong>Department:</strong> Computer Science [Shift II]</p>
+                <p><strong>Address:</strong> SF M 36 Lucky Colony, Anbunagar, Perumalpuram, TVL-627007</p>
+            </div>
+        </div>
+
+        <section>
+            <h3>Personal Details</h3>
+            <div class="personal-details">
+                <div>Date of Birth: <b>21-12-1982</b></div>
+                <div>Community: <b>BC</b></div>
+                <div>Qualification: <b>M.Sc., M.Phil., M.B.A., M.A., Ph.D., SET, NET</b></div>
+                <div>Religion: <b>Christian</b></div>
+                <div>Designation: <b>Coordinator, Assistant Professor</b></div>
+                <div>Nationality: <b>Indian</b></div>
+                <div>Department: <b>Computer Science [Shift II]</b></div>
+                <div>Mobile: <b>9894527603</b></div>
+                <div>Email ID: <b>profjrexy@gmail.com</b></div>
+            </div>
+        </section>
+
+        <section>
+            <h3>Academic Qualifications</h3>
+            <table class="qualifications-table">
+                <tr>
+                    <th>Degree</th>
+                    <th>Specialization</th>
+                    <th>College/University</th>
+                    <th>Percentage</th>
+                    <th>Year of Passing</th>
+                </tr>
+                <tr>
+                    <td>SSLC</td>
+                    <td>-</td>
+                    <td>Mary Sargent HSC</td>
+                    <td>78</td>
+                    <td>1998</td>
+                </tr>
+                <tr>
+                    <td>HSC</td>
+                    <td>Maths Biology</td>
+                    <td>Mary Sargent HSC</td>
+                    <td>67</td>
+                    <td>2000</td>
+                </tr>
+                <tr>
+                    <td>B.Sc.</td>
+                    <td>Computer Science</td>
+                    <td>APA College, MS University</td>
+                    <td>76</td>
+                    <td>2003</td>
+                </tr>
+                <tr>
+                    <td>M.Sc.</td>
+                    <td>Computer Science</td>
+                    <td>GVN College, MS University</td>
+                    <td>82</td>
+                    <td>2005</td>
+                </tr>
+                <tr>
+                    <td>M.Phil.</td>
+                    <td>Computer Science</td>
+                    <td>Bharathidasan University</td>
+                    <td>79</td>
+                    <td>2006</td>
+                </tr>
+                <tr>
+                    <td>M.A.</td>
+                    <td>Public Administration</td>
+                    <td>Tamil Nadu Open University</td>
+                    <td>80</td>
+                    <td>2010</td>
+                </tr>
+                <tr>
+                    <td>M.B.A.</td>
+                    <td>Information System</td>
+                    <td>Bharathiar University</td>
+                    <td>62</td>
+                    <td>2015</td>
+                </tr>
+                <tr>
+                    <td>TNSET</td>
+                    <td>Computer Science and Application</td>
+                    <td>Mother Teresa Women’s University</td>
+                    <td>-</td>
+                    <td>2016</td>
+                </tr>
+                <tr>
+                    <td>NET</td>
+                    <td>Computer Science and Applications</td>
+                    <td>UGC</td>
+                    <td>-</td>
+                    <td>2019</td>
+                </tr>
+                <tr>
+                    <td>Ph.D.</td>
+                    <td>Computer Science</td>
+                    <td>MS University</td>
+                    <td>-</td>
+                    <td>2023</td>
+                </tr>
+            </table>
+        </section>
+
+        <section>
+            <h3>Academic Identity</h3>
+            <div class="academic-identity">
+                <div><strong>VIDWAN ID:</strong> 288167</div>
+                <div><strong>ORCID ID:</strong> 0000-0002-3978-5082</div>
+                <div><strong>SCOPUS ID:</strong></div>
+                <div><strong>RESEARCHER ID / PUBLONS ID:</strong> GON-7015-2022</div>
+                <div class="links">
+                    <strong>Google Scholar:</strong>
+                    <a href="https://scholar.google.com/citations?view_op=list_works&hl=en&user=4WUUS2oAAAAJ" target="_blank">View Profile</a>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h3>Teaching Experience</h3>
+            <table class="teaching-experience-table">
+                <tr>
+                    <th>Level</th>
+                    <th>Experience</th>
+                </tr>
+                <tr>
+                    <td>UG</td>
+                    <td>18 Years</td>
+                </tr>
+                <tr>
+                    <td>PG</td>
+                    <td>18 Years</td>
+                </tr>
+                <tr>
+                    <td>M.Phil.</td>
+                    <td>5 Years</td>
+                </tr>
+            </table>
+            <div style="margin-top:10px;">
+                <strong>Date of Appointment:</strong> 15-07-2005<br>
+            </div>
+            <div style="margin-top:10px;">
+                <strong>Research Guided:</strong> M.Phil: 4
+            </div>
+        </section>
+    </div>
+</body>
+</html>

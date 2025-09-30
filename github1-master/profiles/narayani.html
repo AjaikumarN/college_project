@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Faculty Profile - Dr. V. Narayani</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        :root {
+            --beige: #f5f5dc;
+            --maroon: #800000;
+            --light-maroon: #a05252;
+            --border-radius: 12px;
+        }
+
+        html, body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background-color: #f4f4d4;
+  overflow-x: hidden;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  color: #3d1c13;
+}
+        body {
+            background: var(--beige);
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .profile-container {
+            background: #fff;
+            max-width: 800px;
+            margin: 40px auto;
+            border-radius: var(--border-radius);
+            box-shadow: 0 8px 24px rgba(128, 0, 0, 0.12);
+            padding: 32px;
+            border-top: 10px solid var(--maroon);
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .profile-photo {
+            width: 160px;
+            height: 190px;
+            object-fit: cover;
+            border-radius: var(--border-radius);
+            border: 3px solid var(--maroon);
+            background: var(--beige);
+            box-shadow: 0 4px 12px rgba(128,0,0,0.08);
+        }
+
+        .profile-basic {
+            flex: 1;
+        }
+
+        .profile-basic h2 {
+            color: var(--maroon);
+            margin: 0 0 8px;
+        }
+
+        .profile-basic p {
+            margin: 0 0 6px;
+            color: #333;
+            font-weight: 500;
+        }
+
+        section {
+            margin-top: 28px;
+        }
+
+        section h3 {
+            color: var(--maroon);
+            border-bottom: 2px solid var(--light-maroon);
+            display: inline-block;
+            padding-bottom: 3px;
+            margin-bottom: 12px;
+            font-size: 1.2em;
+        }
+
+        .personal-details, .academic-identity {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px 32px;
+            font-size: 1em;
+        }
+
+        .personal-details div, .academic-identity div {
+            margin-bottom: 6px;
+        }
+
+        .qualifications-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 8px;
+        }
+
+        .qualifications-table th, .qualifications-table td {
+            border: 1px solid var(--beige);
+            padding: 7px 11px;
+            text-align: left;
+        }
+
+        .qualifications-table th {
+            background: var(--maroon);
+            color: #fff;
+        }
+
+        .qualifications-table tr:nth-child(even) {
+            background: #f9ecec;
+        }
+
+        .links a {
+            color: var(--maroon);
+            text-decoration: underline;
+            margin-right: 16px;
+        }
+
+        .teaching-experience-table {
+            width: 100%;
+            max-width: 400px;
+            border-collapse: collapse;
+            margin-top: 8px;
+        }
+
+        .teaching-experience-table th,
+        .teaching-experience-table td {
+            padding: 6px 10px;
+            border: 1px solid var(--beige);
+        }
+
+        .teaching-experience-table th {
+            background: var(--light-maroon);
+            color: #fff;
+        }
+
+        @media (max-width: 700px) {
+            .profile-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+            .personal-details, .academic-identity {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="profile-container">
+        <div class="profile-header">
+            <img class="profile-photo" src="../assets/narayani.png" alt="Dr. V. Narayani Photo">
+            <div class="profile-basic">
+                <h2>Dr. V. Narayani</h2>
+                <p><strong>Designation:</strong> Assistant Professor</p>
+                <p><strong>Department:</strong> Computer Science</p>
+                <p><strong>Address:</strong> Palayamkottai</p>
+            </div>
+        </div>
+
+        <section>
+            <h3>Personal Details</h3>
+            <div class="personal-details">
+                <div>Date of Birth: <b>12.08.1979</b></div>
+                <div>Community: <b>BC</b></div>
+                <div>Qualification: <b>M.C.A., M.Phil., Ph.D</b></div>
+                <div>Religion: <b>Hindu</b></div>
+                <div>Designation: <b>Assistant Professor</b></div>
+                <div>Nationality: <b>Indian</b></div>
+                <div>Department: <b>Computer Science</b></div>
+                <div>Mobile: <b>7010749830</b></div>
+                <div>Email ID: <b>narayaniv1979@gmail.com</b></div>
+            </div>
+        </section>
+
+        <section>
+            <h3>Academic Qualifications</h3>
+            <table class="qualifications-table">
+                <tr>
+                    <th>Degree</th>
+                    <th>Specialization</th>
+                    <th>College</th>
+                    <th>University</th>
+                    <th>Year of Passing</th>
+                </tr>
+                <tr>
+                    <td>B.Sc.</td>
+                    <td>Computer Science</td>
+                    <td>Sri Sarada College for Women, Tirunelveli</td>
+                    <td>Manonmaniam Sundaranar University</td>
+                    <td>1999</td>
+                </tr>
+                <tr>
+                    <td>M.C.A</td>
+                    <td>Computer Application</td>
+                    <td>Manonmaniam Sundaranar University</td>
+                    <td>Manonmaniam Sundaranar University</td>
+                    <td>2002</td>
+                </tr>
+                <tr>
+                    <td>M.Phil</td>
+                    <td>Computer Science</td>
+                    <td>Mother Teresa Women’s University</td>
+                    <td>Mother Teresa Women’s University</td>
+                    <td>2005</td>
+                </tr>
+                <tr>
+                    <td>Ph.D</td>
+                    <td>Computer Application</td>
+                    <td>Manonmaniam Sundaranar University</td>
+                    <td>Manonmaniam Sundaranar University</td>
+                    <td>2012</td>
+                </tr>
+            </table>
+        </section>
+
+        <section>
+            <h3>Academic Identity</h3>
+            <div class="academic-identity">
+                <div><strong>VIDWAN ID:</strong> 287678</div>
+                <div><strong>ORCID ID:</strong> 0000-0002-4226-8211</div>
+                <div><strong>SCOPUS ID:</strong> 56453469200</div>
+                <div><strong>RESEARCHER ID / PUBLONS ID:</strong> GOJ-9994-2022</div>
+                <div class="links">
+                    <strong>Google Scholar:</strong>
+                    <a href="https://scholar.google.com/citations?user=tkWObWEAAAAJ&hl=en" target="_blank">View Profile</a>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h3>Teaching Experience</h3>
+            <table class="teaching-experience-table">
+                <tr>
+                    <th>Level</th>
+                    <th>Experience</th>
+                </tr>
+                <tr>
+                    <td>UG</td>
+                    <td>5 years 8 months</td>
+                </tr>
+                <tr>
+                    <td>PG</td>
+                    <td>15 years</td>
+                </tr>
+                <tr>
+                    <td>M.Phil.</td>
+                    <td>2 years</td>
+                </tr>
+            </table>
+            <div style="margin-top:10px;">
+                <strong>Date of Appointment:</strong> 18.06.2018<br>
+            </div>
+            <div style="margin-top:10px;">
+                <strong>Research Guided:</strong> M.Phil: 3 Guided<br>
+                <strong>Ph.D:</strong> 3 Guided & 4 Guiding
+            </div>
+        </section>
+    </div>
+</body>
+</html>

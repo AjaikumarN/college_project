@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Create Announcement | Faculty</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="fac-announce.css" />
+</head>
+<body>
+  <div class="container">
+    <header class="dashboard-header">
+  <button class="back-btn" onclick="window.history.back()" aria-label="Go Back">&#8592;</button>
+  
+  <span class="header-title">Create Announcement</span>
+  
+  <div class="header-right">
+    <button class="hamburger" aria-label="Open menu">
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </button>
+  </div>
+</header>
+
+
+    <main>
+      <section class="announcement-section">
+        <div class="section-title">NEW ANNOUNCEMENT</div>
+        <form class="announcement-form" onsubmit="return submitAnnouncement(event)">
+          <div class="form-row">
+            <label for="class-select">Class</label>
+            <select id="class-select" required>
+              <option value="">-- Select Class --</option>
+              <option value="ii-bsc-cs">II-B.Sc COMPUTER SCIENCE</option>
+              <option value="i-bsc-cs">I-B.Sc COMPUTER SCIENCE</option>
+              <option value="iii-bsc-cs">III-B.Sc COMPUTER SCIENCE</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <label for="subject-select">Subject</label>
+            <select id="subject-select" required>
+              <option value="">-- Select Subject --</option>
+              <option value="dbms">Database Management Systems</option>
+              <option value="python-lab">Python Programming Lab</option>
+              <option value="ds">Data Structures</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <label for="announcement-title">Title</label>
+            <input type="text" id="announcement-title" placeholder="Announcement Title" required />
+          </div>
+          <div class="form-row">
+            <label for="announcement-message">Message</label>
+            <textarea id="announcement-message" rows="4" placeholder="Enter announcement details..." required></textarea>
+          </div>
+          <button type="submit" class="submit-btn">Submit Announcement</button>
+        </form>
+      </section>
+
+      <section class="announcement-section">
+        <div class="section-title">RECENT ANNOUNCEMENTS</div>
+        <div class="announcements-list" id="announcements-list">
+          <!-- Filled dynamically -->
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="footer-bar">
+        2025 © <strong>ST. XAVIER'S COLLEGE (AUTONOMOUS)</strong>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Axios CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+  <script>
+    const announcementFile = 'fac-announce.json';
+
+    async function loadAnnouncements() {
+      try {
+        const res = await axios.get(announcementFile);
+        const data = res.data;
+        const list = document.getElementById('announcements-list');
+        list.innerHTML = '';
+
+        data.forEach(item => {
+          const row = document.createElement('div');
+          row.className = 'announcement-row';
+          row.innerHTML = `
+            <div>
+              <span class="announcement-title">${item.title}</span>
+              <div class="announcement-message">${item.message}</div>
+            </div>
+            <span class="announcement-date">${formatDate(item.date)}</span>
+          `;
+          list.appendChild(row);
+        });
+      } catch (error) {
+        console.error('Error loading announcements:', error);
+        document.getElementById('announcements-list').innerHTML = "<p style='color:red;'>Could not load announcements.</p>";
+      }
+    }
+
+    function formatDate(dateStr) {
+      const options = { year: 'numeric', month: 'short', day: '2-digit' };
+      return new Date(dateStr).toLocaleDateString('en-GB', options);
+    }
+
+    function submitAnnouncement(event) {
+      event.preventDefault();
+
+      const cls = document.getElementById('class-select').value;
+      const subject = document.getElementById('subject-select').value;
+      const title = document.getElementById('announcement-title').value.trim();
+      const message = document.getElementById('announcement-message').value.trim();
+      const date = new Date().toISOString().split('T')[0];
+
+      if (!cls || !subject || !title || !message) {
+        alert("Please fill all fields");
+        return false;
+      }
+
+      const newAnnouncement = {
+        class: cls,
+        subject,
+        title,
+        message,
+        date
+      };
+
+      // Simulate saving (you'll need backend or use fs/write in Node)
+      alert("Announcement submitted successfully!");
+      console.log("Saved announcement:", newAnnouncement);
+
+      // Optional: Add to UI instantly
+      loadAnnouncements();
+
+      event.target.reset();
+      return false;
+    }
+
+    // Load on page load
+    loadAnnouncements();
+  </script>
+</body>
+</html>

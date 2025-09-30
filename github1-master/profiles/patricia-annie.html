@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Faculty Profile - Dr. J. Patricia Annie Jebamalar</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        :root {
+            --beige: #f5f5dc;
+            --maroon: #800000;
+            --light-maroon: #a05252;
+            --border-radius: 12px;
+        }
+
+        body {
+            background: var(--beige);
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .profile-container {
+            background: #fff;
+            max-width: 800px;
+            margin: 40px auto;
+            border-radius: var(--border-radius);
+            box-shadow: 0 8px 24px rgba(128, 0, 0, 0.12);
+            padding: 32px;
+            border-top: 10px solid var(--maroon);
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .profile-photo {
+            width: 160px;
+            height: 190px;
+            object-fit: cover;
+            border-radius: var(--border-radius);
+            border: 3px solid var(--maroon);
+            background: var(--beige);
+            box-shadow: 0 4px 12px rgba(128,0,0,0.08);
+        }
+
+        .profile-basic {
+            flex: 1;
+        }
+
+        .profile-basic h2 {
+            color: var(--maroon);
+            margin: 0 0 8px;
+        }
+
+        .profile-basic p {
+            margin: 0 0 6px;
+            color: #333;
+            font-weight: 500;
+        }
+
+        section {
+            margin-top: 28px;
+        }
+
+        section h3 {
+            color: var(--maroon);
+            border-bottom: 2px solid var(--light-maroon);
+            display: inline-block;
+            padding-bottom: 3px;
+            margin-bottom: 12px;
+            font-size: 1.2em;
+        }
+
+        .personal-details, .academic-identity {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px 32px;
+            font-size: 1em;
+        }
+
+        .personal-details div, .academic-identity div {
+            margin-bottom: 6px;
+        }
+
+        .qualifications-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 8px;
+        }
+
+        .qualifications-table th, .qualifications-table td {
+            border: 1px solid var(--beige);
+            padding: 7px 11px;
+            text-align: left;
+        }
+
+        .qualifications-table th {
+            background: var(--maroon);
+            color: #fff;
+        }
+
+        .qualifications-table tr:nth-child(even) {
+            background: #f9ecec;
+        }
+
+        .links a {
+            color: var(--maroon);
+            text-decoration: underline;
+            margin-right: 16px;
+        }
+
+        .teaching-experience-table {
+            width: 100%;
+            max-width: 400px;
+            border-collapse: collapse;
+            margin-top: 8px;
+        }
+
+        .teaching-experience-table th,
+        .teaching-experience-table td {
+            padding: 6px 10px;
+            border: 1px solid var(--beige);
+        }
+
+        .teaching-experience-table th {
+            background: var(--light-maroon);
+            color: #fff;
+        }
+
+        @media (max-width: 700px) {
+            .profile-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+            .personal-details, .academic-identity {
+                grid-template-columns: 1fr;
+            }
+        }
+        html, body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background-color: #f4f4d4;
+  overflow-x: hidden;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  color: #3d1c13;
+}
+    </style>
+</head>
+<body>
+    <div class="profile-container">
+        <div class="profile-header">
+            <img class="profile-photo" src="../assets/pat.jpg" alt="Dr. J. Patricia Annie Jebamalar Photo">
+            <div class="profile-basic">
+                <h2>Dr. J. Patricia Annie Jebamalar</h2>
+                <p><strong>Designation:</strong> Assistant Professor and Vice Principal</p>
+                <p><strong>Department:</strong> Computer Science</p>
+                <p><strong>Address:</strong> 8/114A, Kalaikovil Nagar, Krishnapuram, Tirunelveli. 627011</p>
+            </div>
+        </div>
+
+        <section>
+            <h3>Personal Details</h3>
+            <div class="personal-details">
+                <div>Date of Birth: <b>06/08/1976</b></div>
+                <div>Community: <b>BC</b></div>
+                <div>Qualification: <b>M.Sc., M.Phil., NET, SET, Ph.D.</b></div>
+                <div>Religion: <b>Christian</b></div>
+                <div>Designation: <b>Assistant Professor and Vice Principal</b></div>
+                <div>Nationality: <b>Indian</b></div>
+                <div>Department: <b>Computer Science</b></div>
+                <div>Mobile: <b>9442020972</b></div>
+                <div>Email ID: <b>patricia.benlaz@gmail.com</b></div>
+            </div>
+        </section>
+
+        <section>
+            <h3>Academic Qualifications</h3>
+            <table class="qualifications-table">
+                <tr>
+                    <th>Degree</th>
+                    <th>Specialization</th>
+                    <th>College/University</th>
+                    <th>Year of Passing</th>
+                </tr>
+                <tr>
+                    <td>B.Sc.</td>
+                    <td>Computer Science</td>
+                    <td>Sarah Tucker College, Manonmaniam Sundaranar University</td>
+                    <td>April 1997</td>
+                </tr>
+                <tr>
+                    <td>M.Sc.</td>
+                    <td>Computer Science</td>
+                    <td>Manonmaniam Sundaranar University</td>
+                    <td>April 1999</td>
+                </tr>
+                <tr>
+                    <td>M.Phil.</td>
+                    <td>Computer Science</td>
+                    <td>Alagappa University</td>
+                    <td>April 2008</td>
+                </tr>
+                <tr>
+                    <td>Ph.D.</td>
+                    <td>Computer Applications</td>
+                    <td>Karunya Institute of Technology and Sciences, Karunya University</td>
+                    <td>May 2020</td>
+                </tr>
+            </table>
+        </section>
+
+        <section>
+            <h3>Academic Identity</h3>
+            <div class="academic-identity">
+                <div><strong>VIDWAN ID:</strong> 287323</div>
+                <div><strong>ORCID ID:</strong> 0000-0002-3757-5380</div>
+                <div><strong>SCOPUS ID:</strong></div>
+                <div><strong>RESEARCHER ID / PUBLONS ID:</strong> GOH-1449-2022</div>
+                <div class="links">
+                    <strong>Google Scholar:</strong>
+                    <!-- Add the Google Scholar link if available -->
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h3>Teaching Experience</h3>
+            <table class="teaching-experience-table">
+                <tr>
+                    <th>Level</th>
+                    <th>Experience</th>
+                </tr>
+                <tr>
+                    <td>UG</td>
+                    <td>14 years</td>
+                </tr>
+                <tr>
+                    <td>PG</td>
+                    <td>14 years</td>
+                </tr>
+                <tr>
+                    <td>M.Phil.</td>
+                    <td>4 years</td>
+                </tr>
+            </table>
+            <div style="margin-top:10px;">
+                <strong>Date of Appointment:</strong> 16/06/2008<br>
+                <strong>Date of Retirement:</strong> 06/08/2036<br>
+            </div>
+            <div style="margin-top:10px;">
+                <strong>Research Guided:</strong> M.Phil: 2 Guided<br>
+                <strong>Ph.D:</strong> Guiding Ph. D. Scholar
+            </div>
+        </section>
+    </div>
+</body>
+</html>

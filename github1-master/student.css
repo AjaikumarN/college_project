@@ -1,0 +1,325 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background-color: #e6f0ff; /* light blue */
+  overflow-x: hidden;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  color: #123456; /* dark blue text */
+}
+
+/* Header */
+.dashboard-header {
+  background: #0d1b5b; /* dark blue */
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 16px 16px 16px;
+  position: relative;
+}
+
+.header-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+}
+
+.hamburger {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 40px;
+  width: 40px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+  margin-left: 18px;
+}
+.hamburger .bar {
+  width: 26px;
+  height: 3.5px;
+  background-color: #fff;
+  margin: 3.5px 0;
+  border-radius: 3px;
+  display: block;
+  transition: background 0.2s;
+}
+
+/* Drawer Overlay */
+.drawer-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.18);
+  z-index: 90;
+  display: none;
+}
+.drawer-overlay.show {
+  display: block;
+}
+
+/* Side Drawer */
+.side-drawer {
+  position: fixed;
+  top: 0;
+  left: -270px;
+  width: 270px;
+  height: 100vh;
+  background: #e6f0ff; /* light blue */
+  box-shadow: 2px 0 12px rgba(0, 0, 0, 0.11);
+  z-index: 100;
+  transition: left 0.24s cubic-bezier(.4, 0, .2, 1);
+  display: flex;
+  flex-direction: column;
+}
+
+.side-drawer.open {
+  left: 0;
+}
+
+.drawer-content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding-top: 38px;
+}
+
+.drawer-menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.drawer-menu li {
+  border-bottom: 1px solid #d0e3ff;
+}
+
+.drawer-menu a {
+  display: flex;
+  align-items: center;
+  padding: 20px 28px 20px 18px;
+  color: #12264a;
+  text-decoration: none;
+  font-size: 1.13rem;
+  font-weight: 500;
+  transition: background 0.14s;
+}
+
+.drawer-menu a:hover {
+  background: #cfe2ff;
+  color: #0d1b5b;
+}
+
+.menu-icon-text {
+  display: inline-block;
+  width: 1.7em;
+  text-align: center;
+  font-size: 1.3em;
+  margin-right: 14px;
+}
+
+.logout-menu {
+  margin-top: auto;
+  border-top: 1px solid #c0d8f0;
+}
+
+/* Student Profile Card */
+.student-profile-card {
+  background: linear-gradient(90deg, #d6e9ff 70%, #f0f8ff 100%);
+  display: flex;
+  align-items: center;
+  margin: 22px auto 0 auto;
+  max-width: 98%;
+  width: 98%;
+  border-radius: 9px;
+  box-shadow: 0 2px 6px rgba(60, 90, 150, 0.07);
+  padding: 18px 18px 18px 19px;
+  min-height: 120px;
+}
+
+.student-photo {
+  width: 110px;
+  height: 110px;
+  border-radius: 9px;
+  object-fit: cover;
+  background: #c2d6f0;
+  margin-right: 19px;
+  border: 3px solid #0d1b5b;
+}
+
+.student-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.student-name {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #0d3b6f;
+  margin-bottom: 6px;
+}
+
+.student-id {
+  font-size: 1.07rem;
+  color: #376094;
+  margin-bottom: 3px;
+  font-weight: 600;
+}
+
+.student-course {
+  font-size: 1rem;
+  color: #234b75;
+}
+
+.spacer {
+  height: 18px;
+}
+
+/* College Info Section */
+.college-section {
+  background: #ffffff;
+  border-radius: 9px;
+  margin: 0 auto 18px auto;
+  max-width: 98%;
+  box-shadow: 0 2px 8px rgba(80, 120, 180, 0.09);
+  padding: 10px 8px 18px 8px;
+}
+
+.section-title {
+  background: linear-gradient(90deg, #dbeaff 65%, #f2faff 100%);
+  color: #0d1b5b;
+  font-weight: 600;
+  padding: 10px 14px 10px 18px;
+  border-radius: 8px 8px 0 0;
+  font-size: 1.05rem;
+  margin-bottom: 15px;
+  letter-spacing: 0.5px;
+}
+
+.college-features-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px 12px;
+  padding: 0 6px;
+}
+
+.feature-card {
+  background: #f0f8ff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(80, 120, 180, 0.06);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 5px 11px 5px;
+  min-height: 100px;
+  text-decoration: none;
+  color: #2b3f66;
+  font-weight: 500;
+  font-size: 1em;
+  border: 1.5px solid #d6eaff;
+  transition: box-shadow 0.12s, border-color 0.12s;
+}
+
+.feature-card:hover {
+  box-shadow: 0 4px 12px rgba(60, 90, 150, 0.13);
+  border-color: #0d1b5b;
+}
+
+.feature-card img {
+  width: 39px;
+  height: 39px;
+  margin-bottom: 7px;
+}
+
+/* Timetable Section */
+.timetable-section {
+  background: #ffffff;
+  border-radius: 9px;
+  margin: 0 auto 18px auto;
+  max-width: 98%;
+  box-shadow: 0 2px 8px rgba(60, 90, 150, 0.08);
+  padding-bottom: 16px;
+}
+
+.timetable-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 12px 0;
+}
+
+.timetable-table th, .timetable-table td {
+  border: 1px solid #c2d6f0;
+  padding: 10px;
+  text-align: center;
+  font-size: 0.95rem;
+}
+
+.timetable-table th {
+  background-color: #dbeaff;
+  color: #0d1b5b;
+}
+
+.timetable-table td {
+  background-color: #f7fbff;
+  color: #234b75;
+}
+
+/* Footer */
+.footer-bar {
+  background: #0d1b5b;
+  color: #fff;
+  text-align: center;
+  font-size: 1.02rem;
+  font-weight: 500;
+  padding: 15px 0 13px 0;
+  border-radius: 18px 18px 0 0;
+  letter-spacing: 1px;
+  margin: 0;
+}
+
+/* Optional Tagline */
+.college-tagline {
+  text-align: center;
+  font-style: italic;
+  font-size: 1rem;
+  color: #123456;
+  margin-top: 10px;
+}
+
+/* Responsive Design */
+@media (max-width: 700px) {
+  .side-drawer {
+    width: 82vw;
+    min-width: 170px;
+    max-width: 350px;
+  }
+}
+
+@media (max-width: 650px) {
+  .student-profile-card {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 16px 6px;
+  }
+  .student-photo {
+    margin-bottom: 13px;
+    margin-right: 0;
+    align-self: center;
+  }
+  .college-features-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+  .timetable-table th, .timetable-table td {
+    font-size: 0.85rem;
+    padding: 8px;
+  }
+}
