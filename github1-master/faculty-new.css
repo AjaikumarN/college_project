@@ -1,0 +1,494 @@
+/* =============================================
+   FACULTY DASHBOARD - RECONSTRUCTED CSS
+   Version 3.0 - Enhanced UI with Better Alignment
+   ============================================= */
+
+/* ===== BASE STYLES ===== */
+html, body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background-color: #f4f4d4;
+  overflow-x: hidden;
+  font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+  color: #3d1c13;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/* ===== DASHBOARD HEADER ===== */
+.dashboard-header {
+  background: linear-gradient(135deg, #b03a2e 0%, #8b0000 100%);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px;
+  position: relative;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.header-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+/* ===== HAMBURGER MENU ===== */
+.hamburger {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 42px;
+  width: 42px;
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  padding: 8px;
+  transition: all 0.3s ease;
+}
+
+.hamburger:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.05);
+}
+
+.hamburger .bar {
+  width: 26px;
+  height: 3px;
+  background-color: #fff;
+  margin: 3px 0;
+  border-radius: 3px;
+  display: block;
+  transition: all 0.3s ease;
+}
+
+/* ===== SIDE DRAWER ===== */
+.drawer-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 9998;
+  display: none;
+  backdrop-filter: blur(2px);
+}
+
+.drawer-overlay.show {
+  display: block;
+}
+
+.side-drawer {
+  position: fixed;
+  top: 0;
+  right: -320px;
+  width: 300px;
+  height: 100%;
+  background: linear-gradient(180deg, #b03a2e 0%, #8b0000 100%);
+  box-shadow: -4px 0 20px rgba(0, 0, 0, 0.3);
+  z-index: 9999;
+  transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow-y: auto;
+}
+
+.side-drawer.open {
+  right: 0;
+}
+
+.side-drawer-header {
+  padding: 24px 20px;
+  background: rgba(0, 0, 0, 0.2);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.side-drawer-title {
+  color: #fff;
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin: 0;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.side-drawer-menu {
+  list-style: none;
+  padding: 16px 0;
+  margin: 0;
+}
+
+.side-drawer-menu li {
+  margin: 0;
+}
+
+.side-drawer-menu li a {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 24px;
+  color: #fff;
+  text-decoration: none;
+  font-size: 1.05rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  border-left: 4px solid transparent;
+}
+
+.side-drawer-menu li a:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-left-color: #fff;
+  padding-left: 28px;
+}
+
+.side-drawer-menu li a i {
+  font-size: 1.2rem;
+  width: 24px;
+  text-align: center;
+}
+
+/* ===== MAIN CONTENT CONTAINER ===== */
+.dashboard-container {
+  padding: 24px 16px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* ===== FACULTY PROFILE CARD - ENHANCED ===== */
+.faculty-profile-card {
+  background: linear-gradient(135deg, #fff 0%, #fef9f3 100%);
+  border-radius: 16px;
+  padding: 28px;
+  margin-bottom: 24px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  max-width: 96%;
+  margin-left: auto;
+  margin-right: auto;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(176, 58, 46, 0.1);
+}
+
+.faculty-profile-card:hover {
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
+}
+
+.faculty-photo {
+  width: 130px;
+  height: 130px;
+  border-radius: 16px;
+  object-fit: cover;
+  border: 4px solid #b03a2e;
+  box-shadow: 0 4px 12px rgba(176, 58, 46, 0.3);
+  flex-shrink: 0;
+}
+
+.faculty-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.faculty-name {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #b03a2e;
+  margin: 0;
+  line-height: 1.2;
+  letter-spacing: 0.3px;
+}
+
+.faculty-id {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: #666;
+  margin: 0 0 8px 0;
+  letter-spacing: 0.5px;
+}
+
+.faculty-dept {
+  font-size: 1.1rem;
+  color: #555;
+  margin: 0;
+  line-height: 1.4;
+  font-weight: 500;
+}
+
+/* ===== COLLEGE SECTION ===== */
+.college-section {
+  background: linear-gradient(135deg, #fff 0%, #fef9f3 100%);
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 24px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  max-width: 96%;
+  margin-left: auto;
+  margin-right: auto;
+  border: 1px solid rgba(176, 58, 46, 0.1);
+}
+
+.section-title {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #b03a2e;
+  margin: 0 0 20px 0;
+  padding-bottom: 12px;
+  border-bottom: 3px solid #b03a2e;
+  letter-spacing: 0.3px;
+}
+
+/* ===== FEATURE CARDS GRID - ENHANCED ===== */
+.college-features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 18px;
+  padding: 12px 0;
+}
+
+.feature-card {
+  background: linear-gradient(135deg, #fff 0%, #fef9f3 100%);
+  border: 2px solid #b03a2e;
+  border-radius: 12px;
+  padding: 20px 16px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  min-height: 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.feature-card:hover {
+  background: linear-gradient(135deg, #b03a2e 0%, #8b0000 100%);
+  color: white;
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 8px 20px rgba(176, 58, 46, 0.4);
+}
+
+.feature-card img {
+  width: 48px;
+  height: 48px;
+  margin-bottom: 10px;
+  transition: all 0.3s ease;
+}
+
+.feature-card:hover img {
+  filter: brightness(0) invert(1);
+  transform: scale(1.1);
+}
+
+.feature-card p {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
+
+/* ===== TIMETABLE SECTION - ENHANCED ===== */
+.timetable-section {
+  background: linear-gradient(135deg, #fff 0%, #fef9f3 100%);
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 24px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  max-width: 96%;
+  margin-left: auto;
+  margin-right: auto;
+  border: 1px solid rgba(176, 58, 46, 0.1);
+}
+
+.timetable-info {
+  padding: 16px 0;
+}
+
+.today-classes {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.today-classes li {
+  background: linear-gradient(135deg, #fff8ef 0%, #fef9f3 100%);
+  padding: 14px 18px;
+  margin-bottom: 12px;
+  border-radius: 10px;
+  border-left: 5px solid #b03a2e;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: #3d1c13;
+}
+
+.today-classes li:hover {
+  background: linear-gradient(135deg, #fff0e0 0%, #ffe8d5 100%);
+  border-left-width: 6px;
+  padding-left: 22px;
+  box-shadow: 0 4px 12px rgba(176, 58, 46, 0.2);
+  transform: translateX(4px);
+}
+
+.today-classes li:last-child {
+  margin-bottom: 0;
+}
+
+/* No classes message */
+.today-classes li[style*="color: #999"] {
+  border-left-color: #ccc;
+  background: #f9f9f9;
+  font-style: italic;
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+@media (max-width: 768px) {
+  .dashboard-header {
+    padding: 16px 20px;
+  }
+
+  .header-title {
+    font-size: 1.4rem;
+  }
+
+  .faculty-profile-card {
+    flex-direction: column;
+    text-align: center;
+    padding: 24px;
+    max-width: 98%;
+  }
+
+  .faculty-photo {
+    width: 110px;
+    height: 110px;
+  }
+
+  .faculty-name {
+    font-size: 1.4rem;
+  }
+
+  .faculty-id {
+    font-size: 1.05rem;
+  }
+
+  .faculty-dept {
+    font-size: 1rem;
+  }
+
+  .college-features-grid {
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 14px;
+  }
+
+  .feature-card {
+    min-height: 100px;
+    padding: 16px 12px;
+  }
+
+  .feature-card img {
+    width: 40px;
+    height: 40px;
+  }
+
+  .feature-card p {
+    font-size: 0.95rem;
+  }
+
+  .section-title {
+    font-size: 1.2rem;
+  }
+
+  .today-classes li {
+    font-size: 1rem;
+    padding: 12px 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .dashboard-container {
+    padding: 16px 12px;
+  }
+
+  .college-features-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .faculty-profile-card,
+  .college-section,
+  .timetable-section {
+    max-width: 98%;
+    padding: 20px;
+  }
+}
+
+/* ===== LOADING OVERLAY ===== */
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.95);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  backdrop-filter: blur(5px);
+}
+
+.spinner {
+  width: 60px;
+  height: 60px;
+  border: 5px solid rgba(176, 58, 46, 0.2);
+  border-top-color: #b03a2e;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.loading-text {
+  margin-top: 20px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #b03a2e;
+}
+
+/* ===== UTILITY CLASSES ===== */
+.text-center {
+  text-align: center;
+}
+
+.mt-2 {
+  margin-top: 16px;
+}
+
+.mb-2 {
+  margin-bottom: 16px;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.visible {
+  display: block !important;
+}

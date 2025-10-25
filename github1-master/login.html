@@ -4,49 +4,348 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
   <title>Login | Karunya College</title>
+  <link rel="stylesheet" href="enhanced-styles.css">
+  <link rel="stylesheet" href="login-enhanced.css">
+  <link rel="stylesheet" href="text-visibility-fix.css">
   <link rel="stylesheet" href="login.css">
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="api-config.js?v=2024102401"></script>
+  <script src="auth-service.js?v=2024102401"></script>
 </head>
 <body class="login-bg">
+<!-- Back Button -->
+<button class="back-btn" onclick="window.history.back()" aria-label="Go Back">
+  <i class="fas fa-arrow-left"></i>
+</button>
+
+<!-- Login Container -->
 <div class="login-center-container">
-  <form id="loginForm" class="login-card">
-    <img src="assets/karunya-logo.jpeg" alt="Logo" class="login-logo">
-    <h1>Karunya Login</h1>
-    <div class="form-group">
-      <label for="login-email">Email</label>
-      <input type="email" id="login-email" required />
+  <div class="login-card fade-in">
+    <!-- Header Section -->
+    <div class="login-header">
+      <div class="logo-container">
+        <img src="assets/karunya-logo.jpeg" alt="Karunya Logo" class="login-logo">
+      </div>
+      <h1 class="login-title">
+        <i class="fas fa-graduation-cap"></i>
+        Welcome Back
+      </h1>
+      <p class="login-subtitle">Sign in to access your portal</p>
     </div>
-    <div class="form-group">
-      <label for="login-password">Password</label>
-      <input type="password" id="login-password" required />
+
+    <!-- Login Form -->
+    <form id="loginForm" class="login-form">
+      <div class="form-group">
+        <label for="login-email" class="form-label">
+          <i class="fas fa-envelope"></i>
+          Email Address
+        </label>
+        <input 
+          type="email" 
+          id="login-email" 
+          class="form-input" 
+          placeholder="Enter your email"
+          required 
+          autocomplete="email"
+        />
+        <div class="input-feedback" id="email-feedback"></div>
+      </div>
+
+      <div class="form-group">
+        <label for="login-password" class="form-label">
+          <i class="fas fa-lock"></i>
+          Password
+        </label>
+        <div class="password-input-container">
+          <input 
+            type="password" 
+            id="login-password" 
+            class="form-input" 
+            placeholder="Enter your password"
+            required 
+            autocomplete="current-password"
+          />
+          <button type="button" class="password-toggle" id="passwordToggle">
+            <i class="fas fa-eye"></i>
+          </button>
+        </div>
+        <div class="input-feedback" id="password-feedback"></div>
+      </div>
+
+      <!-- Remember Me & Forgot Password -->
+      <div class="form-options">
+        <label class="checkbox-label">
+          <input type="checkbox" id="remember-me">
+          <span class="checkmark"></span>
+          Remember me
+        </label>
+        <a href="#" class="forgot-password">Forgot password?</a>
+      </div>
+
+      <!-- Submit Button -->
+      <button type="submit" class="btn btn-primary btn-lg login-submit" id="loginBtn">
+        <span class="btn-text">Sign In</span>
+        <div class="btn-loading" style="display: none;">
+          <i class="fas fa-spinner fa-spin"></i>
+          Signing in...
+        </div>
+      </button>
+
+      <!-- Error Message -->
+      <div id="login-error" class="error-message"></div>
+      <div id="login-success" class="success-message"></div>
+    </form>
+
+    <!-- Footer Links -->
+    <div class="login-footer">
+      <p>Don't have an account? <a href="register.html">Sign up here</a></p>
+      <div class="login-help">
+        <a href="index.html">
+          <i class="fas fa-home"></i>
+          Back to Home
+        </a>
+      </div>
     </div>
-    <button type="submit" class="btn-primary">Login</button>
-    <p id="login-error" class="error-msg"></p>
-  </form>
+  </div>
+</div>
+
+<!-- Role Selection Modal (if needed for different user types) -->
+<div class="modal-overlay" id="roleModal" style="display: none;">
+  <div class="modal-content">
+    <h3>Select Your Role</h3>
+    <div class="role-options">
+      <button class="role-btn" data-role="student">
+        <i class="fas fa-user-graduate"></i>
+        Student
+      </button>
+      <button class="role-btn" data-role="faculty">
+        <i class="fas fa-chalkboard-teacher"></i>
+        Faculty
+      </button>
+      <button class="role-btn" data-role="admin">
+        <i class="fas fa-user-cog"></i>
+        Admin
+      </button>
+    </div>
+  </div>
 </div>
 
 <script>
-  document.getElementById('loginForm').addEventListener('submit', function (e) {
-    e.preventDefault();
-    const email = document.getElementById('login-email').value.trim();
-    const password = document.getElementById('login-password').value;
-    const errorMsg = document.getElementById('login-error');
+document.addEventListener('DOMContentLoaded', function() {
+  // Check if already authenticated and redirect
+  if (authService.isAuthenticated()) {
+    authService.redirectToRoleDashboard();
+  }
+  
+  // Form elements
+  const loginForm = document.getElementById('loginForm');
+  const emailInput = document.getElementById('login-email');
+  const passwordInput = document.getElementById('login-password');
+  const passwordToggle = document.getElementById('passwordToggle');
+  const loginBtn = document.getElementById('loginBtn');
+  const errorMsg = document.getElementById('login-error');
+  const successMsg = document.getElementById('login-success');
+  const emailFeedback = document.getElementById('email-feedback');
+  const passwordFeedback = document.getElementById('password-feedback');
 
-    axios.post('http://localhost:8080/api/auth/login', { email, password })
-      .then(res => {
-        const user = res.data;
-        localStorage.setItem("userId", user.id);
-        localStorage.setItem("userName", user.name);
-        localStorage.setItem("userEmail", user.email);
-        localStorage.setItem("userCourse", user.course);
-        window.location.href = "student.html";
-      })
-      .catch(err => {
-        console.error("Login error:", err);
-        errorMsg.textContent = "Invalid email or password.";
-        errorMsg.style.color = "red";
-      });
+  // Password toggle functionality
+  passwordToggle.addEventListener('click', function() {
+    const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+    passwordInput.setAttribute('type', type);
+    
+    const icon = passwordToggle.querySelector('i');
+    icon.classList.toggle('fa-eye');
+    icon.classList.toggle('fa-eye-slash');
   });
+
+  // Real-time validation
+  emailInput.addEventListener('blur', validateEmail);
+  emailInput.addEventListener('input', clearEmailError);
+  passwordInput.addEventListener('input', validatePassword);
+
+  function validateEmail() {
+    const email = emailInput.value.trim();
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    
+    if (!email) {
+      showFieldError(emailFeedback, 'Email is required');
+      return false;
+    } else if (!emailRegex.test(email)) {
+      showFieldError(emailFeedback, 'Please enter a valid email address');
+      return false;
+    } else {
+      showFieldSuccess(emailFeedback, 'Valid email address');
+      return true;
+    }
+  }
+
+  function validatePassword() {
+    const password = passwordInput.value;
+    
+    if (!password) {
+      showFieldError(passwordFeedback, 'Password is required');
+      return false;
+    } else if (password.length < 6) {
+      showFieldError(passwordFeedback, 'Password must be at least 6 characters');
+      return false;
+    } else {
+      clearFieldFeedback(passwordFeedback);
+      return true;
+    }
+  }
+
+  function clearEmailError() {
+    if (emailFeedback.classList.contains('error')) {
+      clearFieldFeedback(emailFeedback);
+    }
+  }
+
+  function showFieldError(element, message) {
+    element.textContent = message;
+    element.className = 'input-feedback error';
+    element.style.display = 'block';
+  }
+
+  function showFieldSuccess(element, message) {
+    element.textContent = message;
+    element.className = 'input-feedback success';
+    element.style.display = 'block';
+  }
+
+  function clearFieldFeedback(element) {
+    element.textContent = '';
+    element.className = 'input-feedback';
+    element.style.display = 'none';
+  }
+
+  function showLoading() {
+    const btnText = loginBtn.querySelector('.btn-text');
+    const btnLoading = loginBtn.querySelector('.btn-loading');
+    
+    btnText.style.display = 'none';
+    btnLoading.style.display = 'flex';
+    loginBtn.disabled = true;
+    loginBtn.style.opacity = '0.7';
+  }
+
+  function hideLoading() {
+    const btnText = loginBtn.querySelector('.btn-text');
+    const btnLoading = loginBtn.querySelector('.btn-loading');
+    
+    btnText.style.display = 'block';
+    btnLoading.style.display = 'none';
+    loginBtn.disabled = false;
+    loginBtn.style.opacity = '1';
+  }
+
+  function showError(message) {
+    errorMsg.textContent = message;
+    errorMsg.style.display = 'block';
+    successMsg.style.display = 'none';
+    
+    // Add shake animation
+    loginForm.classList.add('shake');
+    setTimeout(() => loginForm.classList.remove('shake'), 500);
+  }
+
+  function showSuccess(message) {
+    successMsg.textContent = message;
+    successMsg.style.display = 'block';
+    errorMsg.style.display = 'none';
+  }
+
+  function clearMessages() {
+    errorMsg.style.display = 'none';
+    successMsg.style.display = 'none';
+  }
+
+  // Form submission
+  loginForm.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    clearMessages();
+
+    const email = emailInput.value.trim();
+    const password = passwordInput.value;
+
+    // Validate form
+    const isEmailValid = validateEmail();
+    const isPasswordValid = validatePassword();
+
+    if (!isEmailValid || !isPasswordValid) {
+      showError('Please correct the errors above');
+      return;
+    }
+
+    showLoading();
+
+    try {
+      const result = await authService.login(email, password);
+      
+      if (result.success) {
+        showSuccess('Login successful! Redirecting...');
+        
+        // Role-based redirection using auth service
+        setTimeout(() => {
+          authService.redirectToRoleDashboard();
+        }, 1500);
+      } else {
+        throw new Error('Login failed');
+      }
+
+    } catch (error) {
+      hideLoading();
+      console.error("Login error:", error);
+      
+      if (error.response) {
+        // Server responded with error status
+        const status = error.response.status;
+        const message = error.response.data?.message || error.response.data;
+        
+        if (status === 401) {
+          showError('Invalid email or password. Please try again.');
+        } else if (status === 429) {
+          showError('Too many login attempts. Please try again later.');
+        } else {
+          showError(typeof message === 'string' ? message : 'Login failed. Please try again.');
+        }
+      } else if (error.request) {
+        // Network error
+        showError('Network error. Please check your connection and try again.');
+      } else {
+        // Other error
+        showError('An unexpected error occurred. Please try again.');
+      }
+    }
+  });
+
+  // Auto-focus email field
+  emailInput.focus();
+
+  // Add Enter key support for password field
+  passwordInput.addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+      loginForm.dispatchEvent(new Event('submit'));
+    }
+  });
+
+  // Clear error messages when user starts typing
+  [emailInput, passwordInput].forEach(input => {
+    input.addEventListener('input', () => {
+      if (errorMsg.style.display === 'block') {
+        clearMessages();
+      }
+    });
+  });
+
+  // Animate form on load
+  setTimeout(() => {
+    document.querySelector('.login-card').classList.add('animate-slide-up');
+  }, 100);
+});
 </script>
 </body>
 </html>

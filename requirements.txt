@@ -1,0 +1,14 @@
+# College ERP System - Python Dependencies
+# This project primarily uses Java Spring Boot for the backend
+# Python is only used for serving static frontend files during development
+
+# No external Python packages are required
+# The project uses Python's built-in http.server module
+
+# To run the frontend development server:
+# python3 -m http.server 3000
+
+# If you need to add Python-based tools for development/deployment:
+# certbot==2.7.4           # For SSL/TLS certificates (optional)
+# psycopg2-binary==2.9.9   # PostgreSQL adapter for Python (if needed for scripts)
+# requests==2.31.0         # HTTP library (if needed for testing/scripts)

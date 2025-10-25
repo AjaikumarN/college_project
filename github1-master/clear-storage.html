@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Clear Storage</title>
+</head>
+<body>
+  <h1>Clearing localStorage...</h1>
+  <p id="status">Please wait...</p>
+  
+  <script>
+    // Clear all old localStorage data
+    localStorage.clear();
+    
+    document.getElementById('status').innerHTML = 
+      '<p style="color: green; font-size: 18px;">✓ Storage cleared successfully!</p>' +
+      '<p>Click below to login again:</p>' +
+      '<a href="login.html" style="background: #007bff; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">Go to Login</a>';
+    
+    console.log('localStorage cleared');
+  </script>
+</body>
+</html>

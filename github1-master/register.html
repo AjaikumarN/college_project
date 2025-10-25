@@ -5,22 +5,32 @@
   <title>Student Registration</title>
   <link rel="stylesheet" href="register.css">
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="api-config.js"></script>
+  <script src="auth-service.js"></script>
 </head>
 <body>
 <div class="register-bg">
   <div class="register-card animate-pop">
-    <img src="assets/register_icon.png" alt="Logo" class="register-logo">
+    <!-- <img src="assets/register_icon.png" alt="Logo" class="register-logo"> -->
     <h2>Student Registration</h2>
 
     <form id="registerForm">
-      <div class="form-group"><input type="text" name="name" placeholder="Full Name" required /></div>
+      <div class="form-group"><input type="text" name="firstName" placeholder="First Name" required /></div>
+      <div class="form-group"><input type="text" name="lastName" placeholder="Last Name" required /></div>
       <div class="form-group"><input type="email" name="email" placeholder="Email" required /></div>
-      <div class="form-group"><input type="password" name="password" placeholder="Password" required /></div>
-      <div class="form-group"><input type="text" name="course" placeholder="Course" required /></div>
-      <div class="form-group"><input type="text" name="year" placeholder="Year" required /></div>
-      <div class="form-group"><input type="text" name="phone" placeholder="Phone" /></div>
-      <div class="form-group"><input type="text" name="gender" placeholder="Gender" /></div>
-      <div class="form-group"><input type="date" name="dob" placeholder="Date of Birth" /></div>
+      <div class="form-group"><input type="password" name="password" placeholder="Password (min 8 characters)" required minlength="8" /></div>
+      <div class="form-group"><input type="tel" name="phone" placeholder="Phone Number" required pattern="[0-9]{10}" /></div>
+      <div class="form-group"><input type="date" name="dob" placeholder="Date of Birth" required /></div>
+      <div class="form-group">
+        <select name="gender" required>
+          <option value="">Select Gender</option>
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+      <div class="form-group"><input type="text" name="course" placeholder="Course (e.g., Computer Science)" required /></div>
+      <div class="form-group"><input type="text" name="year" placeholder="Year (e.g., 2025)" required /></div>
       <button type="submit" class="btn-register">Register</button>
     </form>
 
@@ -36,9 +46,21 @@
     e.preventDefault();
     const formData = new FormData(form);
     const data = Object.fromEntries(formData.entries());
+    
+    // Add the 'name' field by combining firstName and lastName
+    data.name = `${data.firstName} ${data.lastName}`;
+    
+    // Add default semester value
+    data.semester = "1";
+    
+    // Ensure gender is lowercase as backend expects
+    if (data.gender) {
+      data.gender = data.gender.toLowerCase();
+    }
 
-    axios.post('http://localhost:8080/api/users/register', data)
-      .then(() => {
+    // Use the auth service for registration
+    authService.register(data)
+      .then((result) => {
         msg.innerText = "✅ Registered Successfully!";
         msg.style.color = "green";
         setTimeout(() => {
@@ -47,7 +69,7 @@
       })
       .catch(err => {
         console.error("Registration failed", err);
-        msg.innerText = "❌ Registration Failed.";
+        msg.innerText = `❌ ${err.message || 'Registration Failed.'}`;
         msg.style.color = "red";
       });
   });

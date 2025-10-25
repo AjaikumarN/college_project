@@ -7,7 +7,8 @@ html, body {
 }
 
 .login-bg {
-  background: url("clg_img.jpg") no-repeat center center fixed;
+  /* background: url("clg_img.jpg") no-repeat center center fixed; */
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   background-size: cover;
   min-height: 100vh;
   width: 100vw;

@@ -6,6 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="stu-profile.css">
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="api-config.js?v=2025102501"></script>
+  <script src="auth-service.js?v=2025102501"></script>
 </head>
 <body>
 <header class="profile-header" style="text-align: center;">
@@ -40,26 +42,40 @@
 
 <script>
   async function loadProfile() {
-    const userId = localStorage.getItem("userId");
+    // Wait for authService to be available
+    if (typeof authService === 'undefined') {
+      console.log('Waiting for authService...');
+      setTimeout(loadProfile, 100);
+      return;
+    }
+    
+    // Check authentication using auth-service
+    if (!authService.isAuthenticated()) {
+      alert("Not logged in!");
+      window.location.href = "login.html";
+      return;
+    }
 
-    if (!userId) {
+    const currentUser = authService.getCurrentUser();
+    if (!currentUser) {
       alert("Not logged in!");
       window.location.href = "login.html";
       return;
     }
 
     try {
-      const res = await axios.get(`http://localhost:8080/api/users/profile/${userId}`);
-      const user = res.data;
+      // Use the new backend API endpoint
+      const res = await axios.get('/student/profile');
+      const studentData = res.data.data; // Response is wrapped in ApiResponse
 
-      document.getElementById('name').textContent = user.name;
-      document.getElementById('regNo').textContent = "ID: " + user.id;
-      document.getElementById('degree').textContent = user.course;
-      document.getElementById('year').textContent = user.year;
-      document.getElementById('email').textContent = user.email;
-      document.getElementById('phone').textContent = user.phone || "N/A";
-      document.getElementById('gender').textContent = user.gender || "N/A";
-      document.getElementById('dob').textContent = user.dob || "N/A";
+      document.getElementById('name').textContent = studentData.user.name;
+      document.getElementById('regNo').textContent = studentData.admissionNumber || "STU-" + studentData.user.id;
+      document.getElementById('degree').textContent = studentData.course || studentData.user.course;
+      document.getElementById('year').textContent = studentData.currentYear || studentData.user.year;
+      document.getElementById('email').textContent = studentData.user.email;
+      document.getElementById('phone').textContent = studentData.user.phone || studentData.phone || "N/A";
+      document.getElementById('gender').textContent = studentData.user.gender || "N/A";
+      document.getElementById('dob').textContent = studentData.user.dob || "N/A";
       document.getElementById('profilePhoto').src = "assets/icon.png"; // replace with photo URL if stored
     } catch (err) {
       console.error("Error loading profile:", err);

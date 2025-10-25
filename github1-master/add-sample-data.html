@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add Sample Data - College ERP</title>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="api-config.js?v=2024102401"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 800px;
+      margin: 50px auto;
+      padding: 20px;
+      background: #f5f5f5;
+    }
+    .container {
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    h1 {
+      color: #8B0000;
+      text-align: center;
+    }
+    .btn {
+      background: #8B0000;
+      color: white;
+      border: none;
+      padding: 15px 30px;
+      margin: 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      width: calc(100% - 20px);
+    }
+    .btn:hover {
+      background: #a52a2a;
+    }
+    .btn:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+    .log {
+      background: #f9f9f9;
+      border: 1px solid #ddd;
+      padding: 15px;
+      margin-top: 20px;
+      border-radius: 5px;
+      max-height: 400px;
+      overflow-y: auto;
+      font-family: monospace;
+      font-size: 14px;
+    }
+    .success { color: green; }
+    .error { color: red; }
+    .info { color: blue; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🎓 College ERP - Add Sample Data</h1>
+    <p style="text-align: center; color: #666;">This utility will populate your database with sample students, faculty, courses, and grades.</p>
+    
+    <button class="btn" onclick="addAllSampleData()">Add All Sample Data</button>
+    <button class="btn" onclick="addStudents()">Add Sample Students Only</button>
+    <button class="btn" onclick="addFaculty()">Add Sample Faculty Only</button>
+    <button class="btn" onclick="window.location.href='admin.html'">Go to Admin Dashboard</button>
+    
+    <div class="log" id="log"></div>
+  </div>
+
+  <script>
+    function log(message, type = 'info') {
+      const logDiv = document.getElementById('log');
+      const timestamp = new Date().toLocaleTimeString();
+      const className = type === 'success' ? 'success' : type === 'error' ? 'error' : 'info';
+      logDiv.innerHTML += `<div class="${className}">[${timestamp}] ${message}</div>`;
+      logDiv.scrollTop = logDiv.scrollHeight;
+      console.log(message);
+    }
+
+    async function addAllSampleData() {
+      log('🚀 Starting to add all sample data...', 'info');
+      await addStudents();
+      await addFaculty();
+      log('✅ All sample data added successfully!', 'success');
+    }
+
+    async function addStudents() {
+      log('📚 Adding sample students...', 'info');
+      
+      const students = [
+        {
+          admissionNumber: "23UCS531",
+          user: {
+            name: "G. Varsha",
+            email: "varsha.g@students.xaviers.edu",
+            password: "student123",
+            phone: "9876543210",
+            dateOfBirth: "2005-03-15",
+            gender: "Female",
+            role: "STUDENT"
+          },
+          course: "Computer Science",
+          currentYear: 2
+        },
+        {
+          admissionNumber: "23UCS532",
+          user: {
+            name: "A. Rahul Kumar",
+            email: "rahul.a@students.xaviers.edu",
+            password: "student123",
+            phone: "9876543211",
+            dateOfBirth: "2004-07-22",
+            gender: "Male",
+            role: "STUDENT"
+          },
+          course: "Computer Science",
+          currentYear: 2
+        },
+        {
+          admissionNumber: "23UCS533",
+          user: {
+            name: "S. Priya",
+            email: "priya.s@students.xaviers.edu",
+            password: "student123",
+            phone: "9876543212",
+            dateOfBirth: "2005-01-10",
+            gender: "Female",
+            role: "STUDENT"
+          },
+          course: "Computer Science",
+          currentYear: 2
+        },
+        {
+          admissionNumber: "23UEC401",
+          user: {
+            name: "K. Vijay",
+            email: "vijay.k@students.xaviers.edu",
+            password: "student123",
+            phone: "9876543213",
+            dateOfBirth: "2004-11-05",
+            gender: "Male",
+            role: "STUDENT"
+          },
+          course: "Electronics",
+          currentYear: 2
+        },
+        {
+          admissionNumber: "23UME301",
+          user: {
+            name: "M. Anjali",
+            email: "anjali.m@students.xaviers.edu",
+            password: "student123",
+            phone: "9876543214",
+            dateOfBirth: "2005-06-18",
+            gender: "Female",
+            role: "STUDENT"
+          },
+          course: "Mechanical Engineering",
+          currentYear: 2
+        },
+        {
+          admissionNumber: "22UCS412",
+          user: {
+            name: "R. Karthik",
+            email: "karthik.r@students.xaviers.edu",
+            password: "student123",
+            phone: "9876543215",
+            dateOfBirth: "2003-09-12",
+            gender: "Male",
+            role: "STUDENT"
+          },
+          course: "Computer Science",
+          currentYear: 3
+        },
+        {
+          admissionNumber: "22UCS413",
+          user: {
+            name: "L. Divya",
+            email: "divya.l@students.xaviers.edu",
+            password: "student123",
+            phone: "9876543216",
+            dateOfBirth: "2003-04-25",
+            gender: "Female",
+            role: "STUDENT"
+          },
+          course: "Computer Science",
+          currentYear: 3
+        },
+        {
+          admissionNumber: "24UCS101",
+          user: {
+            name: "P. Arun",
+            email: "arun.p@students.xaviers.edu",
+            password: "student123",
+            phone: "9876543217",
+            dateOfBirth: "2006-02-14",
+            gender: "Male",
+            role: "STUDENT"
+          },
+          course: "Computer Science",
+          currentYear: 1
+        }
+      ];
+
+      let successCount = 0;
+      let errorCount = 0;
+
+      for (const student of students) {
+        try {
+          const response = await apiHelpers.request('/admin/students', {
+            method: 'POST',
+            data: student
+          });
+          
+          if (response.success) {
+            log(`✅ Added student: ${student.user.name} (${student.admissionNumber})`, 'success');
+            successCount++;
+          } else {
+            log(`❌ Failed to add ${student.user.name}: ${response.message}`, 'error');
+            errorCount++;
+          }
+        } catch (error) {
+          log(`❌ Error adding ${student.user.name}: ${error.message}`, 'error');
+          errorCount++;
+        }
+        
+        // Small delay to avoid overwhelming the server
+        await new Promise(resolve => setTimeout(resolve, 500));
+      }
+
+      log(`📊 Students Summary: ${successCount} added, ${errorCount} failed`, successCount > 0 ? 'success' : 'error');
+    }
+
+    async function addFaculty() {
+      log('👨‍🏫 Adding sample faculty...', 'info');
+      
+      const faculty = [
+        {
+          facultyId: "F101",
+          user: {
+            name: "Dr. M. Preethi",
+            email: "preethi.m@xaviers.edu",
+            password: "faculty123",
+            phone: "9876501234",
+            dateOfBirth: "1980-05-15",
+            gender: "Female",
+            role: "FACULTY"
+          },
+          department: "Computer Science",
+          qualification: "PhD in Computer Science"
+        },
+        {
+          facultyId: "F102",
+          user: {
+            name: "Dr. R. Narayani",
+            email: "narayani.r@xaviers.edu",
+            password: "faculty123",
+            phone: "9876501235",
+            dateOfBirth: "1978-08-22",
+            gender: "Female",
+            role: "FACULTY"
+          },
+          department: "Computer Science",
+          qualification: "PhD in Data Science"
+        },
+        {
+          facultyId: "F103",
+          user: {
+            name: "Dr. P. Annie Patricia",
+            email: "patricia.a@xaviers.edu",
+            password: "faculty123",
+            phone: "9876501236",
+            dateOfBirth: "1982-12-10",
+            gender: "Female",
+            role: "FACULTY"
+          },
+          department: "Computer Science",
+          qualification: "PhD in Software Engineering"
+        },
+        {
+          facultyId: "F104",
+          user: {
+            name: "Prof. S. Niraja Rayen",
+            email: "niraja.s@xaviers.edu",
+            password: "faculty123",
+            phone: "9876501237",
+            dateOfBirth: "1975-03-18",
+            gender: "Female",
+            role: "FACULTY"
+          },
+          department: "Computer Science",
+          qualification: "M.Tech in AI/ML"
+        },
+        {
+          facultyId: "F105",
+          user: {
+            name: "Dr. M. Sangeetha",
+            email: "sangeetha.m@xaviers.edu",
+            password: "faculty123",
+            phone: "9876501238",
+            dateOfBirth: "1985-07-25",
+            gender: "Female",
+            role: "FACULTY"
+          },
+          department: "Electronics",
+          qualification: "PhD in VLSI Design"
+        },
+        {
+          facultyId: "F106",
+          user: {
+            name: "Prof. R. Rexy",
+            email: "rexy.r@xaviers.edu",
+            password: "faculty123",
+            phone: "9876501239",
+            dateOfBirth: "1983-11-30",
+            gender: "Female",
+            role: "FACULTY"
+          },
+          department: "Mechanical Engineering",
+          qualification: "M.Tech in Robotics"
+        }
+      ];
+
+      let successCount = 0;
+      let errorCount = 0;
+
+      for (const fac of faculty) {
+        try {
+          const response = await apiHelpers.request('/admin/faculty', {
+            method: 'POST',
+            data: fac
+          });
+          
+          if (response.success) {
+            log(`✅ Added faculty: ${fac.user.name} (${fac.facultyId})`, 'success');
+            successCount++;
+          } else {
+            log(`❌ Failed to add ${fac.user.name}: ${response.message}`, 'error');
+            errorCount++;
+          }
+        } catch (error) {
+          log(`❌ Error adding ${fac.user.name}: ${error.message}`, 'error');
+          errorCount++;
+        }
+        
+        // Small delay to avoid overwhelming the server
+        await new Promise(resolve => setTimeout(resolve, 500));
+      }
+
+      log(`📊 Faculty Summary: ${successCount} added, ${errorCount} failed`, successCount > 0 ? 'success' : 'error');
+    }
+
+    // Auto-check authentication on load
+    window.addEventListener('DOMContentLoaded', () => {
+      log('🎓 Sample Data Utility Loaded', 'info');
+      log('ℹ️ Click a button above to start adding data', 'info');
+      log('ℹ️ Default passwords: student123 (students), faculty123 (faculty), admin123 (admin)', 'info');
+    });
+  </script>
+</body>
+</html>

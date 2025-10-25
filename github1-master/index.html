@@ -4,81 +4,362 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Karunya Institute of Technology & Sciences</title>
+  <link rel="stylesheet" href="enhanced-styles.css" />
+  <link rel="stylesheet" href="index-enhanced.css" />
+  <link rel="stylesheet" href="text-visibility-fix.css" />
   <link rel="stylesheet" href="styles.css" />
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
-<nav>
-  <ul>
-    <li><a class="nav-link" href="index.html">Home</a></li>
-    <li><a class="nav-link" href="department.html">Department</a></li>
-    <li><a class="nav-link" href="about.html">About</a></li>
-    <li><a class="nav-link" href="login.html">Login</a></li>
-  </ul>
+<!-- Modern Navigation -->
+<nav class="navbar">
+  <div class="container flex justify-between items-center">
+    <a href="index.html" class="navbar-brand">
+      <i class="fas fa-graduation-cap"></i>
+      Karunya Institute
+    </a>
+    <ul class="navbar-nav">
+      <li><a class="navbar-link active" href="index.html"><i class="fas fa-home"></i> Home</a></li>
+      <li><a class="navbar-link" href="department.html"><i class="fas fa-building"></i> Department</a></li>
+      <li><a class="navbar-link" href="about.html"><i class="fas fa-info-circle"></i> About</a></li>
+      <li><a class="navbar-link" href="login.html"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+    </ul>
+    <!-- Mobile Menu Button -->
+    <button class="mobile-menu-btn" id="mobileMenuBtn">
+      <i class="fas fa-bars"></i>
+    </button>
+  </div>
 </nav>
 
-<header class="clg-header">
-  <h1>Karunya Institute of Technology and Sciences</h1>
-  <p>A Christian Minority Residential Institution</p>
+<!-- Enhanced Hero Section -->
+<header class="hero-section">
+  <div class="hero-background">
+    <div class="hero-overlay"></div>
+    <img src="assets/karunya-campus.jpg" alt="Karunya Campus" class="hero-bg-image" />
+  </div>
+  <div class="hero-content container">
+    <div class="hero-text fade-in">
+      <h1 class="hero-title">Karunya Institute of Technology and Sciences</h1>
+      <p class="hero-subtitle">A Christian Minority Residential Institution</p>
+      <div class="hero-stats">
+        <div class="stat-item">
+          <span class="stat-number">35+</span>
+          <span class="stat-text">Years of Excellence</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number">10,000+</span>
+          <span class="stat-text">Students</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number">A++</span>
+          <span class="stat-text">NAAC Grade</span>
+        </div>
+      </div>
+      <div class="hero-actions">
+        <a href="login.html" class="btn btn-primary btn-lg">
+          <i class="fas fa-arrow-right"></i>
+          Access Portal
+        </a>
+        <a href="about.html" class="btn btn-secondary btn-lg">
+          <i class="fas fa-play-circle"></i>
+          Learn More
+        </a>
+      </div>
+    </div>
+  </div>
 </header>
 
-<div class="hero-img-container">
-  <img src="assets/karunya-campus.jpg" alt="Karunya Campus" class="hero-img" />
-  <div class="hero-banner-details">
-    <p><strong>Established:</strong> 1986</p>
-    <p><strong>Location:</strong> Coimbatore, Tamil Nadu, India</p>
-    <p><strong>Accreditation:</strong> NAAC A++ | NBA | AICTE Approved</p>
+<!-- Quick Facts Section -->
+<section class="quick-facts">
+  <div class="container">
+    <div class="facts-grid grid grid-cols-3 gap-6">
+      <div class="fact-card card text-center slide-up">
+        <div class="fact-icon">
+          <i class="fas fa-calendar-alt"></i>
+        </div>
+        <h3>Established</h3>
+        <p>1986</p>
+      </div>
+      <div class="fact-card card text-center slide-up">
+        <div class="fact-icon">
+          <i class="fas fa-map-marker-alt"></i>
+        </div>
+        <h3>Location</h3>
+        <p>Coimbatore, Tamil Nadu, India</p>
+      </div>
+      <div class="fact-card card text-center slide-up">
+        <div class="fact-icon">
+          <i class="fas fa-award"></i>
+        </div>
+        <h3>Accreditation</h3>
+        <p>NAAC A++ | NBA | AICTE Approved</p>
+      </div>
+    </div>
   </div>
-</div>
-
-<section class="full-section">
-  <h2>🏛️ About the Institution</h2>
-  <p>
-    Karunya Institute of Technology and Sciences (Deemed to be University) is a globally recognized private Christian institution, providing technical education combined with spiritual and moral values. It was founded by the late evangelist Dr. D.G.S. Dhinakaran with the vision of raising godly leaders who will serve humanity with compassion and integrity.
-  </p>
-  <p>
-    The campus is located in a scenic valley surrounded by the Western Ghats and spans over 700 acres. Karunya offers Undergraduate, Postgraduate, and Doctoral programs in various disciplines including Engineering, Management, Science, and Arts.
-  </p>
 </section>
 
-<div class="card-row equal-space alt-bg">
-  <section class="card">
-    <h3>🎯 Vision</h3>
-    <p>To be a center of excellence in education, research, and service to humanity with a Christ-centered mission.</p>
-  </section>
-  <section class="card">
-    <h3>🎓 Mission</h3>
-    <ul>
-      <li>To raise technically competent and socially committed professionals.</li>
-      <li>To encourage innovations and value-based education.</li>
-      <li>To create industry-ready graduates with global competencies.</li>
-    </ul>
-  </section>
-</div>
-
-<section class="full-section alt-bg">
-  <h2>📊 Rankings & Recognitions</h2>
-  <ul>
-    <li>Ranked among top 100 engineering institutions in NIRF India Rankings.</li>
-    <li>Accredited with highest A++ grade by NAAC in its 4th cycle.</li>
-    <li>Member of Association of Indian Universities (AIU) and International Association of Universities (IAU).</li>
-  </ul>
+<!-- About Section -->
+<section class="about-section">
+  <div class="container">
+    <div class="section-header text-center mb-8">
+      <h2 class="text-3xl font-bold mb-4">
+        <i class="fas fa-university text-primary-blue"></i>
+        About the Institution
+      </h2>
+      <p class="text-lg text-secondary max-w-3xl mx-auto">
+        Discover excellence in education, research, and innovation at one of India's premier institutions.
+      </p>
+    </div>
+    
+    <div class="about-content grid grid-cols-2 gap-8 items-center">
+      <div class="about-text">
+        <div class="card">
+          <h3 class="text-2xl font-semibold mb-4">Our Legacy</h3>
+          <p class="mb-4">
+            Karunya Institute of Technology and Sciences (Deemed to be University) is a globally recognized private Christian institution, providing technical education combined with spiritual and moral values. It was founded by the late evangelist Dr. D.G.S. Dhinakaran with the vision of raising godly leaders who will serve humanity with compassion and integrity.
+          </p>
+          <p>
+            The campus is located in a scenic valley surrounded by the Western Ghats and spans over 700 acres. Karunya offers Undergraduate, Postgraduate, and Doctoral programs in various disciplines including Engineering, Management, Science, and Arts.
+          </p>
+        </div>
+      </div>
+      <div class="about-image">
+        <img src="assets/karunya-campus.jpg" alt="Campus View" class="rounded-xl shadow-lg">
+      </div>
+    </div>
+  </div>
 </section>
 
-<section class="full-section">
-  <h2>💼 Placement Highlights</h2>
-  <p>
-    Karunya University has an excellent placement track record with top recruiters such as Wipro, TCS, HCL, Amazon, Zoho, and Infosys. The Career Development Cell organizes regular training, mock interviews, aptitude workshops, and industrial visits.
-  </p>
-  <ul>
-    <li>95% placement for eligible candidates in 2023</li>
-    <li>Highest package: ₹22 LPA (International)</li>
-    <li>Average package: ₹5.4 LPA</li>
-  </ul>
+<!-- Vision & Mission Section -->
+<section class="vision-mission">
+  <div class="container">
+    <div class="vm-grid grid grid-cols-2 gap-8">
+      <div class="vision-card card">
+        <div class="vm-header">
+          <div class="vm-icon">
+            <i class="fas fa-eye text-primary-blue"></i>
+          </div>
+          <h3 class="text-2xl font-bold">Vision</h3>
+        </div>
+        <p class="text-lg">
+          To be a center of excellence in education, research, and service to humanity with a Christ-centered mission.
+        </p>
+      </div>
+      
+      <div class="mission-card card">
+        <div class="vm-header">
+          <div class="vm-icon">
+            <i class="fas fa-graduation-cap text-primary-blue"></i>
+          </div>
+          <h3 class="text-2xl font-bold">Mission</h3>
+        </div>
+        <ul class="mission-list">
+          <li><i class="fas fa-check-circle text-success"></i> To raise technically competent and socially committed professionals.</li>
+          <li><i class="fas fa-check-circle text-success"></i> To encourage innovations and value-based education.</li>
+          <li><i class="fas fa-check-circle text-success"></i> To create industry-ready graduates with global competencies.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
 </section>
 
-<footer>
-  <p>© 2025 Karunya Institute of Technology & Sciences. All rights reserved.</p>
+<!-- Rankings & Recognition Section -->
+<section class="rankings-section bg-secondary">
+  <div class="container">
+    <div class="section-header text-center mb-8">
+      <h2 class="text-3xl font-bold mb-4">
+        <i class="fas fa-trophy text-warning"></i>
+        Rankings & Recognitions
+      </h2>
+    </div>
+    
+    <div class="rankings-grid grid grid-cols-3 gap-6">
+      <div class="ranking-card card text-center">
+        <div class="ranking-icon mb-4">
+          <i class="fas fa-medal text-warning text-3xl"></i>
+        </div>
+        <h4 class="font-semibold mb-2">NIRF Rankings</h4>
+        <p class="text-sm text-secondary">Ranked among top 100 engineering institutions in NIRF India Rankings.</p>
+      </div>
+      
+      <div class="ranking-card card text-center">
+        <div class="ranking-icon mb-4">
+          <i class="fas fa-star text-warning text-3xl"></i>
+        </div>
+        <h4 class="font-semibold mb-2">NAAC Grade A++</h4>
+        <p class="text-sm text-secondary">Accredited with highest A++ grade by NAAC in its 4th cycle.</p>
+      </div>
+      
+      <div class="ranking-card card text-center">
+        <div class="ranking-icon mb-4">
+          <i class="fas fa-globe text-warning text-3xl"></i>
+        </div>
+        <h4 class="font-semibold mb-2">Global Recognition</h4>
+        <p class="text-sm text-secondary">Member of Association of Indian Universities (AIU) and International Association of Universities (IAU).</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Placement Section -->
+<section class="placement-section">
+  <div class="container">
+    <div class="placement-content grid grid-cols-2 gap-8 items-center">
+      <div class="placement-text">
+        <h2 class="text-3xl font-bold mb-4">
+          <i class="fas fa-briefcase text-primary-blue"></i>
+          Placement Highlights
+        </h2>
+        <p class="mb-6 text-lg">
+          Karunya University has an excellent placement track record with top recruiters such as Wipro, TCS, HCL, Amazon, Zoho, and Infosys. The Career Development Cell organizes regular training, mock interviews, aptitude workshops, and industrial visits.
+        </p>
+        
+        <div class="placement-companies mb-6">
+          <h4 class="font-semibold mb-3">Top Recruiters</h4>
+          <div class="company-logos flex gap-4 flex-wrap">
+            <span class="company-tag badge badge-primary">Wipro</span>
+            <span class="company-tag badge badge-primary">TCS</span>
+            <span class="company-tag badge badge-primary">Amazon</span>
+            <span class="company-tag badge badge-primary">Infosys</span>
+            <span class="company-tag badge badge-primary">Zoho</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="placement-stats">
+        <div class="stats-container">
+          <div class="stat-card">
+            <div class="stat-value text-success">95%</div>
+            <div class="stat-label">Placement Rate 2023</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value text-warning">₹22 LPA</div>
+            <div class="stat-label">Highest Package (International)</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value text-info">₹5.4 LPA</div>
+            <div class="stat-label">Average Package</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Modern Footer -->
+<footer class="modern-footer">
+  <div class="container">
+    <div class="footer-content grid grid-cols-4 gap-8">
+      <div class="footer-section">
+        <h4 class="footer-title">Karunya Institute</h4>
+        <p class="footer-text">Excellence in Education, Research & Innovation</p>
+        <div class="social-links">
+          <a href="#" class="social-link"><i class="fab fa-facebook"></i></a>
+          <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+          <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+          <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+        </div>
+      </div>
+      
+      <div class="footer-section">
+        <h4 class="footer-title">Quick Links</h4>
+        <ul class="footer-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="department.html">Departments</a></li>
+          <li><a href="login.html">Portal Login</a></li>
+        </ul>
+      </div>
+      
+      <div class="footer-section">
+        <h4 class="footer-title">Academics</h4>
+        <ul class="footer-links">
+          <li><a href="#">Undergraduate</a></li>
+          <li><a href="#">Postgraduate</a></li>
+          <li><a href="#">Research</a></li>
+          <li><a href="#">Admissions</a></li>
+        </ul>
+      </div>
+      
+      <div class="footer-section">
+        <h4 class="footer-title">Contact Info</h4>
+        <div class="contact-info">
+          <p><i class="fas fa-map-marker-alt"></i> Karunya Nagar, Coimbatore - 641114</p>
+          <p><i class="fas fa-phone"></i> +91 422 2614000</p>
+          <p><i class="fas fa-envelope"></i> info@karunya.edu</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="footer-bottom">
+      <p>© 2025 Karunya Institute of Technology & Sciences. All rights reserved.</p>
+    </div>
+  </div>
 </footer>
-<script src= "script.js"></script>
+
+<script src="script.js"></script>
+<script>
+  // Enhanced JavaScript for improved interactivity
+  document.addEventListener('DOMContentLoaded', function() {
+    // Mobile menu toggle
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const navbar = document.querySelector('.navbar');
+    
+    if (mobileMenuBtn) {
+      mobileMenuBtn.addEventListener('click', function() {
+        navbar.classList.toggle('mobile-menu-open');
+      });
+    }
+    
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+    
+    // Add scroll effect to navbar
+    window.addEventListener('scroll', function() {
+      if (window.scrollY > 50) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    });
+    
+    // Intersection Observer for animations
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+    
+    const observer = new IntersectionObserver(function(entries) {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, observerOptions);
+    
+    // Observe elements for animation
+    document.querySelectorAll('.slide-up, .fade-in').forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(30px)';
+      el.style.transition = 'all 0.6s ease-out';
+      observer.observe(el);
+    });
+  });
+</script>
 </body>
 </html>

@@ -6,6 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="announcement.css" />
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="api-config.js?v=2025102501"></script>
+  <script src="auth-service.js?v=2025102501"></script>
 </head>
 <body>
 <header class="announcement-header" style="text-align: center;">
@@ -38,21 +40,25 @@
 </footer>
 
 <script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const userName = localStorage.getItem('userName');
-    const userId = localStorage.getItem('userId');
-    const userCourse = localStorage.getItem('userCourse');
+  document.addEventListener('DOMContentLoaded', function () {
+    // Check authentication using auth-service
+    if (!authService.isAuthenticated()) {
+      alert('Please login again.');
+      window.location.href = 'login.html';
+      return;
+    }
 
-    if (!userId || !userName) {
+    const currentUser = authService.getCurrentUser();
+    if (!currentUser) {
       alert('Please login again.');
       window.location.href = 'login.html';
       return;
     }
 
     // Set student info
-    document.getElementById('student-name').textContent = userName;
-    document.getElementById('student-id').textContent = "ID: " + userId;
-    document.getElementById('student-course').textContent = userCourse;
+    document.getElementById('student-name').textContent = currentUser.name;
+    document.getElementById('student-id').textContent = "ID: " + currentUser.id;
+    document.getElementById('student-course').textContent = currentUser.course || 'N/A';
     document.getElementById('student-photo').src = 'assets/default.jpg';
 
     // Load announcements

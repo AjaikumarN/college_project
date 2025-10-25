@@ -6,6 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="marks.css" />
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="api-config.js?v=2025102501"></script>
+  <script src="auth-service.js?v=2025102501"></script>
 </head>
 <body>
 <header class="marks-header" style="text-align: center;">
@@ -48,23 +50,23 @@
 
 <script>
   document.addEventListener("DOMContentLoaded", function () {
-    // 🧠 Get student info from localStorage
-    const student = {
-      name: localStorage.getItem("userName"),
-      id: localStorage.getItem("userId"),
-      course: localStorage.getItem("userCourse"),
-      year: localStorage.getItem("userYear")
-    };
-
-    if (!student.id) {
+    // Check authentication using auth-service
+    if (!authService.isAuthenticated()) {
       alert("Please login again.");
       window.location.href = "login.html";
       return;
     }
 
-    document.getElementById("student-name").textContent = student.name;
-    document.getElementById("student-id").textContent = "ID: " + student.id;
-    document.getElementById("student-course").textContent = student.year + "-Year - " + student.course;
+    const currentUser = authService.getCurrentUser();
+    if (!currentUser) {
+      alert("Please login again.");
+      window.location.href = "login.html";
+      return;
+    }
+
+    document.getElementById("student-name").textContent = currentUser.name;
+    document.getElementById("student-id").textContent = "ID: " + currentUser.id;
+    document.getElementById("student-course").textContent = (currentUser.year || '') + "-Year - " + (currentUser.course || 'N/A');
     document.getElementById("student-photo").src = "assets/default.jpg";
 
     // Load marks.json

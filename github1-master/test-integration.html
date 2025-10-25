@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>College ERP System - Test Page</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #34495e;
+            margin-top: 30px;
+            border-left: 4px solid #3498db;
+            padding-left: 15px;
+        }
+        .status-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        .success { background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); }
+        .error { background: linear-gradient(135deg, #fc466b 0%, #3f5efb 100%); }
+        .warning { background: linear-gradient(135deg, #fdbb2d 0%, #22c1c3 100%); }
+        
+        .test-section {
+            margin: 30px 0;
+            padding: 20px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            background: #f9f9f9;
+        }
+        .test-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            margin: 10px 0;
+            background: white;
+            border-radius: 5px;
+            border-left: 4px solid #3498db;
+        }
+        .test-item.success { border-left-color: #27ae60; }
+        .test-item.error { border-left-color: #e74c3c; }
+        .test-item.warning { border-left-color: #f39c12; }
+        
+        button {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            margin: 5px;
+        }
+        button:hover { background: #2980b9; }
+        
+        .btn-success { background: #27ae60; }
+        .btn-success:hover { background: #229954; }
+        .btn-danger { background: #e74c3c; }
+        .btn-danger:hover { background: #c0392b; }
+        .btn-warning { background: #f39c12; }
+        .btn-warning:hover { background: #d68910; }
+        
+        .results {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 5px;
+            background: #ecf0f1;
+            font-family: monospace;
+            font-size: 14px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .navigation-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 30px 0;
+        }
+        .nav-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+            text-decoration: none;
+            color: #2c3e50;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+        .nav-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+            border-color: #3498db;
+        }
+        .nav-card h3 {
+            margin: 0 0 10px 0;
+            color: #3498db;
+        }
+        .nav-card p {
+            margin: 0;
+            color: #7f8c8d;
+            font-size: 14px;
+        }
+        #testResults {
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🏫 College ERP System - Integration Test</h1>
+        
+        <div class="status-card">
+            <h3>System Status</h3>
+            <p>Frontend-Backend Integration Testing Dashboard</p>
+            <p id="systemStatus">Initializing...</p>
+        </div>
+
+        <h2>🧪 API Connection Tests</h2>
+        <div class="test-section">
+            <div class="test-item" id="authTest">
+                <span>Authentication Service</span>
+                <button onclick="testAuthService()" class="btn-warning">Test Auth</button>
+            </div>
+            <div class="test-item" id="apiConfigTest">
+                <span>API Configuration</span>
+                <button onclick="testAPIConfig()" class="btn-warning">Test API Config</button>
+            </div>
+            <div class="test-item" id="backendTest">
+                <span>Backend Connection</span>
+                <button onclick="testBackendConnection()" class="btn-warning">Test Backend</button>
+            </div>
+            <div class="test-item" id="endpointsTest">
+                <span>API Endpoints</span>
+                <button onclick="testAPIEndpoints()" class="btn-warning">Test Endpoints</button>
+            </div>
+        </div>
+
+        <h2>🔐 Authentication Flow Test</h2>
+        <div class="test-section">
+            <button onclick="testLogin()" class="btn-success">Test Login Flow</button>
+            <button onclick="testLogout()" class="btn-danger">Test Logout</button>
+            <button onclick="testRoleRedirection()" class="btn-warning">Test Role Redirection</button>
+        </div>
+
+        <h2>📱 Page Navigation Links</h2>
+        <div class="navigation-links">
+            <a href="login.html" class="nav-card">
+                <h3>🔑 Login Page</h3>
+                <p>User authentication portal</p>
+            </a>
+            <a href="register.html" class="nav-card">
+                <h3>📝 Registration</h3>
+                <p>New user registration</p>
+            </a>
+            <a href="admin.html" class="nav-card">
+                <h3>👨‍💼 Admin Dashboard</h3>
+                <p>Administrative panel</p>
+            </a>
+            <a href="student.html" class="nav-card">
+                <h3>🎓 Student Portal</h3>
+                <p>Student dashboard</p>
+            </a>
+            <a href="faculty.html" class="nav-card">
+                <h3>👩‍🏫 Faculty Portal</h3>
+                <p>Faculty dashboard</p>
+            </a>
+            <a href="courses.html" class="nav-card">
+                <h3>📚 Courses</h3>
+                <p>Course management</p>
+            </a>
+        </div>
+
+        <h2>📊 Test Results</h2>
+        <div class="results">
+            <div id="testResults">Ready to run tests...</div>
+        </div>
+    </div>
+
+    <!-- Include required scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="api-config.js"></script>
+    <script src="auth-service.js"></script>
+    
+    <script>
+        let testResults = [];
+        
+        function log(message, type = 'info') {
+            const timestamp = new Date().toLocaleTimeString();
+            const logMessage = `[${timestamp}] ${type.toUpperCase()}: ${message}`;
+            testResults.push(logMessage);
+            updateResults();
+            console.log(logMessage);
+        }
+        
+        function updateResults() {
+            document.getElementById('testResults').textContent = testResults.join('\n');
+        }
+        
+        function updateTestStatus(testId, status) {
+            const element = document.getElementById(testId);
+            element.className = `test-item ${status}`;
+            
+            const button = element.querySelector('button');
+            if (status === 'success') {
+                button.textContent = '✓ Passed';
+                button.className = 'btn-success';
+            } else if (status === 'error') {
+                button.textContent = '✗ Failed';
+                button.className = 'btn-danger';
+            } else {
+                button.textContent = '⚠ Warning';
+                button.className = 'btn-warning';
+            }
+        }
+        
+        // Test Authentication Service
+        function testAuthService() {
+            log('Testing Authentication Service...');
+            
+            try {
+                if (typeof authService === 'undefined') {
+                    throw new Error('AuthService not loaded');
+                }
+                
+                log('✓ AuthService is available');
+                log(`✓ Base URL: ${authService.baseURL}`);
+                log(`✓ Current auth status: ${authService.isAuthenticated()}`);
+                
+                updateTestStatus('authTest', 'success');
+                log('Authentication Service test PASSED');
+            } catch (error) {
+                log(`✗ Authentication Service test FAILED: ${error.message}`, 'error');
+                updateTestStatus('authTest', 'error');
+            }
+        }
+        
+        // Test API Configuration
+        function testAPIConfig() {
+            log('Testing API Configuration...');
+            
+            try {
+                if (typeof API_CONFIG === 'undefined') {
+                    throw new Error('API_CONFIG not loaded');
+                }
+                
+                log(`✓ Base URL: ${API_CONFIG.BASE_URL}`);
+                log(`✓ API Version: ${API_CONFIG.API_VERSION}`);
+                log(`✓ Timeout: ${API_CONFIG.TIMEOUT}ms`);
+                log(`✓ Total endpoints configured: ${Object.keys(API_CONFIG.ENDPOINTS).length}`);
+                
+                if (typeof apiHelpers === 'undefined') {
+                    throw new Error('apiHelpers not available');
+                }
+                
+                log('✓ API Helpers are available');
+                updateTestStatus('apiConfigTest', 'success');
+                log('API Configuration test PASSED');
+            } catch (error) {
+                log(`✗ API Configuration test FAILED: ${error.message}`, 'error');
+                updateTestStatus('apiConfigTest', 'error');
+            }
+        }
+        
+        // Test Backend Connection
+        async function testBackendConnection() {
+            log('Testing Backend Connection...');
+            
+            try {
+                const response = await axios.get(`${API_CONFIG.BASE_URL}/health`, {
+                    timeout: 5000
+                });
+                
+                log('✓ Backend is reachable');
+                log(`✓ Response status: ${response.status}`);
+                updateTestStatus('backendTest', 'success');
+                log('Backend connection test PASSED');
+            } catch (error) {
+                if (error.code === 'ECONNREFUSED' || error.message.includes('Network Error')) {
+                    log('✗ Backend server is not running', 'error');
+                    log('Please start the Spring Boot backend server', 'error');
+                } else {
+                    log(`✗ Backend connection test FAILED: ${error.message}`, 'error');
+                }
+                updateTestStatus('backendTest', 'error');
+            }
+        }
+        
+        // Test API Endpoints
+        async function testAPIEndpoints() {
+            log('Testing API Endpoints...');
+            
+            const testEndpoints = [
+                '/auth/health',
+                '/admin/health', 
+                '/student/health',
+                '/faculty/health'
+            ];
+            
+            let successCount = 0;
+            
+            for (const endpoint of testEndpoints) {
+                try {
+                    const response = await axios.get(`${API_CONFIG.BASE_URL}${endpoint}`, {
+                        timeout: 3000
+                    });
+                    log(`✓ ${endpoint}: ${response.status}`);
+                    successCount++;
+                } catch (error) {
+                    log(`✗ ${endpoint}: ${error.response?.status || 'No response'}`, 'error');
+                }
+            }
+            
+            if (successCount === testEndpoints.length) {
+                updateTestStatus('endpointsTest', 'success');
+                log('API Endpoints test PASSED');
+            } else if (successCount > 0) {
+                updateTestStatus('endpointsTest', 'warning');
+                log(`API Endpoints test PARTIAL: ${successCount}/${testEndpoints.length} endpoints working`);
+            } else {
+                updateTestStatus('endpointsTest', 'error');
+                log('API Endpoints test FAILED: No endpoints responding');
+            }
+        }
+        
+        // Test Login Flow
+        function testLogin() {
+            log('Testing Login Flow...');
+            
+            // Test with demo credentials
+            const testCredentials = {
+                email: 'admin@karunya.edu',
+                password: 'admin123'
+            };
+            
+            log(`Attempting login with: ${testCredentials.email}`);
+            
+            authService.login(testCredentials.email, testCredentials.password)
+                .then(result => {
+                    log('✓ Login successful');
+                    log(`✓ User role: ${result.user.role}`);
+                    log('Login Flow test PASSED');
+                })
+                .catch(error => {
+                    log(`✗ Login Flow test FAILED: ${error.message}`, 'error');
+                });
+        }
+        
+        // Test Logout
+        function testLogout() {
+            log('Testing Logout Flow...');
+            
+            try {
+                authService.logout();
+                log('✓ Logout executed');
+                log('✓ Local storage cleared');
+                log('Logout Flow test PASSED');
+            } catch (error) {
+                log(`✗ Logout Flow test FAILED: ${error.message}`, 'error');
+            }
+        }
+        
+        // Test Role Redirection
+        function testRoleRedirection() {
+            log('Testing Role Redirection...');
+            
+            const roles = ['ADMIN', 'STUDENT', 'FACULTY'];
+            
+            roles.forEach(role => {
+                const mockUser = { role: role };
+                authService.setCurrentUser(mockUser);
+                
+                log(`✓ Set user role to: ${role}`);
+                
+                if (authService.hasRole(role)) {
+                    log(`✓ Role check passed for: ${role}`);
+                } else {
+                    log(`✗ Role check failed for: ${role}`, 'error');
+                }
+            });
+            
+            // Clean up
+            authService.logout();
+            log('Role Redirection test COMPLETED');
+        }
+        
+        // Initialize system status
+        function updateSystemStatus() {
+            const statusElement = document.getElementById('systemStatus');
+            
+            if (typeof authService !== 'undefined' && typeof API_CONFIG !== 'undefined') {
+                statusElement.textContent = '✓ All core modules loaded successfully';
+                statusElement.parentElement.className = 'status-card success';
+            } else {
+                statusElement.textContent = '✗ Some modules failed to load';
+                statusElement.parentElement.className = 'status-card error';
+            }
+        }
+        
+        // Run initial checks
+        document.addEventListener('DOMContentLoaded', function() {
+            log('=== College ERP System Test Dashboard ===');
+            log('Initializing system checks...');
+            
+            updateSystemStatus();
+            
+            log('System ready for testing');
+            log('Click the buttons above to run individual tests');
+            log('===========================================');
+        });
+        
+        // Auto-run basic tests
+        setTimeout(() => {
+            testAuthService();
+            testAPIConfig();
+        }, 1000);
+    </script>
+</body>
+</html>

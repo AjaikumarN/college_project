@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Debug Courses Page</title>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="api-config.js?v=2025102501"></script>
+  <script src="auth-service.js?v=2025102501"></script>
+  <style>
+    body { font-family: Arial; padding: 20px; max-width: 1000px; margin: 0 auto; }
+    .result { background: #f5f5f5; padding: 15px; margin: 10px 0; border-radius: 5px; }
+    .success { background: #d4edda; color: #155724; }
+    .error { background: #f8d7da; color: #721c24; }
+    pre { background: #333; color: #fff; padding: 10px; overflow-x: auto; font-size: 12px; }
+    button { padding: 10px 20px; margin: 5px; cursor: pointer; background: #007bff; color: white; border: none; border-radius: 5px; }
+    button:hover { background: #0056b3; }
+  </style>
+</head>
+<body>
+  <h1>🔍 Debug Courses Page</h1>
+  
+  <div>
+    <h3>Step 1: Check Authentication</h3>
+    <button onclick="checkAuth()">Check Auth</button>
+    <div id="authResult" class="result"></div>
+  </div>
+
+  <div>
+    <h3>Step 2: Test API Directly</h3>
+    <button onclick="testAPI()">Test API Call</button>
+    <div id="apiResult" class="result"></div>
+  </div>
+
+  <div>
+    <h3>Step 3: Test with apiHelpers</h3>
+    <button onclick="testAPIHelpers()">Test apiHelpers</button>
+    <div id="helpersResult" class="result"></div>
+  </div>
+
+  <div>
+    <h3>Step 4: Check Console Errors</h3>
+    <button onclick="checkErrors()">Check for Errors</button>
+    <div id="errorsResult" class="result"></div>
+  </div>
+
+  <div>
+    <h3>Step 5: Open Courses Page</h3>
+    <button onclick="window.open('courses.html', '_blank')">Open Courses Page</button>
+  </div>
+
+  <script>
+    let lastError = null;
+    
+    // Capture console errors
+    window.addEventListener('error', function(e) {
+      lastError = {
+        message: e.message,
+        filename: e.filename,
+        lineno: e.lineno,
+        colno: e.colno,
+        error: e.error?.stack
+      };
+      console.error('Captured error:', lastError);
+    });
+
+    function checkAuth() {
+      try {
+        const isAuth = authService.isAuthenticated();
+        const user = authService.getCurrentUser();
+        const token = authService.getToken();
+        
+        if (isAuth && user) {
+          document.getElementById('authResult').className = 'result success';
+          document.getElementById('authResult').innerHTML = 
+            '✓ Authentication OK<br>' +
+            '<strong>User:</strong> ' + user.name + '<br>' +
+            '<strong>Role:</strong> ' + user.role + '<br>' +
+            '<strong>ID:</strong> ' + user.id + '<br>' +
+            '<strong>Token:</strong> ' + token.substring(0, 50) + '...';
+        } else {
+          document.getElementById('authResult').className = 'result error';
+          document.getElementById('authResult').innerHTML = 
+            '✗ Not authenticated<br>' +
+            'User: ' + (user ? 'Present' : 'Missing') + '<br>' +
+            'Token: ' + (token ? 'Present' : 'Missing');
+        }
+      } catch (error) {
+        document.getElementById('authResult').className = 'result error';
+        document.getElementById('authResult').innerHTML = '✗ Error: ' + error.message;
+        console.error('Auth check error:', error);
+      }
+    }
+
+    async function testAPI() {
+      try {
+        document.getElementById('apiResult').innerHTML = 'Loading...';
+        
+        const token = authService.getToken();
+        const response = await axios.get('http://localhost:8080/api/student/portal/courses/available', {
+          headers: {
+            'Authorization': 'Bearer ' + token
+          }
+        });
+        
+        document.getElementById('apiResult').className = 'result success';
+        document.getElementById('apiResult').innerHTML = 
+          '✓ API Call Successful<br>' +
+          '<strong>Status:</strong> ' + response.status + '<br>' +
+          '<strong>Success:</strong> ' + response.data.success + '<br>' +
+          '<strong>Message:</strong> ' + response.data.message + '<br>' +
+          '<strong>Courses Count:</strong> ' + (response.data.data?.availableCourses?.length || 0) + '<br>' +
+          '<strong>Full Response:</strong><pre>' + JSON.stringify(response.data, null, 2) + '</pre>';
+      } catch (error) {
+        document.getElementById('apiResult').className = 'result error';
+        document.getElementById('apiResult').innerHTML = 
+          '✗ API Call Failed<br>' +
+          '<strong>Status:</strong> ' + (error.response?.status || 'N/A') + '<br>' +
+          '<strong>Error:</strong> ' + error.message + '<br>' +
+          '<strong>Details:</strong><pre>' + JSON.stringify(error.response?.data || error.message, null, 2) + '</pre>';
+        console.error('API test error:', error);
+      }
+    }
+
+    async function testAPIHelpers() {
+      try {
+        document.getElementById('helpersResult').innerHTML = 'Loading...';
+        
+        console.log('Testing apiHelpers.request...');
+        const response = await apiHelpers.request('/student/portal/courses/available');
+        
+        console.log('Response from apiHelpers:', response);
+        
+        document.getElementById('helpersResult').className = 'result success';
+        document.getElementById('helpersResult').innerHTML = 
+          '✓ apiHelpers Call Successful<br>' +
+          '<strong>Response Type:</strong> ' + typeof response + '<br>' +
+          '<strong>Has success property:</strong> ' + ('success' in response) + '<br>' +
+          '<strong>Success:</strong> ' + response.success + '<br>' +
+          '<strong>Message:</strong> ' + response.message + '<br>' +
+          '<strong>Courses:</strong> ' + (response.data?.availableCourses?.length || 0) + '<br>' +
+          '<strong>Full Response:</strong><pre>' + JSON.stringify(response, null, 2) + '</pre>';
+      } catch (error) {
+        document.getElementById('helpersResult').className = 'result error';
+        document.getElementById('helpersResult').innerHTML = 
+          '✗ apiHelpers Call Failed<br>' +
+          '<strong>Error:</strong> ' + error.message + '<br>' +
+          '<strong>Details:</strong><pre>' + JSON.stringify(error.response?.data || error.message, null, 2) + '</pre>';
+        console.error('apiHelpers test error:', error);
+      }
+    }
+
+    function checkErrors() {
+      if (lastError) {
+        document.getElementById('errorsResult').className = 'result error';
+        document.getElementById('errorsResult').innerHTML = 
+          '✗ JavaScript Error Detected:<br>' +
+          '<strong>Message:</strong> ' + lastError.message + '<br>' +
+          '<strong>File:</strong> ' + lastError.filename + '<br>' +
+          '<strong>Line:</strong> ' + lastError.lineno + ':' + lastError.colno + '<br>' +
+          '<strong>Stack:</strong><pre>' + lastError.error + '</pre>';
+      } else {
+        document.getElementById('errorsResult').className = 'result success';
+        document.getElementById('errorsResult').innerHTML = '✓ No JavaScript errors detected';
+      }
+    }
+
+    // Auto-run auth check on load
+    window.addEventListener('DOMContentLoaded', function() {
+      checkAuth();
+      console.log('Debug page loaded. Open browser console (F12) for detailed logs.');
+    });
+  </script>
+</body>
+</html>

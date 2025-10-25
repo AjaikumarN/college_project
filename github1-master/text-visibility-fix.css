@@ -1,0 +1,232 @@
+/* Text Visibility Fixes for Enhanced UI */
+
+/* Global text contrast improvements */
+body {
+  color: #0f172a !important;
+  font-weight: 500 !important;
+}
+
+/* Headings - Make them darker and bolder */
+h1, h2, h3, h4, h5, h6 {
+  color: #0f172a !important;
+  font-weight: 700 !important;
+}
+
+/* Paragraphs and regular text */
+p, span, div {
+  color: #334155 !important;
+  font-weight: 500 !important;
+}
+
+/* Secondary text */
+.text-secondary,
+.header-subtitle,
+.profile-role,
+small {
+  color: #475569 !important;
+  font-weight: 600 !important;
+}
+
+/* Muted text */
+.text-muted,
+.action-meta,
+.stat-change {
+  color: #64748b !important;
+  font-weight: 600 !important;
+}
+
+/* Card content */
+.card h3,
+.card h4,
+.card p {
+  color: #0f172a !important;
+}
+
+.card .text-secondary {
+  color: #475569 !important;
+}
+
+/* Action cards */
+.action-content h4 {
+  color: #0f172a !important;
+  font-weight: 700 !important;
+}
+
+.action-content p {
+  color: #475569 !important;
+  font-weight: 500 !important;
+}
+
+/* Stat cards */
+.stat-content h3 {
+  color: #0f172a !important;
+  font-weight: 800 !important;
+}
+
+.stat-content p {
+  color: #475569 !important;
+  font-weight: 600 !important;
+}
+
+/* Schedule and activity items */
+.schedule-content h4,
+.activity-content h4,
+.event-content h4 {
+  color: #0f172a !important;
+  font-weight: 700 !important;
+}
+
+.schedule-content p,
+.activity-content p,
+.event-content p {
+  color: #475569 !important;
+  font-weight: 500 !important;
+}
+
+/* Date and time elements */
+.event-date .day,
+.schedule-time .time {
+  color: #0f172a !important;
+  font-weight: 800 !important;
+}
+
+.event-date .month,
+.schedule-time .duration {
+  color: #475569 !important;
+  font-weight: 700 !important;
+}
+
+/* Navigation items */
+.navbar-link,
+.drawer-menu a {
+  color: #334155 !important;
+  font-weight: 600 !important;
+}
+
+.drawer-menu a:hover,
+.drawer-menu a.active {
+  color: white !important;
+}
+
+/* Form elements */
+.form-label {
+  color: #0f172a !important;
+  font-weight: 600 !important;
+}
+
+.form-input {
+  color: #0f172a !important;
+  font-weight: 500 !important;
+}
+
+/* Section titles */
+.section-title {
+  color: #0f172a !important;
+  font-weight: 700 !important;
+}
+
+/* Notification items */
+.notification-item p {
+  color: #0f172a !important;
+  font-weight: 600 !important;
+}
+
+.notification-item small {
+  color: #64748b !important;
+  font-weight: 600 !important;
+}
+
+/* Header profile */
+.profile-name {
+  color: white !important;
+  font-weight: 700 !important;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.profile-role {
+  color: rgba(255, 255, 255, 0.9) !important;
+  font-weight: 500 !important;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* White text on colored backgrounds */
+.welcome-card h2,
+.welcome-card p,
+.hero-title,
+.hero-subtitle {
+  color: white !important;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4) !important;
+  font-weight: 700 !important;
+}
+
+.quick-stat {
+  color: white !important;
+  font-weight: 600 !important;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Ensure proper contrast on buttons */
+.btn {
+  font-weight: 600 !important;
+}
+
+.btn-primary {
+  color: white !important;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* Footer text */
+.footer-content,
+.footer-links a {
+  color: rgba(255, 255, 255, 0.9) !important;
+  font-weight: 500 !important;
+}
+
+/* Dashboard stats badges */
+.stat-change.positive {
+  color: #059669 !important;
+  font-weight: 700 !important;
+}
+
+.stat-change.negative {
+  color: #dc2626 !important;
+  font-weight: 700 !important;
+}
+
+.stat-change.neutral {
+  color: #64748b !important;
+  font-weight: 600 !important;
+}
+
+/* Priority badges */
+.event-priority.high {
+  color: #dc2626 !important;
+  font-weight: 700 !important;
+}
+
+.event-priority.medium {
+  color: #d97706 !important;
+  font-weight: 700 !important;
+}
+
+.event-priority.low {
+  color: #059669 !important;
+  font-weight: 700 !important;
+}
+
+/* Schedule status badges */
+.schedule-status {
+  font-weight: 700 !important;
+}
+
+.schedule-status.current-class {
+  color: var(--primary-blue) !important;
+}
+
+.schedule-status.upcoming {
+  color: #d97706 !important;
+}
+
+.schedule-status.break {
+  color: #059669 !important;
+}

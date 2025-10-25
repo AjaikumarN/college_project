@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>System Status - College ERP</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 20px;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .header {
+      text-align: center;
+      color: white;
+      margin-bottom: 40px;
+    }
+    
+    .header h1 {
+      font-size: 3em;
+      margin-bottom: 10px;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+    
+    .header p {
+      font-size: 1.2em;
+      opacity: 0.9;
+    }
+    
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+    
+    .card {
+      background: white;
+      border-radius: 15px;
+      padding: 25px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+    }
+    
+    .card h2 {
+      color: #8B0000;
+      margin-bottom: 15px;
+      font-size: 1.5em;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .status-badge {
+      display: inline-block;
+      padding: 5px 15px;
+      border-radius: 20px;
+      font-size: 0.9em;
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
+    
+    .status-online {
+      background: #d4edda;
+      color: #155724;
+    }
+    
+    .status-offline {
+      background: #f8d7da;
+      color: #721c24;
+    }
+    
+    .info-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .info-row:last-child {
+      border-bottom: none;
+    }
+    
+    .info-label {
+      color: #666;
+      font-weight: 500;
+    }
+    
+    .info-value {
+      color: #333;
+      font-weight: bold;
+    }
+    
+    .btn-group {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+    
+    .btn {
+      flex: 1;
+      min-width: 200px;
+      padding: 15px 25px;
+      border: none;
+      border-radius: 10px;
+      font-size: 1em;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      text-align: center;
+      display: inline-block;
+    }
+    
+    .btn-primary {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+    }
+    
+    .btn-success {
+      background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+      color: white;
+    }
+    
+    .btn-info {
+      background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      color: white;
+    }
+    
+    .btn-warning {
+      background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      color: white;
+    }
+    
+    .btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    }
+    
+    .feature-list {
+      list-style: none;
+      margin-top: 15px;
+    }
+    
+    .feature-list li {
+      padding: 8px 0;
+      padding-left: 25px;
+      position: relative;
+    }
+    
+    .feature-list li:before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      color: #28a745;
+      font-weight: bold;
+      font-size: 1.2em;
+    }
+    
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 15px;
+      margin-top: 15px;
+    }
+    
+    .stat-box {
+      text-align: center;
+      padding: 15px;
+      background: #f8f9fa;
+      border-radius: 10px;
+    }
+    
+    .stat-number {
+      font-size: 2em;
+      font-weight: bold;
+      color: #8B0000;
+    }
+    
+    .stat-label {
+      color: #666;
+      font-size: 0.9em;
+      margin-top: 5px;
+    }
+    
+    @media (max-width: 768px) {
+      .header h1 {
+        font-size: 2em;
+      }
+      
+      .grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .btn {
+        min-width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>🎓 College ERP System</h1>
+      <p>Production-Ready Enterprise Resource Planning</p>
+    </div>
+    
+    <div class="grid">
+      <!-- System Status Card -->
+      <div class="card">
+        <h2>⚡ System Status</h2>
+        <span class="status-badge status-online" id="systemStatus">✓ All Systems Operational</span>
+        
+        <div class="info-row">
+          <span class="info-label">Backend:</span>
+          <span class="info-value" id="backendStatus">Online</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Database:</span>
+          <span class="info-value">PostgreSQL 14.19</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Java Version:</span>
+          <span class="info-value">21.0.9</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Spring Boot:</span>
+          <span class="info-value">3.5.0</span>
+        </div>
+      </div>
+      
+      <!-- Features Card -->
+      <div class="card">
+        <h2>✨ Key Features</h2>
+        <ul class="feature-list">
+          <li>Role-Based Authentication</li>
+          <li>Admin Dashboard with CRUD</li>
+          <li>Student Portal</li>
+          <li>Faculty Management</li>
+          <li>Real-time Data Sync</li>
+          <li>Responsive Design</li>
+          <li>Secure JWT Authentication</li>
+          <li>RESTful API (191 endpoints)</li>
+        </ul>
+      </div>
+      
+      <!-- Statistics Card -->
+      <div class="card">
+        <h2>📊 System Statistics</h2>
+        <div class="stats-grid">
+          <div class="stat-box">
+            <div class="stat-number" id="studentCount">-</div>
+            <div class="stat-label">Students</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-number" id="facultyCount">-</div>
+            <div class="stat-label">Faculty</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-number">191</div>
+            <div class="stat-label">API Endpoints</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-number">3</div>
+            <div class="stat-label">User Roles</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Quick Access Card -->
+    <div class="card">
+      <h2>🚀 Quick Access</h2>
+      <div class="btn-group">
+        <a href="login.html" class="btn btn-primary">🔐 Login</a>
+        <a href="admin.html" class="btn btn-success">👨‍💼 Admin Dashboard</a>
+        <a href="student.html" class="btn btn-info">👨‍🎓 Student Portal</a>
+        <a href="add-sample-data.html" class="btn btn-warning">📝 Add Sample Data</a>
+      </div>
+    </div>
+    
+    <!-- Documentation Card -->
+    <div class="card">
+      <h2>📚 Documentation</h2>
+      <div class="info-row">
+        <span class="info-label">Setup Guide:</span>
+        <span class="info-value">See README.md</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">API Documentation:</span>
+        <span class="info-value">191 REST endpoints</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">Default Admin:</span>
+        <span class="info-value">admin@college.edu / admin123</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">Backend URL:</span>
+        <span class="info-value">http://localhost:8080</span>
+      </div>
+    </div>
+    
+    <!-- Tech Stack Card -->
+    <div class="card">
+      <h2>🛠️ Technology Stack</h2>
+      <div class="info-row">
+        <span class="info-label">Backend:</span>
+        <span class="info-value">Java 21, Spring Boot 3.5</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">Database:</span>
+        <span class="info-value">PostgreSQL 14.19</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">Security:</span>
+        <span class="info-value">JWT, BCrypt, Spring Security</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">Frontend:</span>
+        <span class="info-value">Vanilla JS, Axios, CSS3</span>
+      </div>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script>
+    // Check backend status and load stats
+    async function checkSystemStatus() {
+      try {
+        // Try to ping backend
+        const response = await axios.get('http://localhost:8080/api/auth/health', {
+          timeout: 3000
+        }).catch(() => null);
+        
+        if (response) {
+          document.getElementById('backendStatus').textContent = 'Online';
+          document.getElementById('backendStatus').style.color = '#28a745';
+        } else {
+          document.getElementById('backendStatus').textContent = 'Offline';
+          document.getElementById('backendStatus').style.color = '#dc3545';
+          document.getElementById('systemStatus').textContent = '⚠ Backend Offline';
+          document.getElementById('systemStatus').className = 'status-badge status-offline';
+        }
+      } catch (error) {
+        console.log('Backend status check failed:', error);
+        document.getElementById('backendStatus').textContent = 'Unknown';
+        document.getElementById('backendStatus').style.color = '#ffc107';
+      }
+    }
+    
+    // Load stats if authenticated
+    async function loadStats() {
+      const token = localStorage.getItem('college_erp_token');
+      if (token) {
+        try {
+          const config = {
+            headers: { Authorization: `Bearer ${token}` },
+            timeout: 3000
+          };
+          
+          const students = await axios.get('http://localhost:8080/api/admin/students?size=1000', config).catch(() => null);
+          const faculty = await axios.get('http://localhost:8080/api/admin/faculty?size=1000', config).catch(() => null);
+          
+          if (students?.data?.data) {
+            const count = students.data.data.content?.length || students.data.data.length || 0;
+            document.getElementById('studentCount').textContent = count;
+          }
+          
+          if (faculty?.data?.data) {
+            const count = faculty.data.data.content?.length || faculty.data.data.length || 0;
+            document.getElementById('facultyCount').textContent = count;
+          }
+        } catch (error) {
+          console.log('Stats loading failed:', error);
+        }
+      }
+    }
+    
+    // Initialize
+    window.addEventListener('DOMContentLoaded', () => {
+      checkSystemStatus();
+      loadStats();
+    });
+  </script>
+</body>
+</html>

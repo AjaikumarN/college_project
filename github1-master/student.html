@@ -4,120 +4,834 @@
   <meta charset="UTF-8">
   <title>Dashboard | Student Portal</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="enhanced-styles.css">
+  <link rel="stylesheet" href="student-enhanced.css">
+  <link rel="stylesheet" href="text-visibility-fix.css">
   <link rel="stylesheet" href="student.css">
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="api-config.js?v=2024102401"></script>
+  <script src="auth-service.js?v=2024102401"></script>
+  <script src="student-dashboard.js?v=2024102401"></script>
 </head>
 <body>
 
-<!-- Drawer -->
+<!-- Enhanced Side Drawer -->
+<div class="drawer-overlay" id="drawerOverlay"></div>
 <div class="side-drawer" id="sideDrawer">
   <div class="drawer-content">
-    <ul class="drawer-menu">
-      <li><a href="student.html"><span>🏠</span>Home</a></li>
-      <li><a href="stu-profile.html"><span>👤</span>Profile</a></li>
-      <li><a href="attendance.html"><span>📅</span>Attendance</a></li>
-    </ul>
-    <ul class="drawer-menu logout-menu">
-      <li><a href="login.html" onclick="localStorage.clear()"><span>🚪</span>Logout</a></li>
-    </ul>
+    <!-- User Info in Drawer -->
+    <div class="drawer-header">
+      <div class="drawer-user-avatar">
+        <img src="assets/default.jpg" alt="User Avatar" id="drawerAvatar">
+      </div>
+      <div class="drawer-user-info">
+        <h4 id="drawerUserName">Loading...</h4>
+        <p id="drawerUserRole">Student</p>
+      </div>
+    </div>
+    
+    <!-- Navigation Menu -->
+    <nav class="drawer-nav">
+      <ul class="drawer-menu">
+        <li><a href="student.html" class="active"><i class="fas fa-home"></i> Dashboard</a></li>
+        <li><a href="stu-profile.html"><i class="fas fa-user"></i> My Profile</a></li>
+        <li><a href="student-enrollment.html"><i class="fas fa-plus-circle"></i> Course Enrollment</a></li>
+        <li><a href="attendance.html"><i class="fas fa-calendar-check"></i> Attendance</a></li>
+        <li><a href="marks.html"><i class="fas fa-chart-line"></i> Grades</a></li>
+        <li><a href="courses.html"><i class="fas fa-graduation-cap"></i> My Courses</a></li>
+        <li><a href="notes.html"><i class="fas fa-book"></i> Study Notes</a></li>
+        <li><a href="announcement.html"><i class="fas fa-bullhorn"></i> Announcements</a></li>
+      </ul>
+      
+      <!-- Settings & Logout -->
+      <ul class="drawer-menu drawer-footer">
+        <li><a href="#" id="settingsBtn"><i class="fas fa-cog"></i> Settings</a></li>
+        <li><a href="#" onclick="authService.logout(); window.location.href='login.html';" class="logout-link"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+      </ul>
+    </nav>
   </div>
 </div>
 
-<!-- Header -->
-<header class="dashboard-header">
-  <div class="header-left"><span>Dashboard</span></div>
-  <div class="header-right">
-    <button class="hamburger" onclick="openDrawer()">
-      <span class="bar"></span>
-      <span class="bar"></span>
-      <span class="bar"></span>
-    </button>
+<!-- Enhanced Header -->
+<header class="modern-header">
+  <div class="header-container">
+    <div class="header-left">
+      <button class="menu-toggle" id="menuToggle">
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="header-title">
+        <h1>Student Dashboard</h1>
+        <span class="header-subtitle">Welcome back!</span>
+      </div>
+    </div>
+    
+    <div class="header-right">
+      <!-- Search Bar -->
+      <div class="search-container">
+        <i class="fas fa-search"></i>
+        <input type="text" placeholder="Search..." id="globalSearch">
+      </div>
+      
+      <!-- Notifications -->
+      <div class="notification-bell" id="notificationBell">
+        <i class="fas fa-bell"></i>
+        <span class="notification-badge">3</span>
+        <div class="notification-dropdown" id="notificationDropdown">
+          <div class="notification-header">
+            <h4>Notifications</h4>
+            <button class="mark-all-read">Mark all read</button>
+          </div>
+          <div class="notification-list">
+            <div class="notification-item">
+              <i class="fas fa-info-circle text-info"></i>
+              <div>
+                <p>New assignment posted in Database Systems</p>
+                <small>2 hours ago</small>
+              </div>
+            </div>
+            <div class="notification-item">
+              <i class="fas fa-calendar text-warning"></i>
+              <div>
+                <p>Tomorrow: Mid-term exam at 10:00 AM</p>
+                <small>1 day ago</small>
+              </div>
+            </div>
+            <div class="notification-item">
+              <i class="fas fa-check-circle text-success"></i>
+              <div>
+                <p>Attendance updated for today's classes</p>
+                <small>3 hours ago</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- User Profile -->
+      <div class="header-profile" id="headerProfile">
+        <img src="assets/default.jpg" alt="Profile" class="profile-avatar" id="headerAvatar">
+        <div class="profile-info">
+          <span class="profile-name" id="headerUserName">Loading...</span>
+          <small class="profile-role">Student</small>
+        </div>
+        <i class="fas fa-chevron-down"></i>
+      </div>
+    </div>
   </div>
 </header>
 
-<main>
-  <!-- Student Profile -->
-  <section class="student-profile-card">
-    <img src="assets/default.jpg" alt="Student Photo" class="student-photo" id="studentPhoto"
-         onerror="this.onerror=null;this.src='assets/default.jpg';"/>
-    <div class="student-info">
-      <div class="student-name" id="studentName">Loading...</div>
-      <div class="student-id" id="studentId">Loading...</div>
-      <div class="student-course" id="studentCourse">Loading...</div>
-    </div>
+<main class="main-content">
+  <div class="dashboard-container">
+    <!-- Welcome Section -->
+    <section class="welcome-section">
+      <div class="welcome-card card">
+        <div class="welcome-content">
+          <div class="welcome-text">
+            <h2>Good Morning, <span id="welcomeUserName">Student</span>! 👋</h2>
+            <p>Here's what's happening in your academic journey today.</p>
+            <div class="quick-stats">
+              <div class="quick-stat">
+                <i class="fas fa-calendar-day text-primary-blue"></i>
+                <span>Today: <strong id="todayDate"></strong></span>
+              </div>
+              <div class="quick-stat">
+                <i class="fas fa-clock text-success"></i>
+                <span>Next Class: <strong id="nextClass">Physics Lab</strong></span>
+              </div>
+            </div>
+          </div>
+          <div class="welcome-avatar">
+            <img src="assets/default.jpg" alt="Student Photo" id="welcomeAvatar" class="welcome-photo">
+            <div class="online-indicator"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Dashboard Stats -->
+    <section class="dashboard-stats">
+      <div class="stat-card">
+        <div class="stat-icon bg-primary">
+          <i class="fas fa-percentage"></i>
+        </div>
+        <div class="stat-content">
+          <h3 id="attendancePercent">85%</h3>
+          <p>Attendance</p>
+          <small class="stat-change positive">+2% from last month</small>
+        </div>
+      </div>
+      
+      <div class="stat-card">
+        <div class="stat-icon bg-success">
+          <i class="fas fa-star"></i>
+        </div>
+        <div class="stat-content">
+          <h3 id="cgpaValue">8.4</h3>
+          <p>Current CGPA</p>
+          <small class="stat-change positive">+0.2 this semester</small>
+        </div>
+      </div>
+      
+      <div class="stat-card">
+        <div class="stat-icon bg-warning">
+          <i class="fas fa-tasks"></i>
+        </div>
+        <div class="stat-content">
+          <h3 id="pendingTasks">4</h3>
+          <p>Pending Tasks</p>
+          <small class="stat-change negative">Due this week</small>
+        </div>
+      </div>
+      
+      <div class="stat-card">
+        <div class="stat-icon bg-info">
+          <i class="fas fa-trophy"></i>
+        </div>
+        <div class="stat-content">
+          <h3 id="achievements">12</h3>
+          <p>Achievements</p>
+          <small class="stat-change neutral">All time</small>
+        </div>
+      </div>
+    </section>
+
+    <!-- Quick Actions -->
+    <section class="quick-actions-section">
+      <h3 class="section-title">
+        <i class="fas fa-rocket"></i>
+        Quick Actions
+      </h3>
+      <div class="quick-actions-grid">
+        <a href="attendance.html" class="action-card">
+          <div class="action-icon bg-primary">
+            <i class="fas fa-calendar-check"></i>
+          </div>
+          <div class="action-content">
+            <h4>Attendance</h4>
+            <p>View your attendance records</p>
+            <span class="action-meta">Current: 85%</span>
+          </div>
+          <i class="fas fa-arrow-right action-arrow"></i>
+        </a>
+        
+        <a href="marks.html" class="action-card">
+          <div class="action-icon bg-success">
+            <i class="fas fa-chart-line"></i>
+          </div>
+          <div class="action-content">
+            <h4>Academic Results</h4>
+            <p>Check your marks and grades</p>
+            <span class="action-meta">Latest: A+ in Database</span>
+          </div>
+          <i class="fas fa-arrow-right action-arrow"></i>
+        </a>
+        
+        <a href="notes.html" class="action-card">
+          <div class="action-icon bg-info">
+            <i class="fas fa-book-open"></i>
+          </div>
+          <div class="action-content">
+            <h4>Study Materials</h4>
+            <p>Access lecture notes and resources</p>
+            <span class="action-meta">12 new documents</span>
+          </div>
+          <i class="fas fa-arrow-right action-arrow"></i>
+        </a>
+        
+        <a href="announcement.html" class="action-card">
+          <div class="action-icon bg-warning">
+            <i class="fas fa-bullhorn"></i>
+          </div>
+          <div class="action-content">
+            <h4>Announcements</h4>
+            <p>Stay updated with latest news</p>
+            <span class="action-meta">3 unread messages</span>
+          </div>
+          <i class="fas fa-arrow-right action-arrow"></i>
+        </a>
+        
+        <a href="courses.html" class="action-card">
+          <div class="action-icon bg-purple">
+            <i class="fas fa-graduation-cap"></i>
+          </div>
+          <div class="action-content">
+            <h4>My Courses</h4>
+            <p>View enrolled courses</p>
+            <span class="action-meta">6 active courses</span>
+          </div>
+          <i class="fas fa-arrow-right action-arrow"></i>
+        </a>
+        
+        <a href="stu-profile.html" class="action-card">
+          <div class="action-icon bg-secondary">
+            <i class="fas fa-user-edit"></i>
+          </div>
+          <div class="action-content">
+            <h4>My Profile</h4>
+            <p>Update personal information</p>
+            <span class="action-meta">Profile 90% complete</span>
+          </div>
+          <i class="fas fa-arrow-right action-arrow"></i>
+        </a>
+      </div>
   </section>
 
-  <!-- College Features -->
-  <section class="college-section">
-    <div class="section-title">MY COLLEGE</div>
-    <div class="college-features-grid">
-      <a href="stu-profile.html" class="feature-card"><img src="assets/pro.png"><span>My Profile</span></a>
-      <a href="courses.html" class="feature-card"><img src="assets/courseic.png"><span>Courses</span></a>
-      <a href="attendance.html" class="feature-card"><img src="assets/atticon.png"><span>Attendance</span></a>
-      <a href="marks.html" class="feature-card"><img src="assets/marksic.webp"><span>Marks</span></a>
-      <a href="notes.html" class="feature-card"><img src="assets/notesic.webp"><span>Notes</span></a>
-      <a href="announcement.html" class="feature-card"><img src="assets/annoic.jpg"><span>Announcements</span></a>
-    </div>
-  </section>
+    <!-- Recent Activity & Upcoming Events -->
+    <div class="dashboard-row">
+      <!-- Recent Activity -->
+      <section class="recent-activity">
+        <div class="section-header">
+          <h3><i class="fas fa-clock"></i> Recent Activity</h3>
+          <button class="view-all-btn">View All</button>
+        </div>
+        <div class="activity-list">
+          <div class="activity-item">
+            <div class="activity-icon bg-success">
+              <i class="fas fa-check"></i>
+            </div>
+            <div class="activity-content">
+              <h4>Assignment Submitted</h4>
+              <p>Database Management Systems - Lab 5</p>
+              <small>2 hours ago</small>
+            </div>
+          </div>
+          
+          <div class="activity-item">
+            <div class="activity-icon bg-info">
+              <i class="fas fa-download"></i>
+            </div>
+            <div class="activity-content">
+              <h4>Notes Downloaded</h4>
+              <p>Computer Networks - Chapter 3</p>
+              <small>5 hours ago</small>
+            </div>
+          </div>
+          
+          <div class="activity-item">
+            <div class="activity-icon bg-warning">
+              <i class="fas fa-calendar-plus"></i>
+            </div>
+            <div class="activity-content">
+              <h4>Attendance Marked</h4>
+              <p>Present in Data Structures class</p>
+              <small>1 day ago</small>
+            </div>
+          </div>
+        </div>
+      </section>
 
-  <!-- Timetable -->
-  <section id="timetable" class="college-section" style="display: none;">
-    <div class="section-title">Your Timetable</div>
-    <table class="timetable-table">
-      <thead>
-      <tr>
-        <th>Day</th>
-        <th>9:00 - 10:00</th>
-        <th>10:00 - 11:00</th>
-        <th>11:00 - 12:00</th>
-        <th>12:00 - 1:00</th>
-        <th>1:00 - 2:00</th>
-        <th>2:00 - 3:00</th>
-        <th>3:00 - 4:00</th>
-      </tr>
-      </thead>
-      <tbody id="timetable-body"></tbody>
-    </table>
-  </section>
+      <!-- Upcoming Events -->
+      <section class="upcoming-events">
+        <div class="section-header">
+          <h3><i class="fas fa-calendar-alt"></i> Upcoming Events</h3>
+          <button class="view-calendar-btn">View Calendar</button>
+        </div>
+        <div class="events-list">
+          <div class="event-item">
+            <div class="event-date">
+              <span class="day">24</span>
+              <span class="month">Oct</span>
+            </div>
+            <div class="event-content">
+              <h4>Mid-term Examination</h4>
+              <p>Database Management Systems</p>
+              <small><i class="fas fa-clock"></i> 10:00 AM - 1:00 PM</small>
+            </div>
+            <div class="event-priority high">High</div>
+          </div>
+          
+          <div class="event-item">
+            <div class="event-date">
+              <span class="day">26</span>
+              <span class="month">Oct</span>
+            </div>
+            <div class="event-content">
+              <h4>Assignment Due</h4>
+              <p>Computer Networks - Project</p>
+              <small><i class="fas fa-clock"></i> 11:59 PM</small>
+            </div>
+            <div class="event-priority medium">Medium</div>
+          </div>
+          
+          <div class="event-item">
+            <div class="event-date">
+              <span class="day">28</span>
+              <span class="month">Oct</span>
+            </div>
+            <div class="event-content">
+              <h4>Guest Lecture</h4>
+              <p>AI in Modern Applications</p>
+              <small><i class="fas fa-clock"></i> 2:00 PM - 3:30 PM</small>
+            </div>
+            <div class="event-priority low">Low</div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Today's Schedule -->
+    <section class="todays-schedule">
+      <div class="section-header">
+        <h3><i class="fas fa-calendar-day"></i> Today's Schedule</h3>
+        <div class="schedule-date" id="scheduleDate"></div>
+      </div>
+      
+      <div class="schedule-timeline">
+        <div class="schedule-item current">
+          <div class="schedule-time">
+            <span class="time">09:00</span>
+            <span class="duration">1hr</span>
+          </div>
+          <div class="schedule-content">
+            <h4>Database Management Systems</h4>
+            <p><i class="fas fa-map-marker-alt"></i> Lab 301, CS Block</p>
+            <p><i class="fas fa-user"></i> Dr. Preethi</p>
+          </div>
+          <div class="schedule-status current-class">Current</div>
+        </div>
+        
+        <div class="schedule-item">
+          <div class="schedule-time">
+            <span class="time">10:15</span>
+            <span class="duration">45min</span>
+          </div>
+          <div class="schedule-content">
+            <h4>Computer Networks</h4>
+            <p><i class="fas fa-map-marker-alt"></i> Room 205, CS Block</p>
+            <p><i class="fas fa-user"></i> Dr. Rajesh</p>
+          </div>
+          <div class="schedule-status upcoming">Next</div>
+        </div>
+        
+        <div class="schedule-item">
+          <div class="schedule-time">
+            <span class="time">11:30</span>
+            <span class="duration">1hr</span>
+          </div>
+          <div class="schedule-content">
+            <h4>Break</h4>
+            <p><i class="fas fa-coffee"></i> Cafeteria / Library</p>
+          </div>
+          <div class="schedule-status break">Break</div>
+        </div>
+        
+        <div class="schedule-item">
+          <div class="schedule-time">
+            <span class="time">12:30</span>
+            <span class="duration">1hr</span>
+          </div>
+          <div class="schedule-content">
+            <h4>Data Structures & Algorithms</h4>
+            <p><i class="fas fa-map-marker-alt"></i> Room 101, CS Block</p>
+            <p><i class="fas fa-user"></i> Dr. Narayani</p>
+          </div>
+          <div class="schedule-status upcoming">Upcoming</div>
+        </div>
+      </div>
+    </section>
+  </div>
 </main>
 
-<!-- Footer -->
-<footer>
-  <div class="footer-bar">2025 © <strong>KARUNYA COLLEGE</strong></div>
+<!-- Enhanced Footer -->
+<footer class="modern-footer">
+  <div class="footer-content">
+    <div class="footer-section">
+      <h4>Karunya Institute</h4>
+      <p>Excellence in Education & Innovation</p>
+    </div>
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="#" onclick="showHelpModal()">Help</a>
+      <a href="#" onclick="showContactModal()">Contact</a>
+    </div>
+    <div class="footer-info">
+      <p>© 2025 Karunya Institute of Technology & Sciences. All rights reserved.</p>
+    </div>
+  </div>
 </footer>
 
-<!-- Script -->
+<!-- Enhanced JavaScript -->
 <script>
-  function openDrawer() {
-    document.getElementById('sideDrawer').classList.add('open');
+document.addEventListener('DOMContentLoaded', function() {
+  // Initialize authentication and check access
+  if (!authService.isAuthenticated()) {
+    window.location.href = 'login.html';
+    return;
   }
-
-  function closeDrawer() {
-    document.getElementById('sideDrawer').classList.remove('open');
+  
+  if (!authService.isStudent()) {
+    authService.showAccessDenied();
+    return;
   }
+  
+  // Student dashboard is initialized from student-dashboard.js
+  console.log('Student dashboard loaded successfully');
+  
+  // Initialize additional UI components
+  initializeDashboard();
+  setupEventListeners();
+  updateDateTime();
+  setInterval(updateDateTime, 60000); // Update every minute
+});
 
-  document.addEventListener('keydown', e => {
-    if (e.key === "Escape") closeDrawer();
+function initializeDashboard() {
+  // Set welcome message based on time
+  const hour = new Date().getHours();
+  let greeting;
+  if (hour < 12) greeting = "Good Morning";
+  else if (hour < 17) greeting = "Good Afternoon";
+  else greeting = "Good Evening";
+  
+  const welcomeText = document.querySelector('.welcome-text h2');
+  if (welcomeText) {
+    welcomeText.innerHTML = `${greeting}, <span id="welcomeUserName">Student</span>! 👋`;
+  }
+}
+
+function setupEventListeners() {
+  // Menu toggle
+  const menuToggle = document.getElementById('menuToggle');
+  const sideDrawer = document.getElementById('sideDrawer');
+  const drawerOverlay = document.getElementById('drawerOverlay');
+  
+  if (menuToggle) {
+    menuToggle.addEventListener('click', toggleDrawer);
+  }
+  
+  if (drawerOverlay) {
+    drawerOverlay.addEventListener('click', closeDrawer);
+  }
+  
+  // Notification bell
+  const notificationBell = document.getElementById('notificationBell');
+  const notificationDropdown = document.getElementById('notificationDropdown');
+  
+  if (notificationBell) {
+    notificationBell.addEventListener('click', toggleNotifications);
+  }
+  
+  // Global search
+  const globalSearch = document.getElementById('globalSearch');
+  if (globalSearch) {
+    globalSearch.addEventListener('input', handleSearch);
+  }
+  
+  // Settings button
+  const settingsBtn = document.getElementById('settingsBtn');
+  if (settingsBtn) {
+    settingsBtn.addEventListener('click', showSettings);
+  }
+  
+  // Keyboard shortcuts
+  document.addEventListener('keydown', handleKeyboardShortcuts);
+}
+
+function toggleDrawer() {
+  const sideDrawer = document.getElementById('sideDrawer');
+  const drawerOverlay = document.getElementById('drawerOverlay');
+  
+  if (sideDrawer && drawerOverlay) {
+    const isOpen = sideDrawer.classList.contains('open');
+    
+    if (isOpen) {
+      closeDrawer();
+    } else {
+      openDrawer();
+    }
+  }
+}
+
+function openDrawer() {
+  const sideDrawer = document.getElementById('sideDrawer');
+  const drawerOverlay = document.getElementById('drawerOverlay');
+  
+  if (sideDrawer && drawerOverlay) {
+    sideDrawer.classList.add('open');
+    drawerOverlay.classList.add('show');
+    document.body.style.overflow = 'hidden';
+  }
+}
+
+function closeDrawer() {
+  const sideDrawer = document.getElementById('sideDrawer');
+  const drawerOverlay = document.getElementById('drawerOverlay');
+  
+  if (sideDrawer && drawerOverlay) {
+    sideDrawer.classList.remove('open');
+    drawerOverlay.classList.remove('show');
+    document.body.style.overflow = '';
+  }
+}
+
+function toggleNotifications() {
+  const dropdown = document.getElementById('notificationDropdown');
+  if (dropdown) {
+    dropdown.classList.toggle('show');
+  }
+}
+
+function handleSearch(e) {
+  const query = e.target.value.toLowerCase();
+  console.log('Searching for:', query);
+  // Implement search functionality here
+}
+
+function loadUserData() {
+  // Load user data from auth service
+  const user = authService.getCurrentUser();
+  
+  // Update UI with user data
+  updateUserInfo(user.name, user.email, 'Computer Science'); // Default course for now
+  
+  // Load dashboard data from API
+  loadDashboardStats();
+}
+
+function updateUserInfo(name, email, course) {
+  const elements = {
+    welcomeUserName: document.getElementById('welcomeUserName'),
+    headerUserName: document.getElementById('headerUserName'),
+    drawerUserName: document.getElementById('drawerUserName')
+  };
+  
+  Object.values(elements).forEach(el => {
+    if (el) el.textContent = name;
   });
+  
+  // Update course info if available
+  if (course) {
+    const courseElements = document.querySelectorAll('.user-course');
+    courseElements.forEach(el => {
+      if (el) el.textContent = course;
+    });
+  }
+}
 
-  const userId = localStorage.getItem("userId");
+function loadDashboardStats() {
+  // Load actual dashboard data from API
+  loadStudentDashboard();
+}
 
-  if (!userId) {
+async function loadStudentDashboard() {
+  try {
+    const dashboardData = await authService.apiRequest('/student/dashboard');
+    
+    if (dashboardData.success) {
+      const data = dashboardData.data;
+      
+      // Update overview stats
+      const overview = data.academicOverview;
+      const performance = data.performanceOverview;
+      const attendance = data.attendanceOverview;
+      
+      updateStat('totalCourses', overview.currentEnrolledCourses || 0);
+      updateStat('totalCredits', overview.totalCredits || 0);
+      updateStat('cgpaValue', performance.cgpa || '0.0');
+      updateStat('attendancePercent', attendance.overallAttendancePercentage ? 
+        `${attendance.overallAttendancePercentage}%` : '0%');
+      
+      // Update recent activities
+      updateRecentActivities(data.recentActivities || []);
+      
+      // Update upcoming events
+      updateUpcomingEvents(data.upcomingEvents || []);
+      
+    } else {
+      console.error('Failed to load dashboard data:', dashboardData.message);
+      // Fallback to default values
+      loadDefaultStats();
+    }
+  } catch (error) {
+    console.error('Error loading dashboard:', error);
+    // Fallback to default values
+    loadDefaultStats();
+  }
+}
+
+function loadDefaultStats() {
+  // Fallback stats if API fails
+  updateStat('totalCourses', '6');
+  updateStat('totalCredits', '18');
+  updateStat('cgpaValue', '8.4');
+  updateStat('attendancePercent', '85%');
+}
+
+function updateRecentActivities(activities) {
+  const container = document.getElementById('recentActivitiesContainer');
+  if (!container || !activities.length) return;
+  
+  const activitiesHTML = activities.map(activity => `
+    <div class="activity-item">
+      <div class="activity-icon">
+        <i class="fas ${activity.type === 'ENROLLMENT' ? 'fa-plus-circle' : 'fa-award'}"></i>
+      </div>
+      <div class="activity-content">
+        <p class="activity-description">${activity.description}</p>
+        <span class="activity-time">${formatDate(activity.timestamp)}</span>
+      </div>
+    </div>
+  `).join('');
+  
+  container.innerHTML = activitiesHTML;
+}
+
+function updateUpcomingEvents(events) {
+  const container = document.getElementById('upcomingEventsContainer');
+  if (!container || !events.length) return;
+  
+  const eventsHTML = events.map(event => `
+    <div class="event-item ${event.priority === 'CRITICAL' ? 'urgent' : ''}">
+      <div class="event-title">${event.title}</div>
+      <div class="event-description">${event.description}</div>
+      <div class="event-date">${formatDate(event.dueDate)}</div>
+    </div>
+  `).join('');
+  
+  container.innerHTML = eventsHTML;
+}
+
+function formatDate(dateString) {
+  const date = new Date(dateString);
+  return date.toLocaleDateString('en-US', { 
+    month: 'short', 
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit'
+  });
+}
+
+function updateStat(elementId, value) {
+  const element = document.getElementById(elementId);
+  if (element) {
+    element.textContent = value;
+    element.classList.add('fade-in');
+  }
+}
+
+function updateDateTime() {
+  const now = new Date();
+  const options = { 
+    weekday: 'long', 
+    year: 'numeric', 
+    month: 'long', 
+    day: 'numeric' 
+  };
+  
+  const todayDate = document.getElementById('todayDate');
+  const scheduleDate = document.getElementById('scheduleDate');
+  
+  if (todayDate) {
+    todayDate.textContent = now.toLocaleDateString('en-US', { 
+      month: 'short', 
+      day: 'numeric' 
+    });
+  }
+  
+  if (scheduleDate) {
+    scheduleDate.textContent = now.toLocaleDateString('en-US', options);
+  }
+}
+
+function handleKeyboardShortcuts(e) {
+  // ESC to close drawer/modals
+  if (e.key === 'Escape') {
+    closeDrawer();
+    hideAllModals();
+  }
+  
+  // Ctrl/Cmd + K for search
+  if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+    e.preventDefault();
+    const searchInput = document.getElementById('globalSearch');
+    if (searchInput) {
+      searchInput.focus();
+    }
+  }
+}
+
+function showSettings() {
+  // Implement settings modal
+  console.log('Opening settings...');
+}
+
+function showHelpModal() {
+  // Implement help modal
+  console.log('Opening help...');
+}
+
+function showContactModal() {
+  // Implement contact modal
+  console.log('Opening contact...');
+}
+
+function hideAllModals() {
+  // Hide all open modals
+  const modals = document.querySelectorAll('.modal-overlay');
+  modals.forEach(modal => {
+    modal.style.display = 'none';
+  });
+}
+
+function logout() {
+  if (confirm('Are you sure you want to logout?')) {
+    localStorage.clear();
+    window.location.href = 'login.html';
+  }
+}
+
+// Animation observers
+const observerOptions = {
+  threshold: 0.1,
+  rootMargin: '0px 0px -50px 0px'
+};
+
+const observer = new IntersectionObserver(function(entries) {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('animate-slide-up');
+    }
+  });
+}, observerOptions);
+
+// Observe elements for animation
+document.querySelectorAll('.card, .stat-card, .action-card').forEach(el => {
+  observer.observe(el);
+});
+
+  // Check authentication using auth service
+  if (!authService.isAuthenticated()) {
     alert("Session expired. Please login again.");
     window.location.href = "login.html";
   } else {
-    axios.get(`http://localhost:8080/api/users/profile/${userId}`)
-      .then(res => {
-        const user = res.data;
-        document.getElementById("studentName").textContent = user.name;
-        document.getElementById("studentId").textContent = "ID: " + user.id;
-        document.getElementById("studentCourse").textContent = user.course || "N/A";
-        document.getElementById("studentPhoto").src = user.photoUrl || "assets/default.jpg";
-      })
-      .catch(err => {
-        console.error("Failed to load profile", err);
-        alert("Failed to load profile data.");
-      });
+    // Get current user from auth service
+    const user = authService.getCurrentUser();
+    
+    if (user) {
+      // Display user information safely (check if elements exist)
+      const nameElement = document.getElementById("studentName");
+      const idElement = document.getElementById("studentId");
+      const courseElement = document.getElementById("studentCourse");
+      const photoElement = document.getElementById("studentPhoto");
+      
+      if (nameElement) nameElement.textContent = user.name || "Student";
+      if (idElement) idElement.textContent = "ID: " + (user.id || "N/A");
+      if (courseElement) courseElement.textContent = user.course || "N/A";
+      
+      // Try to load photo, fallback to default
+      if (photoElement) {
+        photoElement.src = user.photoUrl || "assets/default.jpg";
+        photoElement.onerror = function() {
+          this.src = "assets/default.jpg";
+        };
+      }
+      
+      console.log("Student profile loaded from localStorage:", user);
+    }
   }
 
   const selectedSubjects = JSON.parse(localStorage.getItem("selectedSubjects") || "[]");

@@ -6,6 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="courses.css" />
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="api-config.js?v=2025102501"></script>
+  <script src="auth-service.js?v=2025102501"></script>
 </head>
 <body>
 <header class="courses-header" style="text-align: center;">
@@ -40,75 +42,113 @@
 </footer>
 
 <script>
-  const selectedSubjects = new Set();
-  const tbody = document.getElementById('subjectList');
-  const status = document.getElementById('selectionStatus');
-  const generateBtn = document.getElementById('generateBtn');
-  const userId = localStorage.getItem("userId");
-
-  function updateUI() {
-    status.textContent = `${selectedSubjects.size} of 5 subjects selected.`;
-    generateBtn.disabled = selectedSubjects.size !== 5;
-  }
-
-  function handleSelectionChange(code, checkbox) {
-    if (checkbox.checked) {
-      if (selectedSubjects.size < 5) {
-        selectedSubjects.add(code);
-      } else {
-        checkbox.checked = false;
-        alert("You can only select 5 subjects.");
-      }
-    } else {
-      selectedSubjects.delete(code);
+  document.addEventListener('DOMContentLoaded', function() {
+    // Check authentication
+    if (!authService.isAuthenticated()) {
+      alert("Please login again.");
+      window.location.href = "login.html";
+      return;
     }
-    updateUI();
-  }
 
-  document.addEventListener('DOMContentLoaded', () => {
-    axios.get('http://localhost:8080/api/courses')
-      .then(response => {
-        const courses = response.data;
+    const currentUser = authService.getCurrentUser();
+    if (!currentUser) {
+      alert("Please login again.");
+      window.location.href = "login.html";
+      return;
+    }
+
+    // Initialize page
+    const selectedCourses = new Set();
+    const tbody = document.getElementById('subjectList');
+    const status = document.getElementById('selectionStatus');
+    const generateBtn = document.getElementById('generateBtn');
+    const userId = currentUser.id;
+
+    function updateUI() {
+      status.textContent = `${selectedCourses.size} of 5 subjects selected.`;
+      generateBtn.disabled = selectedCourses.size !== 5;
+    }
+
+    function handleSelectionChange(courseId, checkbox) {
+      if (checkbox.checked) {
+        if (selectedCourses.size < 5) {
+          selectedCourses.add(courseId);
+        } else {
+          checkbox.checked = false;
+          alert("You can only select 5 subjects.");
+        }
+      } else {
+        selectedCourses.delete(courseId);
+      }
+      updateUI();
+    }
+
+    async function loadAvailableCourses() {
+      try {
+        const response = await apiHelpers.request('/student/portal/courses/available');
+        
+        // Response structure: { success, message, data: { totalAvailable, availableCourses } }
+        if (!response.success) {
+          throw new Error(response.message || 'Failed to load courses');
+        }
+        
+        const courses = response.data?.availableCourses || [];
+        
         tbody.innerHTML = '';
-
-        courses.forEach(subject => {
+        
+        if (!courses || courses.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="3">No courses available for enrollment.</td></tr>';
+          return;
+        }
+        
+        courses.forEach(course => {
           const tr = document.createElement('tr');
           tr.innerHTML = `
-            <td><input type="checkbox" onchange="handleSelectionChange('${subject.code}', this)" /></td>
-            <td>${subject.title}</td>
-            <td>${subject.faculty}</td>
+            <td><input type="checkbox" data-course-id="${course.id}" onchange="handleSelectionChange(${course.id}, this)" /></td>
+            <td>${course.courseName || course.name} (${course.courseCode})</td>
+            <td>${course.department?.name || 'N/A'}</td>
           `;
           tbody.appendChild(tr);
         });
-      })
-      .catch(error => {
+      } catch (error) {
         console.error('Error loading courses:', error);
-        tbody.innerHTML = '<tr><td colspan="3">Failed to load subjects.</td></tr>';
-      });
-  });
+        tbody.innerHTML = '<tr><td colspan="3">Server error. Please try again later.</td></tr>';
+      }
+    }
 
-  generateBtn.addEventListener('click', () => {
-    const subjectCodes = Array.from(selectedSubjects);
+  generateBtn.addEventListener('click', async () => {
+    const courseIds = Array.from(selectedCourses);
 
-    if (subjectCodes.length !== 5) {
+    if (courseIds.length !== 5) {
       alert("You must select exactly 5 subjects.");
       return;
     }
 
-    localStorage.setItem("selectedSubjects", JSON.stringify(subjectCodes));
+    try {
+      // Enroll in selected courses using the correct endpoint format
+      const enrollmentPromises = courseIds.map(courseId => 
+        apiHelpers.request(`/student/portal/enroll/${courseId}`, {
+          method: 'POST'
+        })
+      );
 
-    axios.post(`http://localhost:8080/api/users/${userId}/subjects`, subjectCodes, {
-      headers: { 'Content-Type': 'application/json' }
-    }).then(() => {
-      alert("✅ Subjects saved successfully!");
+      await Promise.all(enrollmentPromises);
+      
+      localStorage.setItem("selectedSubjects", JSON.stringify(courseIds));
+      alert("✅ Subjects enrolled successfully!");
       window.location.href = "student.html";
-    }).catch(err => {
-      alert("❌ Failed to save subjects.");
-      console.error(err);
-    });
+    } catch (error) {
+      console.error('Error enrolling in courses:', error);
+      apiHelpers.handleError(error);
+    }
   });
 
+  // Make handleSelectionChange available globally
   window.handleSelectionChange = handleSelectionChange;
+
+  // Load courses on page load
+  loadAvailableCourses();
+});
 </script>
 </body>
 </html>

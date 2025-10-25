@@ -2,9 +2,19 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Faculty Dashboard</title>
+  <title>Faculty Dashboard - College ERP</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="faculty.css">
+  <link rel="stylesheet" href="enhanced-styles.css">
+  <link rel="stylesheet" href="text-visibility-fix.css">
+  <link rel="stylesheet" href="faculty.css?v=8.0-sidebar-fix">
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="api-config.js?v=2"></script>
+  <script src="auth-service.js?v=2"></script>
+  <script src="faculty-dashboard.js?v=2"></script>
 </head>
 <body>
   <!-- Drawer Overlay -->
@@ -13,24 +23,47 @@
   <nav id="sideDrawer" class="side-drawer">
     <div class="drawer-content">
       <ul class="drawer-menu">
-        <li><a href="faculty.html"><span class="menu-icon-text">🏠</span>Home</a></li>
-        
+        <li><a href="faculty.html"><span class="menu-icon-text">🏠</span>Dashboard</a></li>
+        <li><a href="fac-class.html"><span class="menu-icon-text">📚</span>My Courses</a></li>
+        <li><a href="fac-attend.html"><span class="menu-icon-text">📅</span>Attendance</a></li>
+        <li><a href="fac-mark.html"><span class="menu-icon-text">📊</span>Grades</a></li>
+        <li><a href="fac-announce.html"><span class="menu-icon-text">📢</span>Announcements</a></li>
+        <li><a href="fac-notes.html"><span class="menu-icon-text">📝</span>Course Notes</a></li>
         <li><a href="fac-profile.html"><span class="menu-icon-text">👤</span>Profile</a></li>
       </ul>
       <ul class="drawer-menu logout-menu">
-        <li><a href="login.html"><span class="menu-icon-text">🚪</span>Logout</a></li>
+        <li><a href="#" onclick="authService.logout(); window.location.href='login.html';"><span class="menu-icon-text">🚪</span>Logout</a></li>
       </ul>
     </div>
   </nav>
 
-  <header class="dashboard-header">
-    <span class="header-title">Dashboard</span>
-    <div class="header-right">
-      <button class="hamburger" aria-label="Open menu" onclick="openDrawer()">
-        <span class="bar"></span>
-        <span class="bar"></span>
-        <span class="bar"></span>
-      </button>
+    <header class="modern-header" style="background: linear-gradient(135deg, #b03a2e 0%, #8b0000 100%);">
+    <div class="header-container">
+      <div class="header-left">
+        <button class="menu-toggle" onclick="openDrawer()">
+          <i class="fas fa-bars"></i>
+        </button>
+        <div class="header-title">
+          <h1>Faculty Portal</h1>
+          <span class="header-subtitle">Manage your classes & students</span>
+        </div>
+      </div>
+      
+      <div class="header-right">
+        <div class="notification-bell">
+          <i class="fas fa-bell"></i>
+          <span class="notification-badge">2</span>
+        </div>
+        
+        <div class="header-profile">
+          <img src="assets/default.jpg" alt="Profile" class="profile-avatar">
+          <div class="profile-info">
+            <span class="profile-name">Dr. Faculty</span>
+            <small class="profile-role">Faculty</small>
+          </div>
+          <i class="fas fa-chevron-down"></i>
+        </div>
+      </div>
     </div>
   </header>
 
@@ -42,6 +75,7 @@
         <div class="faculty-id">FAC1234</div>
         <div class="faculty-dept">Assistant Professor, Computer Science</div>
       </div>
+      <div class="profile-badge">Active</div>
     </div>
     <div class="spacer"></div>
     <section class="college-section">
@@ -49,27 +83,27 @@
       <div class="college-features-grid">
         <a href="fac-profile.html" class="feature-card">
           <img src="assets/pro.png" alt="Profile">
-          My Profile
+          <p>My Profile</p>
         </a>
         <a href="fac-attend.html" class="feature-card">
           <img src="assets/atticon.png" alt="Mark Attendance">
-          Mark Attendance
+          <p>Mark Attendance</p>
         </a>
         <a href="fac-mark.html" class="feature-card">
           <img src="assets/marksic.webp" alt="Enter Marks">
-          Enter Marks
+          <p>Enter Marks</p>
         </a>
         <a href="fac-class.html" class="feature-card">
           <img src="assets/courseic.png" alt="Assigned Courses">
-          Assigned Classes
+          <p>Assigned Classes</p>
         </a>
         <a href="fac-notes.html" class="feature-card">
           <img src="assets/notesic.webp" alt="Upload Notes">
-          Upload Notes
+          <p>Upload Notes</p>
         </a>
         <a href="fac-announce.html" class="feature-card">
           <img src="assets/annoic.jpg" alt="Create Announcement">
-          Create Announcement
+          <p>Create Announcement</p>
         </a>
        
       </div>
@@ -86,18 +120,151 @@
   </main>
   <footer>
     <div class="footer-bar">
-      2025 © <strong>ST. XAVIER'S COLLEGE (AUTONOMOUS)</strong>
+      2025 © <strong>Karunya Institute of Technology and Sciences</strong>
     </div>
   </footer>
   <script>
+    // Initialize authentication and load faculty dashboard
+    document.addEventListener('DOMContentLoaded', async function() {
+      console.log('🚀 Initializing Faculty Dashboard...');
+      
+      if (!authService.isAuthenticated()) {
+        console.log('❌ Not authenticated, redirecting to login');
+        window.location.href = 'login.html';
+        return;
+      }
+      
+      if (!authService.isFaculty()) {
+        console.log('❌ User is not faculty');
+        authService.showAccessDenied();
+        return;
+      }
+      
+      console.log('✅ Faculty authenticated, loading dashboard...');
+      await loadFacultyDashboard();
+    });
+
+    async function loadFacultyDashboard() {
+      try {
+        const user = authService.getCurrentUser();
+        console.log('👤 Current user:', user);
+        
+        // Update header profile name immediately
+        const headerProfileNames = document.querySelectorAll('.profile-name');
+        headerProfileNames.forEach(el => {
+          if (el) el.textContent = user.name;
+        });
+        
+        // Load full faculty profile from API
+        console.log('📥 Fetching faculty profile from API...');
+        const response = await axios.get('/faculty/profile');
+        console.log('📦 Profile response:', response.data);
+        
+        if (response.data.success && response.data.data) {
+          const facultyProfile = response.data.data;
+          updateFacultyProfile(facultyProfile);
+          
+          // Load courses for today's classes
+          await loadTodaysClasses();
+        } else {
+          console.warn('⚠️ Failed to load faculty profile, using user data');
+          updateFacultyProfileFallback(user);
+        }
+      } catch (error) {
+        console.error('❌ Error loading faculty dashboard:', error);
+        
+        // Fallback to user data
+        const user = authService.getCurrentUser();
+        updateFacultyProfileFallback(user);
+      }
+    }
+
+    function updateFacultyProfile(profile) {
+      console.log('🎨 Updating faculty profile in UI:', profile);
+      
+      // Update faculty photo card
+      const facultyNameEl = document.querySelector('.faculty-name');
+      const facultyIdEl = document.querySelector('.faculty-id');
+      const facultyDeptEl = document.querySelector('.faculty-dept');
+      
+      if (facultyNameEl) {
+        facultyNameEl.textContent = profile.user.name || 'Faculty Name';
+      }
+      
+      if (facultyIdEl) {
+        facultyIdEl.textContent = profile.facultyId || profile.employeeId || 'FACULTY';
+      }
+      
+      if (facultyDeptEl) {
+        const designation = profile.designation || 'Faculty';
+        const deptName = profile.department?.name || 'Department';
+        facultyDeptEl.textContent = `${designation}, ${deptName}`;
+      }
+      
+      console.log('✅ Faculty profile updated in UI');
+    }
+
+    function updateFacultyProfileFallback(user) {
+      console.log('🎨 Updating faculty profile with fallback data');
+      
+      const facultyNameEl = document.querySelector('.faculty-name');
+      const facultyIdEl = document.querySelector('.faculty-id');
+      const facultyDeptEl = document.querySelector('.faculty-dept');
+      
+      if (facultyNameEl) facultyNameEl.textContent = user.name;
+      if (facultyIdEl) facultyIdEl.textContent = 'Faculty';
+      if (facultyDeptEl) facultyDeptEl.textContent = user.email;
+    }
+
+    async function loadTodaysClasses() {
+      try {
+        console.log('📚 Loading today\'s classes...');
+        const response = await axios.get('/faculty/courses');
+        console.log('📦 Courses response:', response.data);
+        
+        if (response.data.success && response.data.data) {
+          const courses = response.data.data;
+          updateTodaysClasses(courses);
+        } else {
+          console.warn('⚠️ No courses found');
+        }
+      } catch (error) {
+        console.error('❌ Error loading courses:', error);
+        // Don't show error to user, keep placeholder
+      }
+    }
+
+    function updateTodaysClasses(courses) {
+      const todayClassesEl = document.querySelector('.today-classes');
+      if (!todayClassesEl) return;
+      
+      if (!courses || courses.length === 0) {
+        todayClassesEl.innerHTML = '<li>No classes scheduled for today</li>';
+        return;
+      }
+      
+      // Display up to 3 courses with sample times
+      const times = ['09:00 AM', '11:00 AM', '02:00 PM', '03:30 PM'];
+      const classesHTML = courses.slice(0, 4).map((course, index) => {
+        const courseName = course.courseName || course.name || 'Course';
+        const courseCode = course.courseCode || '';
+        return `<li>${times[index]}: ${courseName} ${courseCode ? '(' + courseCode + ')' : ''}</li>`;
+      }).join('');
+      
+      todayClassesEl.innerHTML = classesHTML;
+      console.log('✅ Today\'s classes updated');
+    }
+
     function openDrawer() {
       document.getElementById('sideDrawer').classList.add('open');
       document.getElementById('sideDrawerOverlay').classList.add('show');
     }
+    
     function closeDrawer() {
       document.getElementById('sideDrawer').classList.remove('open');
       document.getElementById('sideDrawerOverlay').classList.remove('show');
     }
+    
     document.addEventListener('keydown', function(e) {
       if (e.key === "Escape") closeDrawer();
     });

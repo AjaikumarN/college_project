@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Test All Pages</title>
+  <style>
+    body { font-family: Arial; padding: 20px; max-width: 800px; margin: 0 auto; }
+    h1 { color: #333; }
+    .page-link { 
+      display: block; 
+      padding: 15px; 
+      margin: 10px 0; 
+      background: #007bff; 
+      color: white; 
+      text-decoration: none; 
+      border-radius: 5px;
+      text-align: center;
+      font-size: 16px;
+    }
+    .page-link:hover { background: #0056b3; }
+    .success { background: #28a745; }
+    .info { background: #17a2b8; padding: 15px; border-radius: 5px; margin: 20px 0; }
+  </style>
+</head>
+<body>
+  <h1>🎓 Test All Student Portal Pages</h1>
+  
+  <div class="info">
+    <strong>✓ You are logged in as:</strong> <span id="userName">Loading...</span><br>
+    <strong>Role:</strong> <span id="userRole">Loading...</span>
+  </div>
+
+  <h3>Click each link to test (they will open in new tabs):</h3>
+  
+  <a href="attendance.html?_t=<?php echo time(); ?>" target="_blank" class="page-link success">
+    ✓ Attendance (Working)
+  </a>
+  
+  <a href="marks.html?_t=<?php echo time(); ?>" target="_blank" class="page-link">
+    📊 Marks / Academic Results
+  </a>
+  
+  <a href="notes.html?_t=<?php echo time(); ?>" target="_blank" class="page-link">
+    📚 Class Notes
+  </a>
+  
+  <a href="announcement.html?_t=<?php echo time(); ?>" target="_blank" class="page-link">
+    📢 Announcements
+  </a>
+  
+  <a href="courses.html?_t=<?php echo time(); ?>" target="_blank" class="page-link">
+    🎓 My Courses
+  </a>
+  
+  <a href="stu-profile.html?_t=<?php echo time(); ?>" target="_blank" class="page-link">
+    👤 Profile
+  </a>
+
+  <div style="margin-top: 30px; padding: 15px; background: #f8f9fa; border-radius: 5px;">
+    <h4>If pages still don't work:</h4>
+    <ol>
+      <li>Close ALL browser tabs with localhost:3000</li>
+      <li>Clear browser cache (Cmd+Shift+Delete)</li>
+      <li>Reopen this page and try again</li>
+    </ol>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="api-config.js?v=2025102501"></script>
+  <script src="auth-service.js?v=2025102501"></script>
+  
+  <script>
+    // Add cache-busting timestamp to all links
+    const timestamp = new Date().getTime();
+    document.querySelectorAll('.page-link').forEach(link => {
+      const url = new URL(link.href);
+      url.searchParams.set('_t', timestamp);
+      link.href = url.toString();
+    });
+
+    // Show user info
+    const user = authService.getCurrentUser();
+    if (user) {
+      document.getElementById('userName').textContent = user.name;
+      document.getElementById('userRole').textContent = user.role;
+    } else {
+      document.getElementById('userName').textContent = 'Not logged in!';
+      document.getElementById('userRole').textContent = 'Please login first';
+    }
+  </script>
+</body>
+</html>

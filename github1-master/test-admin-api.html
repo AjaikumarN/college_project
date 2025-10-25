@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin API Test</title>
+  <style>
+    body { font-family: Arial; padding: 20px; }
+    .test-section { margin: 20px 0; padding: 15px; border: 1px solid #ddd; }
+    button { padding: 10px 20px; margin: 5px; }
+    pre { background: #f5f5f5; padding: 10px; overflow: auto; }
+    .error { color: red; }
+    .success { color: green; }
+  </style>
+</head>
+<body>
+  <h1>Admin API Test Page</h1>
+  
+  <div class="test-section">
+    <h2>1. Login as Admin</h2>
+    <button onclick="testLogin()">Login</button>
+    <pre id="loginResult"></pre>
+  </div>
+
+  <div class="test-section">
+    <h2>2. Get Students</h2>
+    <button onclick="testGetStudents()">Get Students</button>
+    <pre id="studentsResult"></pre>
+  </div>
+
+  <div class="test-section">
+    <h2>3. Get Faculty</h2>
+    <button onclick="testGetFaculty()">Get Faculty</button>
+    <pre id="facultyResult"></pre>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script>
+    let authToken = localStorage.getItem('authToken');
+
+    async function testLogin() {
+      const result = document.getElementById('loginResult');
+      result.textContent = 'Logging in...';
+      
+      try {
+        const response = await axios.post('http://localhost:8080/api/auth/login', {
+          email: 'admin@xaviers.edu',
+          password: 'admin123'
+        });
+        
+        authToken = response.data.data.token;
+        localStorage.setItem('authToken', authToken);
+        
+        result.className = 'success';
+        result.textContent = JSON.stringify(response.data, null, 2);
+      } catch (error) {
+        result.className = 'error';
+        result.textContent = 'Error: ' + JSON.stringify(error.response?.data || error.message, null, 2);
+      }
+    }
+
+    async function testGetStudents() {
+      const result = document.getElementById('studentsResult');
+      result.textContent = 'Fetching students...';
+      
+      if (!authToken) {
+        result.className = 'error';
+        result.textContent = 'Please login first!';
+        return;
+      }
+      
+      try {
+        const response = await axios.get('http://localhost:8080/api/admin/students?page=0&size=100', {
+          headers: {
+            'Authorization': `Bearer ${authToken}`
+          }
+        });
+        
+        result.className = 'success';
+        result.textContent = JSON.stringify(response.data, null, 2);
+      } catch (error) {
+        result.className = 'error';
+        result.textContent = 'Error: ' + JSON.stringify(error.response?.data || error.message, null, 2);
+      }
+    }
+
+    async function testGetFaculty() {
+      const result = document.getElementById('facultyResult');
+      result.textContent = 'Fetching faculty...';
+      
+      if (!authToken) {
+        result.className = 'error';
+        result.textContent = 'Please login first!';
+        return;
+      }
+      
+      try {
+        const response = await axios.get('http://localhost:8080/api/admin/faculty?page=0&size=100', {
+          headers: {
+            'Authorization': `Bearer ${authToken}`
+          }
+        });
+        
+        result.className = 'success';
+        result.textContent = JSON.stringify(response.data, null, 2);
+      } catch (error) {
+        result.className = 'error';
+        result.textContent = 'Error: ' + JSON.stringify(error.response?.data || error.message, null, 2);
+      }
+    }
+
+    // Auto-load token on page load
+    if (authToken) {
+      console.log('Auth token found:', authToken.substring(0, 20) + '...');
+    }
+  </script>
+</body>
+</html>

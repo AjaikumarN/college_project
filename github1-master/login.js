@@ -1,4 +1,4 @@
-document.getElementById("loginForm").addEventListener("submit", function (e) {
+document.getElementById("loginForm").addEventListener("submit", async function (e) {
   e.preventDefault();
   const email = document.getElementById("login-email").value.trim();
   const password = document.getElementById("login-password").value;
@@ -6,22 +6,19 @@ document.getElementById("loginForm").addEventListener("submit", function (e) {
 
   errorBox.textContent = "";
 
-  axios.post("http://localhost:8080/api/auth/login", { email, password })
-    .then(response => {
-      const user = response.data;
-
-      if (!user || !user.email) {
-        errorBox.textContent = "Unexpected server response.";
-        return;
-      }
-
-      localStorage.setItem("userId", user.id);
-      localStorage.setItem("userEmail", user.email);
-      localStorage.setItem("userName", user.name);
-      window.location.href = "student.html";
-    })
-    .catch(error => {
-      errorBox.textContent = "Invalid email or password.";
-      console.error("Login error:", error);
-    });
+  try {
+    // Use authService for login
+    const result = await authService.login(email, password);
+    
+    if (result.success) {
+      // authService handles storing token and user data
+      // Redirect based on role
+      authService.redirectToRoleDashboard();
+    } else {
+      errorBox.textContent = "Login failed. Please try again.";
+    }
+  } catch (error) {
+    errorBox.textContent = error.message || "Invalid email or password.";
+    console.error("Login error:", error);
+  }
 });
